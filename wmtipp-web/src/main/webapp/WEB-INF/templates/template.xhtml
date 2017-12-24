@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+  <h:head>
+    <title>JSF 2 Spring 4 JPA 2 Spielwiese</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <h:outputStylesheet name="css/screen.css" />
+  </h:head>
+  <h:body id="page">
+
+    <h:panelGroup  layout="block">
+      <h:panelGroup styleClass="header" layout="block">
+        <p:clock mode="client"  pattern="dd.MM.yyyy - HH:mm:ss" />
+      </h:panelGroup>
+      <h:panelGroup id="header" layout="block">
+        <h:graphicImage  url="/resources/graphics/2018.png" style="padding-right: 50px" />
+        <h:graphicImage  url="/resources/graphics/header.de.png"  />
+        <h:graphicImage  url="/resources/graphics/artwork.png"  style="padding-left: 50px" />
+      </h:panelGroup>
+    </h:panelGroup>
+
+    <h:panelGrid columns="3"  styleClass="top-aligned-columns">
+
+      <h:panelGroup id="sidebar">
+        <p:panelMenu style="min-width: 200px;"  >
+          <p:submenu label="Ajax">
+            <p:menuitem value="Home" outcome="/home.jsf" />
+            <p:menuitem value="Fahrplan" outcome="/schedule.jsf" />
+            <p:menuitem value="Spieler" outcome="/masterdata/createPlayer.jsf" />
+            <p:menuitem value="Spielerpflege" outcome="/masterdata/editPlayer.jsf" />
+            <p:menuitem value="Test Services" outcome="/testServices.jsf" />
+          </p:submenu>
+        </p:panelMenu>
+      </h:panelGroup>
+
+      <h:panelGroup id="container" layout="block">
+        <h:panelGroup id="content" layout="block">
+          <center>
+            <ui:insert name="content">Main Content</ui:insert>
+          </center>
+        </h:panelGroup>
+      </h:panelGroup>
+
+      <h:panelGroup id="sidebar2">
+        <p:panelMenu style="min-width: 200px;"  >
+          <p:submenu label="Ajax">
+            <p:menuitem value="Home" outcome="/home.jsf" />
+            <p:menuitem value="Fahrplan" outcome="/schedule.jsf" />
+            <p:menuitem value="Spieler" outcome="/masterdata/createPlayer.jsf" />
+            <p:menuitem value="Spielerpflege" outcome="/masterdata/editPlayer.jsf" />
+            <p:menuitem value="Test Services" outcome="/testServices.jsf" />
+          </p:submenu>
+        </p:panelMenu>
+      </h:panelGroup>
+
+    </h:panelGrid>
+
+    <h:panelGroup id="footer" layout="block"><br />
+      Developed by Torsten Abels, source code on <p:link href="https://github.com/schallala/" value="GitHub" target="_blank"/> 
+    </h:panelGroup>
+
+  </h:body>
+</html>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/templates/template.xhtml">
+  <ui:define name="content">
+    <h1><h:outputText value="Willkommen zu Abels WM-Tippspiel" /></h1>
+    <br />
+    <h:form>
+      <h2>Mannschaften</h2>
+
+      <p:carousel value="#{teamCtrl.teamList}" headerText="WM-Teilnehmer" var="team" style="min-width:800px;width:1000px;"
+                  itemStyle="text-align:center" responsive="true">
+        <p:panelGrid columns="1" style="margin:10px 0px" columnClasses="label,value" 
+                     layout="grid" styleClass="ui-panelgrid-blank">
+          <f:facet name="header">
+            <p:graphicImage url="resources/graphics/#{team.urlFlagImage}"/> 
+            <p></p>
+            <p:link href="#{team.urlInfo}" value="Infolink"/>
+          </f:facet>
+
+          <h:outputText value="#{team.name}" /><br/>
+          <h:outputText value="#{team.group.name}" />
+
+        </p:panelGrid>
+
+        <f:facet name="footer">
+          In total there are #{teamCtrl.teamList.size()} teams.
+        </f:facet>
+      </p:carousel>
+
+
+
+      <p:dataTable var="player" value="#{playerListCtrl.playerList}"
+                   rows="10"
+                   paginator="true"
+                   paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+                   rowsPerPageTemplate="5,10,15"                     >
+        <p:column headerText="Id" sortBy="#{player.id}">
+          <h:outputText value="#{player.id}" />
+        </p:column>
+        <p:column headerText="Name"  sortBy="#{player.name}">
+          <h:outputText value="#{player.name}" />
+        </p:column>
+        <p:column headerText="Vorname"  sortBy="#{player.firstName}">
+          <h:outputText value="#{player.firstName}" />
+        </p:column>
+        <p:column headerText="Vorname"  sortBy="#{player.login}">
+          <h:outputText value="#{player.login}" />
+        </p:column>
+
+      </p:dataTable>
+
+
+    </h:form>
+  </ui:define>
+</ui:composition>

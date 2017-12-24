@@ -1,0 +1,138 @@
+body {
+	margin: 0;
+	padding: 0;
+	background-color: #EAECEE;
+    font-family: Verdana, sans-serif; 
+	font-size: 10px;    
+}
+
+#header {
+	height: 120px;
+    border-bottom: 3px solid #7c8aea;
+    background: #62b3d4;
+	text-align: center;
+	color: #f0f0f0;
+	margin: 0;
+	padding: 0;
+}
+
+#header h1 {
+	padding-top: 24px;
+	font-size: 250%;
+}
+
+#header a {
+	color : #f0f0f0;
+}
+
+#page {
+	background: #ffffff;
+    min-width: 1050px;
+	margin-left: auto;
+	margin-right: auto;
+	border-right: solid 2px #a0a0a0;
+	border-bottom: solid 2px #a0a0a0;
+    background-image: url("/wmtipp2018/resources/graphics/soc_back.jpg");
+    background-attachment: fixed;
+}
+
+/*#sidebar {
+	float: left;
+	min-height: 240px;
+	padding: 4px;
+}
+
+#sidebar h1 {
+	display: block;
+	font-size: 120%;
+	border-bottom: 1px solid #d0d0d0;
+}*/
+
+#container {
+	padding: 8px;
+}
+
+#content {
+  margin-left: auto;
+  margin-right: auto;
+  min-height: 320px;
+	font-size: 120%;
+}
+
+#footer {
+	text-align: center;
+	padding: 8px;
+	margin: 8px;
+	border-top: 1px solid #c0c0c0;
+	clear : both;
+}
+
+.panel {
+	border: 1px solid #d0d0d0;
+	padding: 8px;
+	margin: 8px 4px 16px 4px;
+	background: #fafafa;
+}
+
+.panel h1 {
+	font-size: 120%;
+	display: block;
+	background: #f0f0f0;
+	padding: 6px;
+	margin: -8px;
+	border-bottom: 1px solid #d0d0d0;
+	margin-bottom: 8px;
+}
+
+.odd {
+	background: #f0f0f0;
+}
+
+.even {
+	background: #ffffff;
+}
+
+.dataTable {
+	border-collapse: collapse;;
+	width: 100%;
+}
+
+.dataTable th {
+	background: #204080;
+	color: #f0f0f0;
+	padding: 6px;
+	border: 1px solid #f0f0f0;
+}
+
+.dataTable td {
+	border: 1px solid #d0d0d0;
+	padding: 4px;
+}
+
+.caption {
+	float: left;
+	width: 100px;
+}
+
+.formCaption {
+	float: left;
+	width: 100px;
+	padding-top: 4px;
+}
+
+.top-aligned-columns td{
+  vertical-align: top;
+}
+
+.value {	
+	margin-right: 8px;
+}
+
+.errorMessage {
+	color: #ff0000;
+	font-weight: bold;
+}
+
+.property {
+	margin-bottom: 12px;
+}

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/templates/template.xhtml">
+  <ui:define name="content">
+    <h1><h:outputText value="Spieler bearbeiten" /></h1>
+    <br />
+    <h:form>
+      <p:growl id="growl" showDetail="true" sticky="true" />  
+
+      <h:panelGrid columns="2" >
+        <p:panel id="editPlayer" header="Spieler" toggleable="true" style="width: 480px;height: 500px;">
+          <h:panelGrid style="height: 400px;" columns="2" cellpadding="5">
+            <p:outputLabel value="ID" for="playerId" />
+            <p:inputText id="playerId" value="#{playerCtrl.currentPlayer.id}" disabled="true"/>
+            <p:outputLabel value="Name" for="name" />
+            <p:inputText id="name" value="#{playerCtrl.currentPlayer.name}" disabled="#{not playerCtrl.editMode}"/>
+            <p:outputLabel value="Vorname" for="firstName"/>
+            <p:inputText id="firstName" value="#{playerCtrl.currentPlayer.firstName}" disabled="#{not playerCtrl.editMode}"/>
+            <p:outputLabel value="Email" for="email"/>
+            <p:inputText id="email" value="#{playerCtrl.currentPlayer.email}" disabled="#{not playerCtrl.editMode}"/>
+            <p:outputLabel value="Phone" for="phone"/>
+            <p:inputText id="phone" value="#{playerCtrl.currentPlayer.phone}" disabled="#{not playerCtrl.editMode}"/>
+            <p:outputLabel value="Login" for="login"/>
+            <p:inputText id="login" value="#{playerCtrl.currentPlayer.login}"  disabled="#{not playerCtrl.editMode}"/>
+            <p:outputLabel  value="Password" for="password"/>
+            <p:password id="password" value="#{playerCtrl.currentPlayer.password}" feedback="true"  disabled="#{not playerCtrl.editMode}"/>
+            <p:outputLabel value="User role" for="userRole"/>
+            <h:selectOneMenu id="userRole" value="#{playerCtrl.currentPlayer.userRole}"  disabled="#{not playerCtrl.editMode}">
+              <f:selectItems value="#{playerCtrl.userRoles}" var="role" itemValue="#{role}" itemLabel="#{role.label}"/>
+            </h:selectOneMenu>
+            <p:outputLabel value="Predicted champion" for="predictedChampion"/>
+            <p:inputText id="predictedChampion" value="#{playerCtrl.currentPlayer.predictedChampion.id}" disabled="#{not playerCtrl.editMode}"/>
+            <p:outputLabel value="Tips visible for ohters" for="tipsVisible"/>
+            <p:selectBooleanCheckbox id="tipsVisible" value="#{playerCtrl.currentPlayer.tipsVisible}"  disabled="#{not playerCtrl.editMode}"/>
+            <p:outputLabel id="feePaid" value="Fee paid" for="feePaid"/>
+            <p:selectBooleanCheckbox value="#{playerCtrl.currentPlayer.feePaid}"  disabled="#{not playerCtrl.editMode}"/>
+          </h:panelGrid>
+          <h:panelGroup>
+            <center>
+              <p:commandButton value="New" actionListener="#{playerCtrl.clear}" update="@form"/>
+              <p:commandButton value="Save" actionListener="#{playerCtrl.save}" update="@form"/>
+            </center>
+          </h:panelGroup>  
+        </p:panel>
+
+        <p:panel id="listPlayer" header="Spielerliste" toggleable="true" style="width: 300px;height: 500px;">
+          <h:panelGrid style="height: 400px;">
+            <h:selectOneListbox id="advanced" value="#{playerCtrl.currentPlayer.id}" style="width: 270px;height: 370px;"
+                                valueChangeListener="#{playerCtrl.playerChangeListener}">
+              <f:selectItems value="#{playerCtrl.playerList}" var="player" itemLabel="#{player.name}, #{player.firstName}" itemValue="#{player.id}" />
+              <p:ajax update="@form"/>
+            </h:selectOneListbox>
+          </h:panelGrid>
+
+          <h:panelGroup>
+            <center>
+              <p:commandButton value="Edit" actionListener="#{playerCtrl.edit}" update="@form" />
+              <p:commandButton value="Delete" actionListener="#{playerCtrl.delete}" update="@form" />
+            </center>
+          </h:panelGroup>
+        </p:panel>
+      </h:panelGrid>
+
+<!--      <p:calendar id="datetime" label="Startzeit" value="#{playerCtrl.date}" pattern="dd.MM.yyyy HH:mm" />
+      <p:commandButton value="Check" actionListener="#{playerCtrl.checkDate}" update="growl"/>-->
+    </h:form>
+
+
+  </ui:define>
+</ui:composition>

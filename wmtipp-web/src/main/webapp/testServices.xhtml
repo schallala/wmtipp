@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/templates/template.xhtml">
+  <ui:define name="content">
+    <h1><h:outputText value="Willkommen zu Abels WM-Tippspiel" /></h1>
+    <br />
+    <h:form>
+      <h2>Test Services</h2>
+
+
+
+
+      <p:dataTable var="player" value="#{playerListCtrl.playerList}"
+                   rows="10"
+                   paginator="true"
+                   paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+                   rowsPerPageTemplate="5,10,15"                     >
+        <p:column headerText="Id" sortBy="#{player.id}">
+          <h:outputText value="#{player.id}" />
+        </p:column>
+        <p:column headerText="Name"  sortBy="#{player.name}">
+          <h:outputText value="#{player.name}" />
+        </p:column>
+        <p:column headerText="Vorname"  sortBy="#{player.firstName}">
+          <h:outputText value="#{player.firstName}" />
+        </p:column>
+        <p:column headerText="Vorname"  sortBy="#{player.login}">
+          <h:outputText value="#{player.login}" />
+        </p:column>
+
+      </p:dataTable>
+
+      <p:dataTable var="team" value="#{playerListCtrl.teamList}"
+                   rows="10"
+                   paginator="true"
+                   paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+                   rowsPerPageTemplate="5,10,15"                     >
+        <p:column headerText="Id" sortBy="#{team.id}">
+          <h:outputText value="#{team.id}" />
+        </p:column>
+        <p:column headerText="Name"  sortBy="#{team.name}">
+          <h:outputText value="#{team.name}" />
+        </p:column>
+        <p:column headerText="Gruppe"  sortBy="#{team.group.name}">
+          <h:outputText value="#{team.group.name}" />
+        </p:column>
+        <p:column headerText="Info"  sortBy="#{team.urlInfo}">
+          <h:outputText value="#{team.urlInfo}" />
+        </p:column>
+
+      </p:dataTable>
+
+      <p:dataTable var="match" value="#{playerListCtrl.matchList}"
+                   rows="10"
+                   paginator="true"
+                   paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+                   rowsPerPageTemplate="5,10,15"                     >
+        <p:column headerText="Id" sortBy="#{match.teamOne.name}">
+          <h:outputText value="#{match.teamOne.name}" />
+        </p:column>
+        <p:column headerText="Name"  sortBy="#{match.teamTwo.name}">
+          <h:outputText value="#{match.teamTwo.name}" />
+        </p:column>
+        <p:column headerText="Gruppe"  sortBy="#{match.goalsTeamOne}">
+          <h:outputText value="#{match.goalsTeamOne}" />
+        </p:column>
+        <p:column headerText="Info"  sortBy="#{match.goalsTeamTwo}">
+          <h:outputText value="#{match.goalsTeamTwo}" />
+        </p:column>
+
+      </p:dataTable>
+
+
+    </h:form>
+  </ui:define>
+</ui:composition>
