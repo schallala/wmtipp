@@ -33,6 +33,8 @@ public interface IGenericBaseService<D extends AbstractBaseDto, E extends IEntit
   void delete(D dto);
 
   List<D> list();
+  
+  List<D> listOrdered(String... order);
 
   D findById(int id);
   

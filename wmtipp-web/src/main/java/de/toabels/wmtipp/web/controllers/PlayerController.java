@@ -20,13 +20,13 @@ import de.toabels.wmtipp.model.dto.PlayerDto;
 import de.toabels.wmtipp.model.dto.TeamDto;
 import de.toabels.wmtipp.model.types.UserRoleType;
 import de.toabels.wmtipp.services.api.IPlayerService;
+import de.toabels.wmtipp.services.api.ITeamService;
 import java.util.Collection;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
@@ -36,35 +36,49 @@ import javax.faces.event.ValueChangeEvent;
 import org.springframework.stereotype.Controller;
 
 @Controller("playerCtrl")
-@Scope("request")
 public class PlayerController {
 
   @Autowired
   private IPlayerService playerService;
 
+  @Autowired
+  private ITeamService teamService;
+
   private static final Logger logger = LoggerFactory.getLogger(PlayerController.class);
 
   private Map<Long, PlayerDto> playerMap;
 
+  private List<PlayerDto> playerList;
+
+  private List<TeamDto> teamList;
+
   private PlayerDto currentPlayer;
 
-  private Date date;
-  
   private boolean editMode;
+
+  private boolean newMode;
 
   @PostConstruct
   public void init() {
     if (currentPlayer == null) {
       currentPlayer = new PlayerDto();
       currentPlayer.setPredictedChampion(new TeamDto());
-   }
+    }
   }
 
-  public Collection<PlayerDto> getPlayerList() {
+  public List<PlayerDto> getPlayerList() {
     if (playerMap == null) {
-      playerMap = playerService.list().stream().collect(Collectors.toMap(PlayerDto::getId, p -> p));
+      playerList = playerService.listOrdered("name", "firstName");
+      playerMap = playerList.stream().collect(Collectors.toMap(PlayerDto::getId, p -> p));
     }
-    return playerMap.values();
+    return playerList;
+  }
+
+  public List<TeamDto> getTeamList() {
+    if (teamList == null) {
+      teamList = teamService.listOrdered("name");
+    }
+    return teamList;
   }
 
   public PlayerDto getCurrentPlayer() {
@@ -75,19 +89,14 @@ public class PlayerController {
     this.currentPlayer = currentPlayer;
   }
 
-  public Date getDate() {
-    return date;
-  }
-
-  public void setDate(Date date) {
-    this.date = date;
-  }
-
   public boolean isEditMode() {
     return editMode;
   }
 
-  
+  public boolean isNewMode() {
+    return newMode;
+  }
+
   public void save() {
     if (currentPlayer != null) {
       PlayerDto result = playerService.save(currentPlayer);
@@ -120,7 +129,7 @@ public class PlayerController {
     currentPlayer = null;
     init();
     editMode = true;
- }
+  }
 
   public UserRoleType[] getUserRoles() {
     return UserRoleType.values();
@@ -131,25 +140,4 @@ public class PlayerController {
     context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Successful", message));
   }
 
-  public void testSave() {
-    PlayerDto dto = new PlayerDto();
-    dto.setName("Egal");
-    dto.setFirstName("Horst");
-    dto.setLogin("login");
-    dto.setEmail("a@bc.de");
-    dto.setPassword("abc123");
-    dto.setUserRole(UserRoleType.ADMIN);
-    dto.setTipsVisible(true);
-    TeamDto predictedChampion = new TeamDto();
-    predictedChampion.setId(50L);
-    predictedChampion.setTournamentWon(true);
-    predictedChampion.setIsNull(true);
-    dto.setPredictedChampion(predictedChampion);
-    PlayerDto result = playerService.save(dto);
-  }
-
-  public void checkDate() {
-    FacesContext context = FacesContext.getCurrentInstance();
-    context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Successful", "Your Date is: " + getDate()));
-  }
 }

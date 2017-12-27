@@ -72,6 +72,11 @@ public class GenericBaseServiceImpl<D extends AbstractBaseDto, E extends IEntity
   }
 
   @Override
+  public List<D> listOrdered(String ... order) {
+    return dao.findAllOrdered(order).stream().map(p -> mapper.map(p)).collect(Collectors.toList());
+  }
+
+  @Override
   public D findById(int id) {
     return mapper.map(dao.findOne(id));
   }
