@@ -28,6 +28,8 @@ import java.util.List;
  */
 public interface IGenericBaseService<D extends AbstractBaseDto, E extends IEntityBase<E>> {
 
+  D getNewObjectInstance();
+  
   D save(D dto);
 
   void delete(D dto);

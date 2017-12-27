@@ -43,11 +43,15 @@ public class GenericBaseServiceImpl<D extends AbstractBaseDto, E extends IEntity
   private MappingServiceImpl<D, E> mapper;
 
   public GenericBaseServiceImpl() {
-
   }
 
   public GenericBaseServiceImpl(IGenericDao<E> dao) {
     this.dao = dao;
+  }
+
+  @Override
+  public D getNewObjectInstance() {
+    return null;
   }
 
   @Override

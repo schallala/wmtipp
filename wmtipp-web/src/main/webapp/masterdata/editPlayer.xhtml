@@ -58,7 +58,10 @@
           </h:panelGrid>
           <h:panelGroup>
             <center>
-              <p:commandButton value="#{playerCtrl.newMode or playerCtrl.editMode ? msg['global_action_cancel'] : msg['global_action_new']}" 
+              <p:commandButton value="#{msg['global_action_cancel']}" rendered="#{playerCtrl.editMode}"
+                               actionListener="#{playerCtrl.cancel}" immediate="true"
+                               update="@form" />
+              <p:commandButton value="#{msg['global_action_new']}" rendered="#{not playerCtrl.editMode}"
                                actionListener="#{playerCtrl.clear}" 
                                update="@form" />
               <p:commandButton value="Save" actionListener="#{playerCtrl.save}" 
@@ -70,8 +73,8 @@
         <p:panel id="listPlayer" header="#{msg['editPlayers_playerlist']}" toggleable="true" style="width: 300px;height: 500px;">
           <h:panelGrid style="height: 400px;">
             <h:selectOneListbox id="advanced" value="#{playerCtrl.currentPlayer.id}" 
-                                style="width: 270px;height: 370px;" disabled="#{playerCtrl.editMode or playerCtrl.newMode}"
-                                valueChangeListener="#{playerCtrl.playerChangeListener}">
+                                style="width: 270px;height: 370px;" disabled="#{playerCtrl.editMode}"
+                                valueChangeListener="#{playerCtrl.subjectChangeListener}">
               <f:selectItems value="#{playerCtrl.playerList}" var="player" 
                              itemLabel="#{player.name}, #{player.firstName}" itemValue="#{player.id}" />
               <p:ajax update="@form"/>
@@ -81,9 +84,9 @@
           <h:panelGroup>
             <center>
               <p:commandButton value="#{msg['global_action_edit']}" actionListener="#{playerCtrl.edit}" 
-                               update="editPlayer" disabled="#{playerCtrl.newMode or playerCtrl.editMode}"/>
+                               update="editPlayer" disabled="#{playerCtrl.editMode}"/>
               <p:commandButton value="#{msg['global_action_delete']}" actionListener="#{playerCtrl.delete}" 
-                               update="listPlayer"  disabled="#{playerCtrl.newMode or playerCtrl.editMode}"/>
+                               update="listPlayer,growl"  disabled="#{playerCtrl.editMode}"/>
             </center>
           </h:panelGroup>
         </p:panel>

@@ -18,6 +18,7 @@ package de.toabels.wmtipp.services.api.impl;
 
 import de.toabels.wmtipp.model.dto.PlayerDto;
 import de.toabels.wmtipp.model.db.Player;
+import de.toabels.wmtipp.model.dto.TeamDto;
 import de.toabels.wmtipp.services.api.IPlayerService;
 import de.toabels.wmtipp.services.dao.IPlayerDao;
 import javax.inject.Inject;
@@ -39,5 +40,14 @@ public class PlayerServiceImpl extends GenericBaseServiceImpl<PlayerDto, Player>
     super(dao);
     playerDao = dao;
   }
+
+  @Override
+  public PlayerDto getNewObjectInstance() {
+    PlayerDto object = new PlayerDto();
+    // add needed child objects
+    object.setPredictedChampion(new TeamDto());
+    return object;
+  }
+
 
 }
