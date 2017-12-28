@@ -7,75 +7,82 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/WEB-INF/templates/template.xhtml">
   <ui:define name="content">
-    <h1><h:outputText value="Spieler bearbeiten" /></h1>
-    <br />
+    <h:outputText value="#{msg['editPlayers_title']}" styleClass="pagetitle"/>
     <h:form>
       <p:growl id="growl" showDetail="true" sticky="true" />  
 
-      <h:panelGrid columns="2" >
-        <p:panel id="editPlayer" header="Spieler" toggleable="true" style="width: 480px;height: 500px;">
+      <h:panelGrid columns="2" styleClass="editpage_panel_region">
+        <p:panel id="editPanel" header="#{msg['editPlayers_subtitle']}" toggleable="true" 
+                 style="width: 480px;height: 500px;" styleClass="editpage_panel_edit">
           <h:panelGrid style="height: 400px;" columns="2" cellpadding="5" >
             <p:outputLabel value="#{msg['global_player_id']}" for="playerId" />
-            <p:inputText id="playerId" value="#{playerCtrl.currentPlayer.id}" 
+            <p:inputText id="playerId" value="#{playerEditCtrl.currentPlayer.id}" 
                          disabled="true"/>
             <p:outputLabel value="#{msg['global_player_name']}" for="name" />
-            <p:inputText id="name" value="#{playerCtrl.currentPlayer.name}" 
-                         required="true" disabled="#{not playerCtrl.editMode}"/>
+            <p:inputText id="name" value="#{playerEditCtrl.currentPlayer.name}" 
+                         required="true" disabled="#{not playerEditCtrl.editMode}"/>
             <p:outputLabel value="#{msg['global_player_firstname']}" for="firstName"/>
-            <p:inputText id="firstName" value="#{playerCtrl.currentPlayer.firstName}" 
-                         required="true" disabled="#{not playerCtrl.editMode}"/>
+            <p:inputText id="firstName" value="#{playerEditCtrl.currentPlayer.firstName}" 
+                         required="true" disabled="#{not playerEditCtrl.editMode}"/>
             <p:outputLabel value="#{msg['global_player_email']}" for="email"/>
-            <p:inputText id="email" value="#{playerCtrl.currentPlayer.email}" 
-                         disabled="#{not playerCtrl.editMode}"/>
+            <p:inputText id="email" value="#{playerEditCtrl.currentPlayer.email}" 
+                         disabled="#{not playerEditCtrl.editMode}"/>
             <p:outputLabel value="#{msg['global_player_phone']}" for="phone"/>
-            <p:inputText id="phone" value="#{playerCtrl.currentPlayer.phone}" 
-                         disabled="#{not playerCtrl.editMode}"/>
+            <p:inputText id="phone" value="#{playerEditCtrl.currentPlayer.phone}" 
+                         disabled="#{not playerEditCtrl.editMode}"/>
             <p:outputLabel value="#{msg['global_player_login']}" for="login"/>
-            <p:inputText id="login" value="#{playerCtrl.currentPlayer.login}"  
-                         required="true" disabled="#{not playerCtrl.editMode}"/>
+            <p:inputText id="login" value="#{playerEditCtrl.currentPlayer.login}"  
+                         required="true" disabled="#{not playerEditCtrl.editMode}"/>
             <p:outputLabel  value="#{msg['global_player_password']}" for="password"/>
-            <p:password id="password" value="#{playerCtrl.currentPlayer.password}" 
+            <p:password id="password" value="#{playerEditCtrl.currentPlayer.password}" 
                         feedback="true"  redisplay="true"
-                        disabled="#{not playerCtrl.editMode}"/>
+                        disabled="#{not playerEditCtrl.editMode}"/>
             <p:outputLabel value="#{msg['global_player_userrole']}" for="userRole"/>
-            <h:selectOneMenu id="userRole" value="#{playerCtrl.currentPlayer.userRole}"  
-                             required="true" disabled="#{not playerCtrl.editMode}">
-              <f:selectItems value="#{playerCtrl.userRoles}" 
+            <p:selectOneMenu id="userRole" value="#{playerEditCtrl.currentPlayer.userRole}"  
+                             required="true" disabled="#{not playerEditCtrl.editMode}"  style="width: 150px;">
+              <f:selectItems value="#{playerEditCtrl.userRoles}" 
                              var="role" itemValue="#{role}" itemLabel="#{role.label}"/>
-            </h:selectOneMenu>
+              <p:column>  
+                #{role.label}
+              </p:column>  
+            </p:selectOneMenu>
             <p:outputLabel value="#{msg['global_player_champion']}" for="predictedChampion"/>
-            <h:selectOneMenu id="predictedChampion" value="#{playerCtrl.currentPlayer.predictedChampion.id}"
-                             required="true" disabled="#{not playerCtrl.editMode}">
-              <f:selectItems value="#{playerCtrl.teamList}" 
+            <p:selectOneMenu id="predictedChampion" value="#{playerEditCtrl.currentPlayer.predictedChampion.id}"
+                             required="true" disabled="#{not playerEditCtrl.editMode}" style="width: 150px;">
+              <f:selectItems value="#{playerEditCtrl.teamList}" 
                              var="team" itemValue="#{team.id}" itemLabel="#{team.name}"/>
-            </h:selectOneMenu>
+              <p:column>  
+                #{team.name}
+              </p:column>  
+            </p:selectOneMenu>
             <p:outputLabel value="#{msg['global_player_tipsvisible']}" for="tipsVisible"/>
-            <p:selectBooleanCheckbox id="tipsVisible" value="#{playerCtrl.currentPlayer.tipsVisible}"  
-                                     disabled="#{not playerCtrl.editMode}"/>
+            <p:selectBooleanCheckbox id="tipsVisible" value="#{playerEditCtrl.currentPlayer.tipsVisible}"  
+                                     disabled="#{not playerEditCtrl.editMode}"/>
             <p:outputLabel id="feePaid" value="#{msg['global_player_feepaid']}" for="feePaid"/>
-            <p:selectBooleanCheckbox value="#{playerCtrl.currentPlayer.feePaid}"  
-                                     disabled="#{not playerCtrl.editMode}"/>
+            <p:selectBooleanCheckbox value="#{playerEditCtrl.currentPlayer.feePaid}"  
+                                     disabled="#{not playerEditCtrl.editMode}"/>
           </h:panelGrid>
           <h:panelGroup>
             <center>
-              <p:commandButton value="#{msg['global_action_cancel']}" rendered="#{playerCtrl.editMode}"
-                               actionListener="#{playerCtrl.cancel}" immediate="true"
+              <p:commandButton value="#{msg['global_action_cancel']}" rendered="#{playerEditCtrl.editMode}"
+                               actionListener="#{playerEditCtrl.cancel}" immediate="true"
                                update="@form" />
-              <p:commandButton value="#{msg['global_action_new']}" rendered="#{not playerCtrl.editMode}"
-                               actionListener="#{playerCtrl.clear}" 
+              <p:commandButton value="#{msg['global_action_new']}" rendered="#{not playerEditCtrl.editMode}"
+                               actionListener="#{playerEditCtrl.clear}" 
                                update="@form" />
-              <p:commandButton value="Save" actionListener="#{playerCtrl.save}" 
-                               update="@form" disabled="#{not playerCtrl.editMode}"/>
+              <p:commandButton value="Save" actionListener="#{playerEditCtrl.save}" 
+                               update="@form" disabled="#{not playerEditCtrl.editMode}"/>
             </center>
           </h:panelGroup>  
         </p:panel>
 
-        <p:panel id="listPlayer" header="#{msg['editPlayers_playerlist']}" toggleable="true" style="width: 300px;height: 500px;">
+        <p:panel id="listPanel" header="#{msg['editPlayers_playerlist']}" toggleable="true" 
+                 style="width: 300px;height: 500px;" styleClass="editpage_panel_list">
           <h:panelGrid style="height: 400px;">
-            <h:selectOneListbox id="advanced" value="#{playerCtrl.currentPlayer.id}" 
-                                style="width: 270px;height: 370px;" disabled="#{playerCtrl.editMode}"
-                                valueChangeListener="#{playerCtrl.subjectChangeListener}">
-              <f:selectItems value="#{playerCtrl.playerList}" var="player" 
+            <h:selectOneListbox id="advanced" value="#{playerEditCtrl.currentPlayer.id}" 
+                                style="width: 270px;height: 370px;" disabled="#{playerEditCtrl.editMode}"
+                                valueChangeListener="#{playerEditCtrl.subjectChangeListener}">
+              <f:selectItems value="#{playerEditCtrl.playerList}" var="player" 
                              itemLabel="#{player.name}, #{player.firstName}" itemValue="#{player.id}" />
               <p:ajax update="@form"/>
             </h:selectOneListbox>
@@ -83,10 +90,10 @@
 
           <h:panelGroup>
             <center>
-              <p:commandButton value="#{msg['global_action_edit']}" actionListener="#{playerCtrl.edit}" 
-                               update="editPlayer" disabled="#{playerCtrl.editMode}"/>
-              <p:commandButton value="#{msg['global_action_delete']}" actionListener="#{playerCtrl.delete}" 
-                               update="listPlayer,growl"  disabled="#{playerCtrl.editMode}"/>
+              <p:commandButton value="#{msg['global_action_edit']}" actionListener="#{playerEditCtrl.edit}" 
+                               update="@form" disabled="#{playerEditCtrl.editMode}"/>
+              <p:commandButton value="#{msg['global_action_delete']}" actionListener="#{playerEditCtrl.delete}" 
+                               update="@form"  disabled="#{playerEditCtrl.editMode}"/>
             </center>
           </h:panelGroup>
         </p:panel>

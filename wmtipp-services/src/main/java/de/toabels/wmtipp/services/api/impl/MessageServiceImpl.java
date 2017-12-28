@@ -18,6 +18,7 @@ package de.toabels.wmtipp.services.api.impl;
 
 import de.toabels.wmtipp.model.db.Message;
 import de.toabels.wmtipp.model.dto.MessageDto;
+import de.toabels.wmtipp.model.dto.PlayerDto;
 import de.toabels.wmtipp.services.api.IMessageService;
 import de.toabels.wmtipp.services.dao.IMessageDao;
 import javax.inject.Inject;
@@ -40,4 +41,11 @@ public class MessageServiceImpl extends GenericBaseServiceImpl<MessageDto, Messa
     playerDao = dao;
   }
 
+  @Override
+  public MessageDto getNewObjectInstance() {
+    MessageDto object = new MessageDto();
+    object.setRecipient(new PlayerDto());
+    object.setSender(new PlayerDto());
+    return object;
+  }
 }

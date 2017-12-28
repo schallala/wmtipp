@@ -34,10 +34,12 @@ public class GroupDto extends AbstractBaseDto {
   }
 
   public GroupDto(Long id) {
+    this();
     this.id = id;
   }
 
   public GroupDto(Long id, String name) {
+    this();
     this.id = id;
     this.name = name;
   }

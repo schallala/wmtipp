@@ -25,28 +25,46 @@ body {
 	color : #f0f0f0;
 }
 
+.pagetitle {
+  font-weight: bold;
+  padding-top: 36px;
+  font-size: 250%;
+  color : #555555;
+}
+
+.editpage_panel_edit {
+}
+
+.editpage_panel_list {
+}
+
+.editpage_panel_region {
+  padding-top: 24px;
+}
+
 #page {
-	background: #ffffff;
+    background: #ffffff;
     min-width: 1050px;
 	margin-left: auto;
 	margin-right: auto;
 	border-right: solid 2px #a0a0a0;
 	border-bottom: solid 2px #a0a0a0;
-    background-image: url("/wmtipp2018/resources/graphics/soc_back.jpg");
+    background-image: url("/wmtipp/resources/graphics/soc_back.jpg");
     background-attachment: fixed;
 }
 
-/*#sidebar {
+#sidebar_left {
 	float: left;
 	min-height: 240px;
 	padding: 4px;
 }
 
-#sidebar h1 {
-	display: block;
-	font-size: 120%;
-	border-bottom: 1px solid #d0d0d0;
-}*/
+#sidebar_right {
+  float: right;
+  min-height: 240px;
+  padding: 4px;
+}
+
 
 #container {
 	padding: 8px;

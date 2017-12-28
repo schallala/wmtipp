@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.toabels.wmtipp.web.controllers;
+package de.toabels.wmtipp.web.controllers.masterdata;
 
 import de.toabels.wmtipp.model.dto.PlayerDto;
 import de.toabels.wmtipp.model.dto.TeamDto;
@@ -29,7 +29,12 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import org.springframework.stereotype.Controller;
 
-@Controller("playerCtrl")
+/**
+ * Controller class to manage CRUD operations on player objects
+ *
+ * @author Torsten Abels <torsten.abels@gmail.com>
+ */
+@Controller("playerEditCtrl")
 public class PlayerEditController extends AbstractEditController<PlayerDto> {
 
   @Autowired
@@ -42,21 +47,40 @@ public class PlayerEditController extends AbstractEditController<PlayerDto> {
 
   private List<TeamDto> teamList;
 
-  /* first initialization steps */
+  /* Following methods should be implemented in a similar way by all child classes of AbstractEditController */
+ /* Concrete implementation may vary depending on the subject of the edit page                              */
+  /**
+   * Init method calls super.init with specific service instance
+   */
   @PostConstruct
   public void init() {
     super.init(playerService);
   }
 
+  /**
+   * This getter serves as wrapper for the current subject object of the abstract controller class
+   *
+   * @return current player dto
+   */
   public PlayerDto getCurrentPlayer() {
     return super.getCurrentSubject();
   }
 
+  /**
+   * This getter serves as wrapper for the list selection of the abstract controller class
+   *
+   * @return ordered list of players
+   */
   public List<PlayerDto> getPlayerList() {
     return getSubjectList("name", "firstName");
   }
 
   /* Subject specific selection lists */
+  /**
+   * List of teams to select predicted champion
+   *
+   * @return team list
+   */
   public List<TeamDto> getTeamList() {
     if (teamList == null) {
       teamList = teamService.listOrdered("name");
@@ -64,6 +88,11 @@ public class PlayerEditController extends AbstractEditController<PlayerDto> {
     return teamList;
   }
 
+  /**
+   * Array of user roles known by the system
+   *
+   * @return array of roles
+   */
   public UserRoleType[] getUserRoles() {
     return UserRoleType.values();
   }

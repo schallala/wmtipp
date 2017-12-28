@@ -40,4 +40,9 @@ public class RoundServiceImpl extends GenericBaseServiceImpl<RoundDto, Round> im
     roundDao = dao;
   }
 
+  @Override
+  public RoundDto getNewObjectInstance() {
+    RoundDto object = new RoundDto();
+    return object;
+  }
 }

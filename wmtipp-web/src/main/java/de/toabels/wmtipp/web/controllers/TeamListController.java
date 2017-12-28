@@ -14,41 +14,39 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.toabels.wmtipp.services.api.impl;
+package de.toabels.wmtipp.web.controllers;
 
 import de.toabels.wmtipp.model.db.Team;
-import de.toabels.wmtipp.model.dto.GroupDto;
-import de.toabels.wmtipp.model.dto.TeamDto;
-import de.toabels.wmtipp.services.api.ITeamService;
+
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import de.toabels.wmtipp.services.dao.ITeamDao;
-import javax.inject.Inject;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Controller;
 
-/**
- *
- * @author abels
- */
-@Service
-@Transactional
-public class TeamServiceImpl extends GenericBaseServiceImpl<TeamDto, Team> implements ITeamService {
+@Controller("teamListCtrl")
+@Scope("request")
+public class TeamListController {
 
-  ITeamDao teamDao;
-  
-  @Inject
-  public TeamServiceImpl(ITeamDao dao) {
-    super(dao);
-    teamDao = dao;
+  private static final Logger logger = LoggerFactory.getLogger(TeamListController.class);
+
+  private List<Team> teamList;
+
+  @Autowired
+  private ITeamDao teamDao;
+
+  private void invalidateTeamList() {
+    teamList = null;
   }
 
-  @Override
-  public TeamDto getNewObjectInstance() {
-    TeamDto object = new TeamDto();
-    // add needed child objects
-    object.setGroup(new GroupDto());
+  public List<Team> getTeamList() {
+    if (teamList == null) {
+      teamList = teamDao.findAll();
+    }
+    return teamList;
 
-    return object;
   }
-
-
 }

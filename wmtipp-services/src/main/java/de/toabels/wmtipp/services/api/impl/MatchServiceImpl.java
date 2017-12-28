@@ -17,7 +17,10 @@
 package de.toabels.wmtipp.services.api.impl;
 
 import de.toabels.wmtipp.model.db.Match;
+import de.toabels.wmtipp.model.dto.GroupDto;
 import de.toabels.wmtipp.model.dto.MatchDto;
+import de.toabels.wmtipp.model.dto.RoundDto;
+import de.toabels.wmtipp.model.dto.TeamDto;
 import de.toabels.wmtipp.services.api.IMatchService;
 import de.toabels.wmtipp.services.dao.IMatchDao;
 import javax.inject.Inject;
@@ -40,4 +43,13 @@ public class MatchServiceImpl extends GenericBaseServiceImpl<MatchDto, Match> im
     matchDao = dao;
   }
 
+  @Override
+  public MatchDto getNewObjectInstance() {
+    MatchDto object = new MatchDto();
+    object.setGroup(new GroupDto());
+    object.setRound(new RoundDto());
+    object.setTeamOne(new TeamDto());
+    object.setTeamTwo(new TeamDto());
+    return object;
+  }
 }

@@ -54,43 +54,17 @@ public class PlayerDto extends AbstractBaseDto {
   private String login;
 
   public PlayerDto() {
+    this.feePaid = false;
+    this.score = 0;
+    this.correctTips = 0;
+    this.correctTrends = 0;
+    this.tipsVisible = true;
+    this.userRole = UserRoleType.USER;
   }
 
   public PlayerDto(Long id) {
+    this();
     this.id = id;
-  }
-
-  public PlayerDto(String name, String firstName, String phone, String email, TeamDto predictedChampion, Boolean feePaid, Integer score, Integer correctTips, Integer correctTrends, String password, boolean tipsVisible, UserRoleType userRole, String login) {
-    this.name = name;
-    this.firstName = firstName;
-    this.phone = phone;
-    this.email = email;
-    this.predictedChampion = predictedChampion;
-    this.feePaid = feePaid;
-    this.score = score;
-    this.correctTips = correctTips;
-    this.correctTrends = correctTrends;
-    this.password = password;
-    this.tipsVisible = tipsVisible;
-    this.userRole = userRole;
-    this.login = login;
-  }
-
-  public PlayerDto(String name, String firstName, String phone, String email, TeamDto predictedChampion, Boolean feePaid, Integer score, Integer correctTips, Integer correctTrends, String password, boolean tipsVisible, UserRoleType userRole, String login, Long id) {
-    super(id);
-    this.name = name;
-    this.firstName = firstName;
-    this.phone = phone;
-    this.email = email;
-    this.predictedChampion = predictedChampion;
-    this.feePaid = feePaid;
-    this.score = score;
-    this.correctTips = correctTips;
-    this.correctTrends = correctTrends;
-    this.password = password;
-    this.tipsVisible = tipsVisible;
-    this.userRole = userRole;
-    this.login = login;
   }
 
   public String getName() {

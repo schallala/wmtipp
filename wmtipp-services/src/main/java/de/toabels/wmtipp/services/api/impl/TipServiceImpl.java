@@ -17,6 +17,8 @@
 package de.toabels.wmtipp.services.api.impl;
 
 import de.toabels.wmtipp.model.db.Tip;
+import de.toabels.wmtipp.model.dto.MatchDto;
+import de.toabels.wmtipp.model.dto.PlayerDto;
 import de.toabels.wmtipp.model.dto.TipDto;
 import de.toabels.wmtipp.services.api.ITipService;
 import de.toabels.wmtipp.services.dao.ITipDao;
@@ -40,4 +42,11 @@ public class TipServiceImpl extends GenericBaseServiceImpl<TipDto, Tip> implemen
     tipDao = dao;
   }
 
+  @Override
+  public TipDto getNewObjectInstance() {
+    TipDto object = new TipDto();
+    object.setMatch(new MatchDto());
+    object.setPlayer(new PlayerDto());
+    return object;
+  }
 }

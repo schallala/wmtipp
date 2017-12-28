@@ -12,7 +12,7 @@
   <h:body id="page">
 
     <h:panelGroup  layout="block">
-      <h:panelGroup styleClass="header" layout="block">
+      <h:panelGroup layout="block" style="background: #62b3d4;padding-top: 10px;padding-left: 5px;">
         <p:clock mode="client"  pattern="dd.MM.yyyy - HH:mm:ss" />
       </h:panelGroup>
       <h:panelGroup id="header" layout="block">
@@ -24,13 +24,15 @@
 
     <h:panelGrid columns="3"  styleClass="top-aligned-columns">
 
-      <h:panelGroup id="sidebar">
+      <h:panelGroup id="sidebar_left" >
         <p:panelMenu style="min-width: 200px;"  >
           <p:submenu label="Ajax">
             <p:menuitem value="Home" outcome="/home.jsf" />
             <p:menuitem value="Fahrplan" outcome="/schedule.jsf" />
-            <p:menuitem value="Spieler" outcome="/masterdata/createPlayer.jsf" />
-            <p:menuitem value="Spielerpflege" outcome="/masterdata/editPlayer.jsf" />
+            <p:menuitem value="Spieler bearbeiten" outcome="/masterdata/editPlayer.jsf" />
+            <p:menuitem value="Teams bearbeiten" outcome="/masterdata/editTeam.jsf" />
+            <p:menuitem value="Gruppen bearbeiten" outcome="/masterdata/editGroup.jsf" />
+            <p:menuitem value="Runden bearbeiten" outcome="/masterdata/editRound.jsf" />
             <p:menuitem value="Test Services" outcome="/testServices.jsf" />
           </p:submenu>
         </p:panelMenu>
@@ -44,12 +46,11 @@
         </h:panelGroup>
       </h:panelGroup>
 
-      <h:panelGroup id="sidebar2">
+      <h:panelGroup id="sidebar_right">
         <p:panelMenu style="min-width: 200px;"  >
           <p:submenu label="Ajax">
             <p:menuitem value="Home" outcome="/home.jsf" />
             <p:menuitem value="Fahrplan" outcome="/schedule.jsf" />
-            <p:menuitem value="Spieler" outcome="/masterdata/createPlayer.jsf" />
             <p:menuitem value="Spielerpflege" outcome="/masterdata/editPlayer.jsf" />
             <p:menuitem value="Test Services" outcome="/testServices.jsf" />
           </p:submenu>

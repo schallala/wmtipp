@@ -36,8 +36,7 @@ public class PlayerResource {
   @Path("/{id}")
   @Produces({MediaType.APPLICATION_JSON})
   public PlayerDto getPlayer(@PathParam("id") int id) {
-    return new PlayerDto("Mustermann", "Martin", "0190696969", "abels@nix.de", null, true, 4, 5, 6, "password", true, 
-            null, "login");
+    return new PlayerDto(1234L);
   }
 
 }

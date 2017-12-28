@@ -35,7 +35,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class GenericBaseServiceImpl<D extends AbstractBaseDto, E extends IEntityBase<E>> implements IGenericBaseService<D, E> {
+public abstract class GenericBaseServiceImpl<D extends AbstractBaseDto, E extends IEntityBase<E>> implements IGenericBaseService<D, E> {
 
   private IGenericDao<E> dao;
 
@@ -50,9 +50,7 @@ public class GenericBaseServiceImpl<D extends AbstractBaseDto, E extends IEntity
   }
 
   @Override
-  public D getNewObjectInstance() {
-    return null;
-  }
+  public abstract D getNewObjectInstance();
 
   @Override
   public D save(D dto) {

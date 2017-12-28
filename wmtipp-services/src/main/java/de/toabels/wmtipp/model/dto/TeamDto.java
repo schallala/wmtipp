@@ -51,6 +51,13 @@ public class TeamDto extends AbstractBaseDto {
   private Boolean isNull;
 
   public TeamDto() {
+    this.goalDifference = 0;
+    this.goalsConceeded = 0;
+    this.goalsScored = 0;
+    this.isNull = false;
+    this.points = 0;
+    this.tournamentWon = false;
+    this.tournamentState = 0;
   }
 
   public String getName() {

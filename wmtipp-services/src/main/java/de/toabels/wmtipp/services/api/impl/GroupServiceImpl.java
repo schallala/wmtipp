@@ -40,4 +40,9 @@ public class GroupServiceImpl extends GenericBaseServiceImpl<GroupDto, Group> im
     groupDao = dao;
   }
 
+  @Override
+  public GroupDto getNewObjectInstance() {
+    GroupDto object = new GroupDto();
+    return object;
+  }
 }

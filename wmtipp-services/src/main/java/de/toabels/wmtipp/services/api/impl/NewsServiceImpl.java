@@ -40,4 +40,9 @@ public class NewsServiceImpl extends GenericBaseServiceImpl<NewsDto, News> imple
     newsDao = dao;
   }
 
+  @Override
+  public NewsDto getNewObjectInstance() {
+    NewsDto object = new NewsDto();
+    return object;
+  }
 }

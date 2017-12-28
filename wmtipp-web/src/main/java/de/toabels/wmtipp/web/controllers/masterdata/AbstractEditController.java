@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.toabels.wmtipp.web.controllers;
+package de.toabels.wmtipp.web.controllers.masterdata;
 
 import de.toabels.wmtipp.model.dto.AbstractBaseDto;
 import de.toabels.wmtipp.services.api.IGenericBaseService;
@@ -29,11 +29,19 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 
+/**
+ * Abstract base class to manage CRUD operations on master data objects
+ *
+ * @author Torsten Abels <torsten.abels@gmail.com>
+ * @param <D> - DTO class of page subject
+ */
 public abstract class AbstractEditController<D extends AbstractBaseDto> {
 
   private IGenericBaseService subjectService;
 
   private static final Logger logger = LoggerFactory.getLogger(AbstractEditController.class);
+
+  private ResourceBundle messageBundle;
 
   protected Map<Long, D> subjectMap;
 
@@ -44,15 +52,15 @@ public abstract class AbstractEditController<D extends AbstractBaseDto> {
   protected boolean editMode;
 
   /* first initialization steps */
-  public void init(IGenericBaseService service){
-    if(this.subjectService == null){
+  public void init(IGenericBaseService service) {
+    if (this.subjectService == null) {
       this.subjectService = service;
     }
     setNewSubjectInstance();
   }
 
   /* subject list for selection */
-  protected List<D> getSubjectList(String ... order){
+  protected List<D> getSubjectList(String... order) {
     if (subjectMap == null) {
       subjectList = subjectService.listOrdered(order);
       subjectMap = subjectList.stream().collect(Collectors.toMap(AbstractBaseDto::getId, p -> p));
@@ -81,7 +89,7 @@ public abstract class AbstractEditController<D extends AbstractBaseDto> {
       D result = (D) subjectService.save(currentSubject);
       subjectMap = null;
       editMode = false;
-      growlSuccess("Your Dto is: " + result);
+      growlSuccess(getMessage("global_save_success"), getMessage("global_save_success_detail"));
     }
   }
 
@@ -89,7 +97,7 @@ public abstract class AbstractEditController<D extends AbstractBaseDto> {
     if (currentSubject != null) {
       subjectService.delete(currentSubject);
       subjectMap = null;
-      growlSuccess("Deleted!");
+      growlSuccess(getMessage("global_delete_success"), getMessage("global_delete_success_detail"));
     }
   }
 
@@ -109,12 +117,13 @@ public abstract class AbstractEditController<D extends AbstractBaseDto> {
     editMode = false;
   }
 
-  private void setNewSubjectInstance(){
+  private void setNewSubjectInstance() {
     if (currentSubject == null) {
       currentSubject = (D) subjectService.getNewObjectInstance();
     }
-    
+
   }
+
   /* List change listener */
   public void subjectChangeListener(ValueChangeEvent event) {
     Long id = (Long) event.getNewValue();
@@ -125,22 +134,21 @@ public abstract class AbstractEditController<D extends AbstractBaseDto> {
 
 
   /* Feedback popups */
-  private void growlSuccess(String message) {
+  private void growlSuccess(String summary, String detail) {
     FacesContext context = FacesContext.getCurrentInstance();
-    ResourceBundle bundle = ResourceBundle.getBundle("messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
-
-    String title = bundle.getString("global_save_success");
-    String detail = bundle.getString("global_save_success_detail");
-    context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, title, detail));
+    context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail));
   }
 
-  private void growlFailure(String message) {
+  private void growlFailure(String summary, String detail) {
     FacesContext context = FacesContext.getCurrentInstance();
-    ResourceBundle bundle = ResourceBundle.getBundle("messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
+    context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, detail));
+  }
 
-    String title = bundle.getString("global_save_failure");
-    String detail = bundle.getString("global_save_failure_detail");
-    context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, title, detail));
+  private String getMessage(String key) {
+    if (messageBundle == null) {
+      messageBundle = ResourceBundle.getBundle("messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
+    }
+    return messageBundle.getString(key);
   }
 
 }
