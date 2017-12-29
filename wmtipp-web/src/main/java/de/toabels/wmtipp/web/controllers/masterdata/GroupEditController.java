@@ -63,7 +63,7 @@ public class GroupEditController extends AbstractEditController<GroupDto> {
    *
    * @return ordered list of players
    */
-  public List<GroupDto> getGroupList() {
+  public List<GroupDto> getSelectionList() {
     return getSubjectList("sortOrder");
   }
 

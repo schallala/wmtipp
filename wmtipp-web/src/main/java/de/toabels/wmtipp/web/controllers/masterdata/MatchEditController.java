@@ -36,6 +36,8 @@ public class MatchEditController extends AbstractEditController<MatchDto> {
 
   @Autowired
   private IMatchService matchService;
+  
+  String autoMatchSelection;
 
   private static final Logger logger = LoggerFactory.getLogger(MatchEditController.class);
 
@@ -58,14 +60,21 @@ public class MatchEditController extends AbstractEditController<MatchDto> {
     return super.getCurrentSubject();
   }
 
+  public String getAutoMatchSelection() {
+    return autoMatchSelection;
+  }
+
+  public void setAutoMatchSelection(String autoMatchSelection) {
+    this.autoMatchSelection = autoMatchSelection;
+  }
+  
   /**
    * This getter serves as wrapper for the list selection of the abstract controller class
    *
    * @return ordered list of players
    */
-  public List<MatchDto> getMatchList() {
+  public List<MatchDto> getSelectionList() {
     return getSubjectList("startDate");
   }
 
-  /* Subject specific selection lists */
 }

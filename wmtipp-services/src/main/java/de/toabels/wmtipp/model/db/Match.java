@@ -70,17 +70,17 @@ public class Match implements IEntityBase<Match>, Serializable {
   @Column(name = "Status")
   private short status;
   @Column(name = "auto_knockout_team_one_fk")
-  private Integer autoKnockoutMatchTeamOne;
+  private Long autoKnockoutMatchTeamOne;
   @Column(name = "auto_knockout_team_two_fk")
-  private Integer autoKnockoutMatchTeamTwo;
+  private Long autoKnockoutMatchTeamTwo;
   @Column(name = "auto_knockout_group_team_one_fk")
-  private Integer autoKnockoutGroupTeamOne;
+  private Long autoKnockoutGroupTeamOne;
   @Column(name = "auto_knockout_group_team_two_fk")
-  private Integer autoKnockoutGroupTeamTwo;
+  private Long autoKnockoutGroupTeamTwo;
   @Column(name = "auto_knockout_pos_team_one_fk")
-  private Integer autoKnockoutGroupPosTeamOne;
+  private Long autoKnockoutGroupPosTeamOne;
   @Column(name = "auto_knockout_pos_team_two_fk")
-  private Integer autoKnockoutGroupPosTeamTwo;
+  private Long autoKnockoutGroupPosTeamTwo;
   @Column(name = "ticker_url")
   private String tickerUrl;
   @Column(name = "ticker_match_id")
@@ -181,51 +181,51 @@ public class Match implements IEntityBase<Match>, Serializable {
     this.name = name;
   }
 
-  public Integer getAutoKnockoutMatchTeamOne() {
+  public Long getAutoKnockoutMatchTeamOne() {
     return autoKnockoutMatchTeamOne;
   }
 
-  public void setAutoKnockoutMatchTeamOne(Integer autoKnockoutMatchTeamOne) {
+  public void setAutoKnockoutMatchTeamOne(Long autoKnockoutMatchTeamOne) {
     this.autoKnockoutMatchTeamOne = autoKnockoutMatchTeamOne;
   }
 
-  public Integer getAutoKnockoutMatchTeamTwo() {
+  public Long getAutoKnockoutMatchTeamTwo() {
     return autoKnockoutMatchTeamTwo;
   }
 
-  public void setAutoKnockoutMatchTeamTwo(Integer autoKnockoutMatchTeamTwo) {
+  public void setAutoKnockoutMatchTeamTwo(Long autoKnockoutMatchTeamTwo) {
     this.autoKnockoutMatchTeamTwo = autoKnockoutMatchTeamTwo;
   }
 
-  public Integer getAutoKnockoutGroupTeamOne() {
+  public Long getAutoKnockoutGroupTeamOne() {
     return autoKnockoutGroupTeamOne;
   }
 
-  public void setAutoKnockoutGroupTeamOne(Integer autoKnockoutGroupTeamOne) {
+  public void setAutoKnockoutGroupTeamOne(Long autoKnockoutGroupTeamOne) {
     this.autoKnockoutGroupTeamOne = autoKnockoutGroupTeamOne;
   }
 
-  public Integer getAutoKnockoutGroupTeamTwo() {
+  public Long getAutoKnockoutGroupTeamTwo() {
     return autoKnockoutGroupTeamTwo;
   }
 
-  public void setAutoKnockoutGroupTeamTwo(Integer autoKnockoutGroupTeamTwo) {
+  public void setAutoKnockoutGroupTeamTwo(Long autoKnockoutGroupTeamTwo) {
     this.autoKnockoutGroupTeamTwo = autoKnockoutGroupTeamTwo;
   }
 
-  public Integer getAutoKnockoutGroupPosTeamOne() {
+  public Long getAutoKnockoutGroupPosTeamOne() {
     return autoKnockoutGroupPosTeamOne;
   }
 
-  public void setAutoKnockoutGroupPosTeamOne(Integer autoKnockoutGroupPosTeamOne) {
+  public void setAutoKnockoutGroupPosTeamOne(Long autoKnockoutGroupPosTeamOne) {
     this.autoKnockoutGroupPosTeamOne = autoKnockoutGroupPosTeamOne;
   }
 
-  public Integer getAutoKnockoutGroupPosTeamTwo() {
+  public Long getAutoKnockoutGroupPosTeamTwo() {
     return autoKnockoutGroupPosTeamTwo;
   }
 
-  public void setAutoKnockoutGroupPosTeamTwo(Integer autoKnockoutGroupPosTeamTwo) {
+  public void setAutoKnockoutGroupPosTeamTwo(Long autoKnockoutGroupPosTeamTwo) {
     this.autoKnockoutGroupPosTeamTwo = autoKnockoutGroupPosTeamTwo;
   }
 

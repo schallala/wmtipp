@@ -16,9 +16,7 @@
  */
 package de.toabels.wmtipp.web.controllers.masterdata;
 
-import de.toabels.wmtipp.model.dto.GroupDto;
 import de.toabels.wmtipp.model.dto.TeamDto;
-import de.toabels.wmtipp.services.api.IGroupService;
 import de.toabels.wmtipp.services.api.ITeamService;
 
 import org.slf4j.Logger;
@@ -38,11 +36,6 @@ public class TeamEditController extends AbstractEditController<TeamDto> {
 
   @Autowired
   private ITeamService teamService;
-
-  @Autowired
-  private IGroupService groupService;
-
-  private List<GroupDto> groupList;
 
   private static final Logger logger = LoggerFactory.getLogger(TeamEditController.class);
 
@@ -70,22 +63,8 @@ public class TeamEditController extends AbstractEditController<TeamDto> {
    *
    * @return ordered list of players
    */
-  public List<TeamDto> getTeamList() {
+  public List<TeamDto> getSelectionList() {
     return getSubjectList("name");
-  }
-
-  /* Subject specific selection lists */
-  /**
-   * List of teams to select predicted champion
-   *
-   * @return team list
-   */
-  public List<GroupDto> getGroupList() {
-    if (groupList == null) {
-      String test;
-      groupList = groupService.listOrdered("sortOrder");
-    }
-    return groupList;
   }
 
 }

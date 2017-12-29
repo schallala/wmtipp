@@ -17,10 +17,8 @@
 package de.toabels.wmtipp.web.controllers.masterdata;
 
 import de.toabels.wmtipp.model.dto.PlayerDto;
-import de.toabels.wmtipp.model.dto.TeamDto;
 import de.toabels.wmtipp.model.types.UserRoleType;
 import de.toabels.wmtipp.services.api.IPlayerService;
-import de.toabels.wmtipp.services.api.ITeamService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,12 +38,7 @@ public class PlayerEditController extends AbstractEditController<PlayerDto> {
   @Autowired
   private IPlayerService playerService;
 
-  @Autowired
-  private ITeamService teamService;
-
   private static final Logger logger = LoggerFactory.getLogger(PlayerEditController.class);
-
-  private List<TeamDto> teamList;
 
   /* Following methods should be implemented in a similar way by all child classes of AbstractEditController */
  /* Concrete implementation may vary depending on the subject of the edit page                              */
@@ -71,23 +64,11 @@ public class PlayerEditController extends AbstractEditController<PlayerDto> {
    *
    * @return ordered list of players
    */
-  public List<PlayerDto> getPlayerList() {
+  public List<PlayerDto> getSelectionList() {
     return getSubjectList("name", "firstName");
   }
 
   /* Subject specific selection lists */
-  /**
-   * List of teams to select predicted champion
-   *
-   * @return team list
-   */
-  public List<TeamDto> getTeamList() {
-    if (teamList == null) {
-      teamList = teamService.listOrdered("name");
-    }
-    return teamList;
-  }
-
   /**
    * Array of user roles known by the system
    *

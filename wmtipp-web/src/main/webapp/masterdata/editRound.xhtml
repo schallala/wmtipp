@@ -28,7 +28,7 @@
             <p:selectBooleanCheckbox id="approve" value="#{roundEditCtrl.currentRound.approved}"  
                                      disabled="#{not roundEditCtrl.editMode}"/>
           </h:panelGrid>
-          <h:panelGroup>
+          <h:panelGroup id="editPanel_buttons">
             <center>
               <p:commandButton value="#{msg['global_action_cancel']}" rendered="#{roundEditCtrl.editMode}"
                                actionListener="#{roundEditCtrl.cancel}" immediate="true"
@@ -42,19 +42,19 @@
           </h:panelGroup>  
         </p:panel>
 
-        <p:panel id="listPanel" header="#{msg['editRounds_roundlist']}" toggleable="true" 
+        <p:panel id="listPanel" header="#{msg['editRounds_selectionlist']}" toggleable="true" 
                  style="width: 300px;height: 300px;" styleClass="editpage_panel_list">
           <h:panelGrid style="height: 200px;">
             <h:selectOneListbox id="advanced" value="#{roundEditCtrl.currentRound.id}" 
                                 style="width: 270px;height: 170px;" disabled="#{roundEditCtrl.editMode}"
                                 valueChangeListener="#{roundEditCtrl.subjectChangeListener}">
-              <f:selectItems value="#{roundEditCtrl.roundList}" var="tround" 
+              <f:selectItems value="#{roundEditCtrl.selectionList}" var="tround" 
                              itemLabel="#{tround.name}" itemValue="#{tround.id}" />
-              <p:ajax update="@form"/>
+              <p:ajax update="editPanel,editPanel_buttons,listPanel_buttons"/>
             </h:selectOneListbox>
           </h:panelGrid>
 
-          <h:panelGroup>
+          <h:panelGroup id="listPanel_buttons">
             <center>
               <p:commandButton value="#{msg['global_action_edit']}" actionListener="#{roundEditCtrl.edit}" 
                                update="@form" disabled="#{roundEditCtrl.editMode}"/>

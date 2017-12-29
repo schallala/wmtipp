@@ -56,13 +56,15 @@
               </p:column>  
             </p:selectOneMenu>
             <p:outputLabel value="#{msg['global_player_tipsvisible']}" for="tipsVisible"/>
-            <p:selectBooleanCheckbox id="tipsVisible" value="#{playerEditCtrl.currentPlayer.tipsVisible}"  
-                                     disabled="#{not playerEditCtrl.editMode}"/>
+            <p:selectBooleanButton id="tipsVisible" value="#{playerEditCtrl.currentPlayer.tipsVisible}" 
+                                   onIcon="ui-icon-check" offIcon="ui-icon-close" style="width:60px"
+                                   onLabel="Ja" offLabel="Nein" disabled="#{not playerEditCtrl.editMode}"/>
             <p:outputLabel id="feePaid" value="#{msg['global_player_feepaid']}" for="feePaid"/>
-            <p:selectBooleanCheckbox value="#{playerEditCtrl.currentPlayer.feePaid}"  
-                                     disabled="#{not playerEditCtrl.editMode}"/>
+            <p:selectBooleanButton value="#{playerEditCtrl.currentPlayer.feePaid}"  
+                                   onIcon="ui-icon-check" offIcon="ui-icon-close" style="width:60px"
+                                   onLabel="Ja" offLabel="Nein" disabled="#{not playerEditCtrl.editMode}"/>
           </h:panelGrid>
-          <h:panelGroup>
+          <h:panelGroup id="editPanel_buttons">
             <center>
               <p:commandButton value="#{msg['global_action_cancel']}" rendered="#{playerEditCtrl.editMode}"
                                actionListener="#{playerEditCtrl.cancel}" immediate="true"
@@ -76,19 +78,19 @@
           </h:panelGroup>  
         </p:panel>
 
-        <p:panel id="listPanel" header="#{msg['editPlayers_playerlist']}" toggleable="true" 
+        <p:panel id="listPanel" header="#{msg['editPlayers_selectionlist']}" toggleable="true" 
                  style="width: 300px;height: 500px;" styleClass="editpage_panel_list">
           <h:panelGrid style="height: 400px;">
             <h:selectOneListbox id="advanced" value="#{playerEditCtrl.currentPlayer.id}" 
                                 style="width: 270px;height: 370px;" disabled="#{playerEditCtrl.editMode}"
                                 valueChangeListener="#{playerEditCtrl.subjectChangeListener}">
-              <f:selectItems value="#{playerEditCtrl.playerList}" var="player" 
+              <f:selectItems value="#{playerEditCtrl.selectionList}" var="player" 
                              itemLabel="#{player.name}, #{player.firstName}" itemValue="#{player.id}" />
-              <p:ajax update="@form"/>
+              <p:ajax update="editPanel,editPanel_buttons,listPanel_buttons"/>
             </h:selectOneListbox>
           </h:panelGrid>
 
-          <h:panelGroup>
+          <h:panelGroup id="listPanel_buttons">
             <center>
               <p:commandButton value="#{msg['global_action_edit']}" actionListener="#{playerEditCtrl.edit}" 
                                update="@form" disabled="#{playerEditCtrl.editMode}"/>

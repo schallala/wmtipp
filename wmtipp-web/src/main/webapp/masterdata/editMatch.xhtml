@@ -13,16 +13,74 @@
 
       <h:panelGrid columns="2" styleClass="editpage_panel_region">
         <p:panel id="editPanel" header="#{msg['editMatches_subtitle']}" toggleable="true" 
-                 style="width: 480px;height: 300px;" styleClass="editpage_panel_edit">
-          <h:panelGrid style="height: 200px;" columns="2" cellpadding="5" >
+                 style="width: 390px;min-height: 500px;" styleClass="editpage_panel_edit">
+          <h:panelGrid style="min-height: 400px;" columns="2" cellpadding="5" >
             <p:outputLabel value="#{msg['global_match_id']}" for="matchId" />
             <p:inputText id="matchId" value="#{matchEditCtrl.currentMatch.id}" 
                          disabled="true"/>
             <p:outputLabel value="#{msg['global_match_name']}" for="name" />
             <p:inputText id="name" value="#{matchEditCtrl.currentMatch.name}" 
                          required="true" disabled="#{not matchEditCtrl.editMode}"/>
+
+            <p:outputLabel value="#{msg['global_match_round']}" for="rounds"/>
+            <p:selectOneMenu id="rounds" value="#{matchEditCtrl.currentMatch.round.id}"  
+                             required="true" disabled="#{not matchEditCtrl.editMode}"  style="width: 150px;">
+              <f:selectItems value="#{matchEditCtrl.roundList}" 
+                             var="round" itemValue="#{round.id}" itemLabel="#{round.name}"/>
+              <p:column>  
+                #{round.name}
+              </p:column>  
+            </p:selectOneMenu>
+            <p:outputLabel value="#{msg['global_match_group']}" for="groups"/>
+            <p:selectOneMenu id="groups" value="#{matchEditCtrl.currentMatch.group.id}" 
+                             disabled="#{not matchEditCtrl.editMode}"  style="width: 150px;">
+              <f:selectItem itemValue="" itemLabel=" - "/>
+              <f:selectItems value="#{matchEditCtrl.groupList}" 
+                             var="group" itemValue="#{group.id}" itemLabel="#{group.name}"/>
+              <p:column>  
+                #{group.name}
+              </p:column>  
+            </p:selectOneMenu>
+            <p:outputLabel value="#{msg['global_match_teamone']}" for="teamsone"/>
+            <p:selectOneMenu id="teamsone" value="#{matchEditCtrl.currentMatch.teamOne.id}"  
+                             required="true" disabled="#{not matchEditCtrl.editMode}"  style="width: 150px;">
+              <f:selectItems value="#{matchEditCtrl.teamList}" 
+                             var="teamOne" itemValue="#{teamOne.id}" itemLabel="#{teamOne.name}"/>
+              <p:column>  
+                #{teamOne.name}
+              </p:column>  
+            </p:selectOneMenu>
+            <p:outputLabel value="#{msg['global_match_teamtwo']}" for="teamstwo"/>
+            <p:selectOneMenu id="teamstwo" value="#{matchEditCtrl.currentMatch.teamTwo.id}"  
+                             required="true" disabled="#{not matchEditCtrl.editMode}"  style="width: 150px;">
+              <f:selectItems value="#{matchEditCtrl.teamList}" 
+                             var="teamTwo" itemValue="#{teamTwo.id}" itemLabel="#{teamTwo.name}"/>
+              <p:column>  
+                #{teamTwo.name}
+              </p:column>  
+            </p:selectOneMenu>
+
+            <p:outputLabel value="#{msg['global_match_tickerurl']}" for="tickerUrl" />
+            <p:inputText id="tickerUrl" value="#{matchEditCtrl.currentMatch.tickerUrl}" 
+                         disabled="#{not matchEditCtrl.editMode}"/>
+            <p:outputLabel value="#{msg['global_match_tickerid']}" for="tickerId" />
+            <p:inputText id="tickerId" value="#{matchEditCtrl.currentMatch.tickerMatchId}" 
+                         disabled="#{not matchEditCtrl.editMode}"/>
+            <p:outputLabel value="#{msg['global_match_description']}" for="description" />
+            <p:inputText id="description" value="#{matchEditCtrl.currentMatch.description}" 
+                         required="true" disabled="#{not matchEditCtrl.editMode}"/>
+            <p:outputLabel value="#{msg['global_match_startdate']}" for="startDate" />
+            <p:calendar id="startDate" value="#{matchEditCtrl.currentMatch.startDate}" 
+                        pattern="dd.MM.yyyy HH:mm" showMinute="false"
+                        showOn="button" required="true" disabled="#{not matchEditCtrl.editMode}">
+            </p:calendar>
+
           </h:panelGrid>
-          <h:panelGroup>
+          <!-- Panel to specify matches which are based on results of other matches -->
+            <ui:include src="editMatchAutoMatchPanel.xhtml" />
+
+            <h:panelGrid style="height: 20px;"/>
+          <h:panelGroup  id="editPanel_buttons">
             <center>
               <p:commandButton value="#{msg['global_action_cancel']}" rendered="#{matchEditCtrl.editMode}"
                                actionListener="#{matchEditCtrl.cancel}" immediate="true"
@@ -36,19 +94,18 @@
           </h:panelGroup>  
         </p:panel>
 
-        <p:panel id="listPanel" header="#{msg['editMatches_matchlist']}" toggleable="true" 
-                 style="width: 300px;height: 300px;" styleClass="editpage_panel_list">
-          <h:panelGrid style="height: 200px;">
+        <p:panel id="listPanel" header="#{msg['editMatches_selectionlist']}" toggleable="true" 
+                 style="width: 390px;min-height: 520px;" styleClass="editpage_panel_list">
+          <h:panelGrid style="min-height: 455px;">
             <h:selectOneListbox id="advanced" value="#{matchEditCtrl.currentMatch.id}" 
-                                style="width: 270px;height: 170px;" disabled="#{matchEditCtrl.editMode}"
+                                style="width: 370px;height: 420px;" disabled="#{matchEditCtrl.editMode}" 
                                 valueChangeListener="#{matchEditCtrl.subjectChangeListener}">
-              <f:selectItems value="#{matchEditCtrl.matchList}" var="match" 
-                             itemLabel="#{match.name}" itemValue="#{match.id}" />
-              <p:ajax update="@form"/>
+              <f:selectItems value="#{matchEditCtrl.selectionList}" var="match" itemValue="#{match.id}" 
+                             itemLabel="#{match.teamOne.name} - #{match.teamTwo.name} (#{match.round.name} #{match.group.id != null ? ', ' : ''}#{match.group.name})"/>
+              <p:ajax update="editPanel,editPanel_buttons,listPanel_buttons"/>
             </h:selectOneListbox>
           </h:panelGrid>
-
-          <h:panelGroup>
+          <h:panelGroup id="listPanel_buttons" >
             <center>
               <p:commandButton value="#{msg['global_action_edit']}" actionListener="#{matchEditCtrl.edit}" 
                                update="@form" disabled="#{matchEditCtrl.editMode}"/>

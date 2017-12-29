@@ -63,9 +63,7 @@ public class RoundEditController extends AbstractEditController<RoundDto> {
    *
    * @return ordered list of players
    */
-  public List<RoundDto> getRoundList() {
+  public List<RoundDto> getSelectionList() {
     return getSubjectList("sortOrder");
   }
-
-  /* Subject specific selection lists */
 }

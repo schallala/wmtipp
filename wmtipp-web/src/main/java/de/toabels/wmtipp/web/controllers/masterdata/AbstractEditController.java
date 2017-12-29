@@ -17,7 +17,15 @@
 package de.toabels.wmtipp.web.controllers.masterdata;
 
 import de.toabels.wmtipp.model.dto.AbstractBaseDto;
+import de.toabels.wmtipp.model.dto.GroupDto;
+import de.toabels.wmtipp.model.dto.MatchDto;
+import de.toabels.wmtipp.model.dto.RoundDto;
+import de.toabels.wmtipp.model.dto.TeamDto;
 import de.toabels.wmtipp.services.api.IGenericBaseService;
+import de.toabels.wmtipp.services.api.IGroupService;
+import de.toabels.wmtipp.services.api.IMatchService;
+import de.toabels.wmtipp.services.api.IRoundService;
+import de.toabels.wmtipp.services.api.ITeamService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +36,7 @@ import java.util.stream.Collectors;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Abstract base class to manage CRUD operations on master data objects
@@ -50,6 +59,27 @@ public abstract class AbstractEditController<D extends AbstractBaseDto> {
   protected D currentSubject;
 
   protected boolean editMode;
+
+  /* define lookup services for listboces in central spot */
+  @Autowired
+  private IMatchService matchService;
+
+  @Autowired
+  private IGroupService groupService;
+
+  @Autowired
+  private IRoundService roundService;
+
+  @Autowired
+  private ITeamService teamService;
+  
+  private List<MatchDto> matchList;
+
+  private List<GroupDto> groupList;
+
+  private List<RoundDto> roundList;
+
+  private List<TeamDto> teamList;
 
   /* first initialization steps */
   public void init(IGenericBaseService service) {
@@ -132,6 +162,54 @@ public abstract class AbstractEditController<D extends AbstractBaseDto> {
     }
   }
 
+  /* Subject specific selection lists */
+  /**
+   * List of matches for select box
+   *
+   * @return team list
+   */
+  public List<MatchDto> getMatchList() {
+    if (matchList == null) {
+      matchList = matchService.listOrdered("startDate");
+    }
+    return matchList;
+  }
+
+  /**
+   * List of groups for select box
+   *
+   * @return team list
+   */
+  public List<GroupDto> getGroupList() {
+    if (groupList == null) {
+      groupList = groupService.listOrdered("sortOrder");
+    }
+    return groupList;
+  }
+
+  /**
+   * List of rounds for select box
+   *
+   * @return team list
+   */
+  public List<RoundDto> getRoundList() {
+    if (roundList == null) {
+      roundList = roundService.listOrdered("sortOrder nulls last");
+    }
+    return roundList;
+  }
+
+  /**
+   * List of teams for select box
+   *
+   * @return team list
+   */
+  public List<TeamDto> getTeamList() {
+    if (teamList == null) {
+      teamList = teamService.listOrdered("name");
+    }
+    return teamList;
+  }
 
   /* Feedback popups */
   private void growlSuccess(String summary, String detail) {

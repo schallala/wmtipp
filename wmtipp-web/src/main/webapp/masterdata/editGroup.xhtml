@@ -25,7 +25,7 @@
             <p:inputText id="sortorder" value="#{groupEditCtrl.currentGroup.sortOrder}" 
                          disabled="#{not groupEditCtrl.editMode}"/>
           </h:panelGrid>
-          <h:panelGroup>
+          <h:panelGroup id="editPanel_buttons">
             <center>
               <p:commandButton value="#{msg['global_action_cancel']}" rendered="#{groupEditCtrl.editMode}"
                                actionListener="#{groupEditCtrl.cancel}" immediate="true"
@@ -39,19 +39,19 @@
           </h:panelGroup>  
         </p:panel>
 
-        <p:panel id="listPanel" header="#{msg['editGroups_grouplist']}" toggleable="true" 
+        <p:panel id="listPanel" header="#{msg['editGroups_selectionlist']}" toggleable="true" 
                  style="width: 300px;height: 300px;" styleClass="editpage_panel_list">
           <h:panelGrid style="height: 200px;">
             <h:selectOneListbox id="advanced" value="#{groupEditCtrl.currentGroup.id}" 
                                 style="width: 270px;height: 170px;" disabled="#{groupEditCtrl.editMode}"
                                 valueChangeListener="#{groupEditCtrl.subjectChangeListener}">
-              <f:selectItems value="#{groupEditCtrl.groupList}" var="tgroup" 
+              <f:selectItems value="#{groupEditCtrl.selectionList}" var="tgroup" 
                              itemLabel="#{tgroup.name}" itemValue="#{tgroup.id}" />
-              <p:ajax update="@form"/>
+              <p:ajax update="editPanel,editPanel_buttons,listPanel_buttons"/>
             </h:selectOneListbox>
           </h:panelGrid>
 
-          <h:panelGroup>
+          <h:panelGroup id="listPanel_buttons">
             <center>
               <p:commandButton value="#{msg['global_action_edit']}" actionListener="#{groupEditCtrl.edit}" 
                                update="@form" disabled="#{groupEditCtrl.editMode}"/>

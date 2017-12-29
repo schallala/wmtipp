@@ -114,10 +114,11 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
    * @return Group DTO
    */
   public GroupDto map(Group group) {
-    if (group == null) {
-      return null;
-    }
     GroupDto dto = new GroupDto();
+    // TAKE CARE: group is not mandatory
+    if (group == null) {
+      return dto;
+    }
     dto.setId(group.getId());
     dto.setName(group.getName());
     dto.setSortOrder(group.getSortOrder());
@@ -131,7 +132,8 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
    * @return Group entity
    */
   public Group map(GroupDto dto) {
-    if (dto == null) {
+    // TAKE CARE: group is not mandatory
+    if (dto == null || dto.getId() == null) {
       return null;
     }
     Group group = new Group();
@@ -274,14 +276,16 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
     dto.setRound(map(match.getRound()));
     dto.setStartDate(match.getStartDate());
     dto.setStatus(match.getStatus());
+    dto.setTickerMatchId(match.getTickerMatchId());
+    dto.setTickerUrl(match.getTickerUrl());
     dto.setTeamOne(mapCore(match.getTeamOne()));
     dto.setTeamTwo(mapCore(match.getTeamTwo()));
-    dto.setAutoKnockoutGroupTeamOne(Integer.MIN_VALUE);
-    dto.setAutoKnockoutGroupTeamTwo(Integer.MIN_VALUE);
-    dto.setAutoKnockoutGroupPosTeamOne(Integer.MIN_VALUE);
-    dto.setAutoKnockoutGroupPosTeamTwo(Integer.MIN_VALUE);
-    dto.setAutoKnockoutMatchTeamOne(Integer.MIN_VALUE);
-    dto.setAutoKnockoutMatchTeamTwo(Integer.MIN_VALUE);
+    dto.setAutoKnockoutGroupTeamOne(match.getAutoKnockoutGroupTeamOne());
+    dto.setAutoKnockoutGroupTeamTwo(match.getAutoKnockoutGroupTeamTwo());
+    dto.setAutoKnockoutGroupPosTeamOne(match.getAutoKnockoutGroupPosTeamOne());
+    dto.setAutoKnockoutGroupPosTeamTwo(match.getAutoKnockoutGroupPosTeamTwo());
+    dto.setAutoKnockoutMatchTeamOne(match.getAutoKnockoutMatchTeamOne());
+    dto.setAutoKnockoutMatchTeamTwo(match.getAutoKnockoutMatchTeamTwo());
     return dto;
   }
 
@@ -307,6 +311,8 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
     match.setRound(map(dto.getRound()));
     match.setStartDate(dto.getStartDate());
     match.setStatus(dto.getStatus());
+    match.setTickerMatchId(dto.getTickerMatchId());
+    match.setTickerUrl(dto.getTickerUrl());
     match.setTeamOne(mapCore(dto.getTeamOne()));
     match.setTeamTwo(mapCore(dto.getTeamTwo()));
     match.setAutoKnockoutGroupTeamOne(dto.getAutoKnockoutGroupTeamOne());

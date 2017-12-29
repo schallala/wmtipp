@@ -45,17 +45,17 @@ public class MatchDto extends AbstractBaseDto {
 
   private short status;
 
-  private Integer autoKnockoutMatchTeamOne;
+  private Long autoKnockoutMatchTeamOne;
 
-  private Integer autoKnockoutMatchTeamTwo;
+  private Long autoKnockoutMatchTeamTwo;
 
-  private Integer autoKnockoutGroupTeamOne;
+  private Long autoKnockoutGroupTeamOne;
 
-  private Integer autoKnockoutGroupTeamTwo;
+  private Long autoKnockoutGroupTeamTwo;
 
-  private Integer autoKnockoutGroupPosTeamOne;
+  private Long autoKnockoutGroupPosTeamOne;
 
-  private Integer autoKnockoutGroupPosTeamTwo;
+  private Long autoKnockoutGroupPosTeamTwo;
 
   private String tickerUrl;
 
@@ -64,7 +64,7 @@ public class MatchDto extends AbstractBaseDto {
   private String description;
 
   private Date startDate;
-
+  
   public MatchDto() {
   }
 
@@ -140,51 +140,51 @@ public class MatchDto extends AbstractBaseDto {
     this.name = name;
   }
 
-  public Integer getAutoKnockoutMatchTeamOne() {
+  public Long getAutoKnockoutMatchTeamOne() {
     return autoKnockoutMatchTeamOne;
   }
 
-  public void setAutoKnockoutMatchTeamOne(Integer autoKnockoutMatchTeamOne) {
+  public void setAutoKnockoutMatchTeamOne(Long autoKnockoutMatchTeamOne) {
     this.autoKnockoutMatchTeamOne = autoKnockoutMatchTeamOne;
   }
 
-  public Integer getAutoKnockoutMatchTeamTwo() {
+  public Long getAutoKnockoutMatchTeamTwo() {
     return autoKnockoutMatchTeamTwo;
   }
 
-  public void setAutoKnockoutMatchTeamTwo(Integer autoKnockoutMatchTeamTwo) {
+  public void setAutoKnockoutMatchTeamTwo(Long autoKnockoutMatchTeamTwo) {
     this.autoKnockoutMatchTeamTwo = autoKnockoutMatchTeamTwo;
   }
 
-  public Integer getAutoKnockoutGroupTeamOne() {
+  public Long getAutoKnockoutGroupTeamOne() {
     return autoKnockoutGroupTeamOne;
   }
 
-  public void setAutoKnockoutGroupTeamOne(Integer autoKnockoutGroupTeamOne) {
+  public void setAutoKnockoutGroupTeamOne(Long autoKnockoutGroupTeamOne) {
     this.autoKnockoutGroupTeamOne = autoKnockoutGroupTeamOne;
   }
 
-  public Integer getAutoKnockoutGroupTeamTwo() {
+  public Long getAutoKnockoutGroupTeamTwo() {
     return autoKnockoutGroupTeamTwo;
   }
 
-  public void setAutoKnockoutGroupTeamTwo(Integer autoKnockoutGroupTeamTwo) {
+  public void setAutoKnockoutGroupTeamTwo(Long autoKnockoutGroupTeamTwo) {
     this.autoKnockoutGroupTeamTwo = autoKnockoutGroupTeamTwo;
   }
 
-  public Integer getAutoKnockoutGroupPosTeamOne() {
+  public Long getAutoKnockoutGroupPosTeamOne() {
     return autoKnockoutGroupPosTeamOne;
   }
 
-  public void setAutoKnockoutGroupPosTeamOne(Integer autoKnockoutGroupPosTeamOne) {
+  public void setAutoKnockoutGroupPosTeamOne(Long autoKnockoutGroupPosTeamOne) {
     this.autoKnockoutGroupPosTeamOne = autoKnockoutGroupPosTeamOne;
   }
 
-  public Integer getAutoKnockoutGroupPosTeamTwo() {
+  public Long getAutoKnockoutGroupPosTeamTwo() {
     return autoKnockoutGroupPosTeamTwo;
   }
 
-  public void setAutoKnockoutGroupPosTeamTwo(Integer autoKnockoutGroupPosTeamTwo) {
+  public void setAutoKnockoutGroupPosTeamTwo(Long autoKnockoutGroupPosTeamTwo) {
     this.autoKnockoutGroupPosTeamTwo = autoKnockoutGroupPosTeamTwo;
   }
 
@@ -218,6 +218,11 @@ public class MatchDto extends AbstractBaseDto {
 
   public void setStartDate(Date startDate) {
     this.startDate = startDate;
+  }
+
+  public Boolean getAutoConfiguration() {
+    return this.autoKnockoutGroupTeamOne != null || this.autoKnockoutMatchTeamOne != null
+            || this.autoKnockoutGroupTeamOne != null || this.autoKnockoutMatchTeamOne != null;
   }
 
   @Override

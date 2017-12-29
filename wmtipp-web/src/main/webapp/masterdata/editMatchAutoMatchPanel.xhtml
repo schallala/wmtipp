@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+  <!-- Panel to specify matches which are based on results of other matches -->
+  <p:panel id="vertical" header="#{msg['editMatches_automatchselection_title']}" 
+             collapsed="#{!matchEditCtrl.currentMatch.autoConfiguration}" toggleable="true" 
+             toggleOrientation="vertical" >
+      <h:panelGrid id="autoMatchDefinition" >
+        <p:outputLabel value="#{msg['global_match_automatchselector']}" for="autoMatchSelector"/>
+        <p:selectOneButton id="autoMatchSelector" value="#{matchEditCtrl.autoMatchSelection}" immediate="true">
+          <f:selectItem itemLabel="#{msg['editMatches_automatchselection_type_ko']}" itemValue="K_O" />
+          <f:selectItem itemLabel="#{msg['editMatches_automatchselection_type_tab']}" itemValue="TAB" />
+          <p:ajax update="autoMatchDefinition"/>
+        </p:selectOneButton>
+        <h:panelGrid id="autoMatchKO" rendered="#{matchEditCtrl.autoMatchSelection eq 'K_O'}" cellpadding="5" columns="2" >
+          <p:outputLabel value="#{msg['global_match_automatchteamone']}" for="automatchesteamone"/>
+          <p:selectOneMenu id="automatchesteamone" value="#{matchEditCtrl.currentMatch.autoKnockoutMatchTeamOne}"  
+                           disabled="#{not matchEditCtrl.editMode}"  style="width: 150px;">
+            <f:selectItem itemValue="" itemLabel=" - "/>
+            <f:selectItems value="#{matchEditCtrl.matchList}" 
+                           var="autoMatchOne" itemValue="#{autoMatchOne.id}" 
+                           itemLabel="#{autoMatchOne.teamOne.name} - #{autoMatchOne.teamTwo.name} (#{autoMatchOne.round.name})"/>
+          </p:selectOneMenu>
+          <p:outputLabel value="#{msg['global_match_automatchteamtwo']}" for="automatchesteamtwo"/>
+          <p:selectOneMenu id="automatchesteamtwo" value="#{matchEditCtrl.currentMatch.autoKnockoutMatchTeamTwo}"  
+                           disabled="#{not matchEditCtrl.editMode}"  style="width: 150px;">
+            <f:selectItem itemValue="" itemLabel=" - "/>
+            <f:selectItems value="#{matchEditCtrl.matchList}" 
+                           var="autoMatchTwo" itemValue="#{autoMatchTwo.id}" 
+                           itemLabel="#{autoMatchTwo.teamOne.name} - #{autoMatchTwo.teamTwo.name} (#{autoMatchTwo.round.name})"/>
+          </p:selectOneMenu>
+        </h:panelGrid>
+
+        <h:panelGrid id="autoMatchTAB" rendered="#{matchEditCtrl.autoMatchSelection eq 'TAB'}" cellpadding="5" columns="4">
+          <p:outputLabel value="#{msg['global_match_autogroupteamone']}" for="autogroupsteamone"/>
+          <p:selectOneMenu id="autogroupsteamone" value="#{matchEditCtrl.currentMatch.autoKnockoutGroupTeamOne}"  
+                           disabled="#{not matchEditCtrl.editMode}"  style="width: 150px;">
+            <f:selectItem itemValue="" itemLabel=" - "/>
+            <f:selectItems value="#{matchEditCtrl.groupList}" 
+                           var="autoGroupOne" itemValue="#{autoGroupOne.id}" itemLabel="#{autoGroupOne.name}"/>
+          </p:selectOneMenu>
+          <p:outputLabel value="#{msg['global_match_autogroupteamonepos']}" for="autoMatchGroupPosOne"/>
+          <p:inputText id="autoMatchGroupPosOne" value="#{matchEditCtrl.currentMatch.autoKnockoutGroupPosTeamOne}" 
+                       disabled="#{not matchEditCtrl.editMode}" style="width: 16px;"/>
+
+          <p:outputLabel value="#{msg['global_match_autogroupteamtwo']}" for="autogroupsteamtwo"/>
+          <p:selectOneMenu id="autogroupsteamtwo" value="#{matchEditCtrl.currentMatch.autoKnockoutGroupTeamTwo}"  
+                           disabled="#{not matchEditCtrl.editMode}"  style="width: 150px;">
+            <f:selectItem itemValue="" itemLabel=" - "/>
+            <f:selectItems value="#{matchEditCtrl.groupList}" 
+                           var="autoGroupTwo" itemValue="#{autoGroupTwo.id}" itemLabel="#{autoGroupTwo.name}"/>
+          </p:selectOneMenu>
+          <p:outputLabel value="#{msg['global_match_autogroupteamtwopos']}" for="autoMatchGroupPosTwo"/>
+          <p:inputText id="autoMatchGroupPosTwo" value="#{matchEditCtrl.currentMatch.autoKnockoutGroupPosTeamTwo}" 
+                       disabled="#{not matchEditCtrl.editMode}" style="width: 16px;"/>
+        </h:panelGrid>
+
+      </h:panelGrid>
+    </p:panel>
+
+</ui:composition>

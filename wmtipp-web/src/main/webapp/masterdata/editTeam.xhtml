@@ -27,8 +27,9 @@
                          required="true" disabled="#{not teamEditCtrl.editMode}"/>
 
             <p:outputLabel value="#{msg['global_team_group']}" for="groups"/>
-            <p:selectOneMenu id="groups" value="#{teamEditCtrl.currentTeam.group.id}"
-                             required="true" disabled="#{not teamEditCtrl.editMode}" style="width: 150px;">
+            <p:selectOneMenu id="groups" value="#{teamEditCtrl.currentTeam.group.id}" 
+                             disabled="#{not teamEditCtrl.editMode}" style="width: 150px;">
+              <f:selectItem itemValue="" itemLabel=" - "/>
               <f:selectItems value="#{teamEditCtrl.groupList}" 
                              var="group" itemValue="#{group.id}" itemLabel="#{group.name}"/>
               <p:column>  
@@ -46,7 +47,7 @@
           <h:panelGrid style="height: 200px;" columns="2" cellpadding="5" />
 
           <!-- Edit object action buttons -->
-          <h:panelGroup>
+          <h:panelGroup id="editPanel_buttons">
             <center>
               <p:commandButton value="#{msg['global_action_cancel']}" rendered="#{teamEditCtrl.editMode}"
                                actionListener="#{teamEditCtrl.cancel}" immediate="true"
@@ -61,20 +62,20 @@
         </p:panel>
 
         <!-- Select object area -->
-        <p:panel id="listPanel" header="#{msg['editTeams_teamlist']}" toggleable="true" 
+        <p:panel id="listPanel" header="#{msg['editTeams_selectionlist']}" toggleable="true" 
                  style="width: 300px;height: 500px;" styleClass="editpage_panel_list">
           <h:panelGrid style="height: 400px;">
             <h:selectOneListbox id="advanced" value="#{teamEditCtrl.currentTeam.id}" 
                                 style="width: 270px;height: 370px;" disabled="#{teamEditCtrl.editMode}"
                                 valueChangeListener="#{teamEditCtrl.subjectChangeListener}">
-              <f:selectItems value="#{teamEditCtrl.teamList}" var="team" 
+              <f:selectItems value="#{teamEditCtrl.selectionList}" var="team" 
                              itemLabel="#{team.name}" itemValue="#{team.id}" />
-              <p:ajax update="@form"/>
+              <p:ajax update="editPanel,editPanel_buttons,listPanel_buttons"/>
             </h:selectOneListbox>
           </h:panelGrid>
 
           <!-- List action buttons -->
-          <h:panelGroup>
+          <h:panelGroup id="listPanel_buttons">
             <center>
               <p:commandButton value="#{msg['global_action_edit']}" actionListener="#{teamEditCtrl.edit}" 
                                update="@form" disabled="#{teamEditCtrl.editMode}"/>
