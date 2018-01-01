@@ -20,7 +20,7 @@ import de.toabels.wmtipp.model.db.IEntityBase;
 import de.toabels.wmtipp.model.dto.AbstractBaseDto;
 import de.toabels.wmtipp.services.api.IGenericBaseService;
 import de.toabels.wmtipp.services.dao.IGenericDao;
-import de.toabels.wmtipp.services.utiils.MappingServiceImpl;
+import de.toabels.wmtipp.services.utiils.IMappingService;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
@@ -28,10 +28,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
+ * Generic DAO implementation of common persistence tasks
+ *
+ * All methods are working on DTO objects and never directly return entity objects to calling methods. Mapping between
+ * DTO and entity objects is done by a generic mapping servicee, where mapping rules are specified.
  *
  * @author abels
- * @param <D>
- * @param <E>
+ * @param <D> - DTO object
+ * @param <E> - ntity object
  */
 @Service
 @Transactional
@@ -39,12 +43,20 @@ public abstract class GenericBaseServiceImpl<D extends AbstractBaseDto, E extend
 
   private IGenericDao<E> dao;
 
+  /*
+   * Child classes get direct access to the mapper in order to implement offer additional methods with mapping.
+   */
   @Inject
-  protected MappingServiceImpl<D, E> mapper;
+  protected IMappingService<D, E> mapper;
 
   public GenericBaseServiceImpl() {
   }
 
+  /**
+   * Each child class has to define its associated DAO class to perform concrete task on database
+   * 
+   * @param dao 
+   */
   public GenericBaseServiceImpl(IGenericDao<E> dao) {
     this.dao = dao;
   }
