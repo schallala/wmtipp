@@ -34,7 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class PlayerServiceImpl extends GenericBaseServiceImpl<PlayerDto, Player> implements IPlayerService {
 
   IPlayerDao playerDao;
-  
+
   @Inject
   public PlayerServiceImpl(IPlayerDao dao) {
     super(dao);
@@ -49,5 +49,12 @@ public class PlayerServiceImpl extends GenericBaseServiceImpl<PlayerDto, Player>
     return object;
   }
 
-
+  @Override
+  public PlayerDto loginUser(String login, String password) {
+    Player result = playerDao.findByLoginAndPassword(login, password);
+    if (result != null) {
+      return mapper.map(result);
+    }
+    return null;
+  }
 }

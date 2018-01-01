@@ -24,5 +24,7 @@ import de.toabels.wmtipp.model.db.Player;
  * @author abels
  */
 public interface IPlayerDao extends IGenericDao<Player>{
+
+  Player findByLoginAndPassword(String login, String password);
   
 }

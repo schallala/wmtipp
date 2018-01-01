@@ -11,9 +11,9 @@
     <h:form>
       <p:growl id="growl" showDetail="true" sticky="true" />  
 
-      <h:panelGrid columns="2" styleClass="editpage_panel_region">
+      <p:panelGrid columns="2" styleClass="editpage_panel_region">
         <p:panel id="editPanel" header="#{msg['editGroups_subtitle']}" toggleable="true" 
-                 style="width: 480px;height: 300px;" styleClass="editpage_panel_edit">
+                 style="min-width: 350px;height: 300px;" styleClass="editpage_panel_edit">
           <h:panelGrid style="height: 200px;" columns="2" cellpadding="5" >
             <p:outputLabel value="#{msg['global_group_id']}" for="groupId" />
             <p:inputText id="groupId" value="#{groupEditCtrl.currentGroup.id}" 
@@ -37,13 +37,15 @@
                                update="@form" disabled="#{not groupEditCtrl.editMode}"/>
             </center>
           </h:panelGroup>  
+          <!-- pseudo responsible -->
+          <p:dataTable value=" "/>
         </p:panel>
 
         <p:panel id="listPanel" header="#{msg['editGroups_selectionlist']}" toggleable="true" 
-                 style="width: 300px;height: 300px;" styleClass="editpage_panel_list">
+                 style="min-width: 350px;height: 300px;" styleClass="editpage_panel_list">
           <h:panelGrid style="height: 200px;">
             <h:selectOneListbox id="advanced" value="#{groupEditCtrl.currentGroup.id}" 
-                                style="width: 270px;height: 170px;" disabled="#{groupEditCtrl.editMode}"
+                                style="min-width: 270px;height: 170px;" disabled="#{groupEditCtrl.editMode}"
                                 valueChangeListener="#{groupEditCtrl.subjectChangeListener}">
               <f:selectItems value="#{groupEditCtrl.selectionList}" var="tgroup" 
                              itemLabel="#{tgroup.name}" itemValue="#{tgroup.id}" />
@@ -59,11 +61,11 @@
                                update="@form"  disabled="#{groupEditCtrl.editMode}"/>
             </center>
           </h:panelGroup>
+          <!-- pseudo responsible -->
+          <p:dataTable value=" "/>
         </p:panel>
-      </h:panelGrid>
+      </p:panelGrid>
 
     </h:form>
-
-
   </ui:define>
 </ui:composition>

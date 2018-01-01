@@ -18,6 +18,8 @@ package de.toabels.wmtipp.services.dao.impl;
 
 import de.toabels.wmtipp.model.db.Player;
 import de.toabels.wmtipp.services.dao.IPlayerDao;
+import java.util.List;
+import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -29,4 +31,14 @@ public class PlayerDaoImpl extends AbstractGenericDao<Player> implements IPlayer
     setClazz(Player.class);
   }
   
+  public Player findByLoginAndPassword(String login, String password){
+    Query query = this.entityManager.createQuery("from Player where login = :login and password = :password");
+    query.setParameter("login", login);
+    query.setParameter("password", password);
+    List result = query.getResultList();
+    if(result.isEmpty() || result.size() > 1){
+      return null;
+    }
+    return (Player)result.get(0);
+  }
 }

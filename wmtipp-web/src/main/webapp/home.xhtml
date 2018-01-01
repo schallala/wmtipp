@@ -9,10 +9,11 @@
   <ui:define name="content">
     <h1><h:outputText value="Willkommen zu Abels WM-Tippspiel" /></h1>
     <br />
+    <h:panelGrid>
     <h:form>
       <h2>Mannschaften</h2>
-
-      <p:carousel value="#{teamListCtrl.teamList}" headerText="WM-Teilnehmer" var="team" style="min-width:800px;width:1000px;"
+<!--
+      <p:carousel value="#{teamListCtrl.teamList}" headerText="WM-Teilnehmer" var="team" style="min-width:800px;"
                   itemStyle="text-align:center" responsive="true">
         <p:panelGrid columns="1" style="margin:10px 0px" columnClasses="label,value" 
                      layout="grid" styleClass="ui-panelgrid-blank">
@@ -31,7 +32,7 @@
           In total there are #{teamListCtrl.teamList.size()} teams.
         </f:facet>
       </p:carousel>
-
+-->
 
 
       <p:dataTable var="player" value="#{playerListCtrl.playerList}"
@@ -56,5 +57,6 @@
 
 
     </h:form>
+    </h:panelGrid>
   </ui:define>
 </ui:composition>

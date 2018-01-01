@@ -12,9 +12,9 @@
   <h:body id="page">
 
     <h:panelGroup  layout="block">
-      <h:panelGroup layout="block" style="background: #62b3d4;padding-top: 10px;padding-left: 5px;">
-        <p:clock mode="client"  pattern="dd.MM.yyyy - HH:mm:ss" />
-      </h:panelGroup>
+      <!--      <h:panelGroup layout="block" style="background: #62b3d4;padding-top: 10px;padding-left: 5px;">
+              <p:clock mode="client"  pattern="dd.MM.yyyy - HH:mm:ss" />
+            </h:panelGroup>-->
       <h:panelGroup id="header" layout="block">
         <h:graphicImage  url="/resources/graphics/2018.png" style="padding-right: 50px" />
         <h:graphicImage  url="/resources/graphics/header.de.png"  />
@@ -25,7 +25,7 @@
     <h:panelGrid columns="3"  styleClass="top-aligned-columns">
 
       <h:panelGroup id="sidebar_left" >
-        <p:panelMenu style="min-width: 200px;"  >
+        <p:menu style="min-width: 150px;"  >
           <p:submenu label="Ajax">
             <p:menuitem value="Home"  outcome="/home.jsf" />
             <p:menuitem value="Fahrplan" outcome="/schedule.jsf" />
@@ -36,7 +36,7 @@
             <p:menuitem value="Spiele bearbeiten" outcome="/masterdata/editMatch.jsf" />
             <p:menuitem value="Test Services" outcome="/testServices.jsf" />
           </p:submenu>
-        </p:panelMenu>
+        </p:menu>
       </h:panelGroup>
 
       <h:panelGroup id="container" layout="block">
@@ -48,14 +48,25 @@
       </h:panelGroup>
 
       <h:panelGroup id="sidebar_right">
-        <p:panelMenu style="min-width: 200px;"  >
-          <p:submenu label="Ajax">
-            <p:menuitem value="Home" outcome="/home.jsf" />
-            <p:menuitem value="Fahrplan" outcome="/schedule.jsf" />
-            <p:menuitem value="Spielerpflege" outcome="/masterdata/editPlayer.jsf" />
-            <p:menuitem value="Test Services" outcome="/testServices.jsf" />
-          </p:submenu>
-        </p:panelMenu>
+        <p:panel header="User" style="min-width: 150px;"  >
+          <h:form>
+            <p:panelGrid columns="2" rendered="#{userSessionCtrl.currentUser == null}">
+              <p:outputLabel for="login" value="Login: "/>
+              <p:inputText id="login" value="#{userSessionCtrl.login}" style="width: 80px;"/>
+              <p:outputLabel for="password" value="Passwort: "/>
+              <p:password id="password" value="#{userSessionCtrl.password}" style="width: 80px;"/>
+            </p:panelGrid>
+            <center>
+              <p:panelGrid columns="2" rendered="#{userSessionCtrl.currentUser != null}">
+                Hallo #{userSessionCtrl.currentUser.firstName} #{userSessionCtrl.currentUser.name}!
+              </p:panelGrid>
+              <p:commandButton value="Login" actionListener="#{userSessionCtrl.validateAndlogin}" style="margin-top: 5px;"
+                               rendered="#{userSessionCtrl.currentUser == null}" update="sidebar_right"/>
+              <p:commandButton value="Logout" actionListener="#{userSessionCtrl.invalidateLogin}" style="margin-top: 5px;" 
+                               rendered="#{userSessionCtrl.currentUser != null}" update="sidebar_right"/>
+            </center>
+          </h:form>
+        </p:panel>
       </h:panelGroup>
 
     </h:panelGrid>

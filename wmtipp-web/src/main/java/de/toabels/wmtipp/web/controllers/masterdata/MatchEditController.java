@@ -36,7 +36,7 @@ public class MatchEditController extends AbstractEditController<MatchDto> {
 
   @Autowired
   private IMatchService matchService;
-  
+
   String autoMatchSelection;
 
   private static final Logger logger = LoggerFactory.getLogger(MatchEditController.class);
@@ -67,7 +67,7 @@ public class MatchEditController extends AbstractEditController<MatchDto> {
   public void setAutoMatchSelection(String autoMatchSelection) {
     this.autoMatchSelection = autoMatchSelection;
   }
-  
+
   /**
    * This getter serves as wrapper for the list selection of the abstract controller class
    *

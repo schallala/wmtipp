@@ -14,21 +14,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.toabels.wmtipp.services.api;
+package de.toabels.wmtipp.web.controllers;
 
-import de.toabels.wmtipp.model.dto.PlayerDto;
-import de.toabels.wmtipp.model.db.Player;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.primefaces.context.RequestContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
 
-/**
- * Service class offering player related funtionality
- *
- * @author abels
- */
-@Service
-@Transactional
-public interface IPlayerService extends IGenericBaseService<PlayerDto, Player> {
+@Controller("pageCtrl")
+@Scope("request")
+public class PageController {
 
-  PlayerDto loginUser(String login, String password);  
+  String currentPage;
+  
+  private static final Logger logger = LoggerFactory.getLogger(PageController.class);
+
+  public String getCurrentPage() {
+    return currentPage == null ? PageEnum.EDIT_NEW_PLAYER.getOutcome() : currentPage;
+  }
+
+  public void setCurrentPage(PageEnum page) {
+    this.currentPage = page.getOutcome();
+  }
 }

@@ -29,7 +29,7 @@ public abstract class AbstractGenericDao< T extends IEntityBase<T>> implements I
   private Class< T> clazz;
 
   @PersistenceContext
-  private EntityManager entityManager;
+  protected EntityManager entityManager;
 
   @Override
   public final void setClazz(Class< T> clazzToSet) {

@@ -137,9 +137,9 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
       return null;
     }
     Group group = new Group();
-    group.setId(group.getId());
-    group.setName(group.getName());
-    group.setSortOrder(group.getSortOrder());
+    group.setId(dto.getId());
+    group.setName(dto.getName());
+    group.setSortOrder(dto.getSortOrder());
     return group;
   }
 
@@ -339,7 +339,7 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
    * @param player - entity
    * @return Player DTO
    */
-  public PlayerDto map(Player player) {
+  private PlayerDto map(Player player) {
     if (player == null) {
       return null;
     }
@@ -358,7 +358,7 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
     return dto;
   }
 
-  public PlayerDto mapCore(Player player) {
+  private PlayerDto mapCore(Player player) {
     if (player == null) {
       return null;
     }
@@ -375,7 +375,7 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
    * @param dto - player DTO
    * @return Player entity
    */
-  public Player map(PlayerDto dto) {
+  private Player map(PlayerDto dto) {
     if (dto == null) {
       return null;
     }
@@ -394,7 +394,7 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
     return player;
   }
 
-  public Player mapCore(PlayerDto dto) {
+  private Player mapCore(PlayerDto dto) {
     if (dto == null) {
       return null;
     }

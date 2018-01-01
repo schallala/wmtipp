@@ -11,9 +11,9 @@
     <h:form>
       <p:growl id="growl" showDetail="true" sticky="true" />  
 
-      <h:panelGrid columns="2" styleClass="editpage_panel_region">
+      <p:panelGrid columns="2" styleClass="editpage_panel_region">
         <p:panel id="editPanel" header="#{msg['editMatches_subtitle']}" toggleable="true" 
-                 style="width: 390px;min-height: 500px;" styleClass="editpage_panel_edit">
+                 style="min-width: 350px;min-height: 500px;" styleClass="editpage_panel_edit">
           <h:panelGrid style="min-height: 400px;" columns="2" cellpadding="5" >
             <p:outputLabel value="#{msg['global_match_id']}" for="matchId" />
             <p:inputText id="matchId" value="#{matchEditCtrl.currentMatch.id}" 
@@ -77,9 +77,9 @@
 
           </h:panelGrid>
           <!-- Panel to specify matches which are based on results of other matches -->
-            <ui:include src="editMatchAutoMatchPanel.xhtml" />
+          <ui:include src="editMatchAutoMatchPanel.xhtml" />
 
-            <h:panelGrid style="height: 20px;"/>
+          <h:panelGrid style="height: 20px;"/>
           <h:panelGroup  id="editPanel_buttons">
             <center>
               <p:commandButton value="#{msg['global_action_cancel']}" rendered="#{matchEditCtrl.editMode}"
@@ -92,13 +92,15 @@
                                update="@form" disabled="#{not matchEditCtrl.editMode}"/>
             </center>
           </h:panelGroup>  
+          <!-- pseudo responsible -->
+          <p:dataTable value=" "/>
         </p:panel>
 
         <p:panel id="listPanel" header="#{msg['editMatches_selectionlist']}" toggleable="true" 
-                 style="width: 390px;min-height: 520px;" styleClass="editpage_panel_list">
+                 style="min-width: 350px;min-height: 520px;" styleClass="editpage_panel_list">
           <h:panelGrid style="min-height: 455px;">
             <h:selectOneListbox id="advanced" value="#{matchEditCtrl.currentMatch.id}" 
-                                style="width: 370px;height: 420px;" disabled="#{matchEditCtrl.editMode}" 
+                                style="min-width: 330px;height: 420px;" disabled="#{matchEditCtrl.editMode}" 
                                 valueChangeListener="#{matchEditCtrl.subjectChangeListener}">
               <f:selectItems value="#{matchEditCtrl.selectionList}" var="match" itemValue="#{match.id}" 
                              itemLabel="#{match.teamOne.name} - #{match.teamTwo.name} (#{match.round.name} #{match.group.id != null ? ', ' : ''}#{match.group.name})"/>
@@ -113,8 +115,10 @@
                                update="@form"  disabled="#{matchEditCtrl.editMode}"/>
             </center>
           </h:panelGroup>
+          <!-- pseudo responsible -->
+          <p:dataTable value=" "/>
         </p:panel>
-      </h:panelGrid>
+      </p:panelGrid>
 
     </h:form>
 

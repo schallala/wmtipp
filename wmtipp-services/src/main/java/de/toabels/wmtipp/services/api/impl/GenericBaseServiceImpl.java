@@ -40,7 +40,7 @@ public abstract class GenericBaseServiceImpl<D extends AbstractBaseDto, E extend
   private IGenericDao<E> dao;
 
   @Inject
-  private MappingServiceImpl<D, E> mapper;
+  protected MappingServiceImpl<D, E> mapper;
 
   public GenericBaseServiceImpl() {
   }

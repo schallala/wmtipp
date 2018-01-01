@@ -28,7 +28,7 @@ body {
 .pagetitle {
   font-weight: bold;
   padding-top: 36px;
-  font-size: 250%;
+  font-size: 1%;
   color : #555555;
 }
 
@@ -39,7 +39,7 @@ body {
 }
 
 .editpage_panel_region {
-  padding-top: 24px;
+  border: hidden;
 }
 
 #page {
@@ -54,14 +54,12 @@ body {
 }
 
 #sidebar_left {
-	float: left;
-	min-height: 240px;
+	min-height: 200px;
 	padding: 4px;
 }
 
 #sidebar_right {
-  float: right;
-  min-height: 240px;
+  min-height: 200px;
   padding: 4px;
 }
 
@@ -73,8 +71,8 @@ body {
 #content {
   margin-left: auto;
   margin-right: auto;
-  min-height: 320px;
-	font-size: 120%;
+  min-height: 600px;
+  font-size: 120%;
 }
 
 #footer {
@@ -84,6 +82,7 @@ body {
 	border-top: 1px solid #c0c0c0;
 	clear : both;
 }
+
 
 .panel {
 	border: 1px solid #d0d0d0;
