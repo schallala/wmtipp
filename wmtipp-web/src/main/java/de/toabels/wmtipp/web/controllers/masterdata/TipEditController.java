@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 
 /**
@@ -57,8 +58,9 @@ public class TipEditController extends AbstractEditController<TipDto> {
     super.init(tipService);
   }
 
+  @Cacheable("tips")
   public List<TipDto> getTipList() {
-    return tipService.findByPlayerId(1L);
+    return tipService.list();
   }
   
   public MatchDto mapMatch(Long id){

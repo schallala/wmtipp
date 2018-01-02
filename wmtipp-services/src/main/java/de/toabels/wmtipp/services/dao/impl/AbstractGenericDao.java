@@ -47,9 +47,9 @@ public abstract class AbstractGenericDao< T extends IEntityBase<T>> implements I
   }
 
   @Override
-  public List< T> findAllOrdered(String ... orderBy) {
+  public List< T> findAllOrdered(String... orderBy) {
     String orderByString = null;
-    for(String str : orderBy){
+    for (String str : orderBy) {
       orderByString = (orderByString == null) ? " order by " + str : orderByString + ", " + str;
     }
     return entityManager.createQuery("from " + clazz.getName() + orderByString).getResultList();
@@ -77,4 +77,4 @@ public abstract class AbstractGenericDao< T extends IEntityBase<T>> implements I
     delete(entity);
   }
 
-  }
+}

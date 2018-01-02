@@ -17,6 +17,9 @@
                      paginator="true"
                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
                      rowsPerPageTemplate="5,10,15">
+          <p:column headerText="Anpfiff" sortBy="#{tip.player.name}">
+            <h:outputText value="#{tip.player.name}, #{tip.player.firstName}" />
+          </p:column>
           <p:column headerText="Anpfiff" sortBy="#{tip.match.startDate}">
             <h:outputText value="#{tip.match.startDate}" >
               <f:convertDateTime pattern="dd.MM.yyyy', ' HH:mm 'Uhr'" /> 

@@ -22,7 +22,6 @@ import de.toabels.wmtipp.services.api.IGenericBaseService;
 import de.toabels.wmtipp.services.dao.IGenericDao;
 import de.toabels.wmtipp.services.utiils.IMappingService;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
@@ -56,13 +55,13 @@ public abstract class GenericBaseServiceImpl<D extends AbstractBaseDto, E extend
 
   /**
    * Each child class has to define its associated DAO class to perform concrete task on database
-   * 
-   * @param dao 
+   *
+   * @param dao
    */
   public GenericBaseServiceImpl(IGenericDao<E> dao) {
     this.dao = dao;
   }
-
+  
   @Override
   public abstract D getNewObjectInstance();
 
@@ -79,7 +78,7 @@ public abstract class GenericBaseServiceImpl<D extends AbstractBaseDto, E extend
 
   @Override
   public List<D> saveList(List<D> dtoList) {
-    if(dtoList == null){
+    if (dtoList == null) {
       return dtoList;
     }
     List<D> newList = new ArrayList<>();
@@ -88,7 +87,7 @@ public abstract class GenericBaseServiceImpl<D extends AbstractBaseDto, E extend
     });
     return newList;
   }
-  
+
   @Override
   public void delete(D dto) {
     dao.deleteById(dto.getId());
@@ -107,7 +106,7 @@ public abstract class GenericBaseServiceImpl<D extends AbstractBaseDto, E extend
   }
 
   @Override
-  public List<D> listOrdered(String ... order) {
+  public List<D> listOrdered(String... order) {
     return dao.findAllOrdered(order).stream().map(p -> mapper.map(p)).collect(Collectors.toList());
   }
 
