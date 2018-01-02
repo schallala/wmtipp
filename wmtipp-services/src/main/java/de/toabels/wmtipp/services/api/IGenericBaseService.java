@@ -50,12 +50,27 @@ public interface IGenericBaseService<D extends AbstractBaseDto, E extends IEntit
   D save(D dto);
 
   /**
+   * Convenience method to save a list of DTOs (no bulk update!)
+   * 
+   * @param dtoList - list of DTO objects
+   * @return list of persisted DTO objects
+   */
+  List<D> saveList(List<D> dtoList);  
+  
+  /**
    * Deleting a DTO object from database
    * 
    * @param dto - DTO object
    */
   void delete(D dto);
 
+  /**
+   * Convenience method to delete a list of DTOs from datatabase (no bulk operation!)
+   *
+   * @param dtoList - list of DTO objects
+   */
+  void deleteList(List<D> dtoList);
+  
   /**
    * Get a list of all DTO objects which entities are stored in database
    * 

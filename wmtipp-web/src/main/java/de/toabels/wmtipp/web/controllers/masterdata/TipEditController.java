@@ -16,33 +16,36 @@
  */
 package de.toabels.wmtipp.web.controllers.masterdata;
 
-import de.toabels.wmtipp.model.dto.PlayerDto;
-import de.toabels.wmtipp.model.types.UserRoleType;
-import de.toabels.wmtipp.services.api.IPlayerService;
-import de.toabels.wmtipp.services.utiils.ISecurityService;
+import de.toabels.wmtipp.model.dto.AbstractBaseDto;
+import de.toabels.wmtipp.model.dto.MatchDto;
+import de.toabels.wmtipp.model.dto.RoundDto;
+import de.toabels.wmtipp.model.dto.TipDto;
+import de.toabels.wmtipp.services.api.IRoundService;
+import de.toabels.wmtipp.services.api.ITipService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import org.springframework.stereotype.Controller;
 
 /**
- * Controller class to manage CRUD operations on player objects
+ * Controller class to manage CRUD operations on round objects
  *
  * @author Torsten Abels <torsten.abels@gmail.com>
  */
-@Controller("playerEditCtrl")
-public class PlayerEditController extends AbstractEditController<PlayerDto> {
+@Controller("tipEditCtrl")
+public class TipEditController extends AbstractEditController<TipDto> {
 
   @Autowired
-  private ISecurityService securityService;
-
-  @Autowired
-  private IPlayerService playerService;
-
-  private static final Logger logger = LoggerFactory.getLogger(PlayerEditController.class);
+  ITipService tipService;
+  
+  private Map<Long, MatchDto> matchMap;
+  
+  private static final Logger logger = LoggerFactory.getLogger(TipEditController.class);
 
   /* Following methods should be implemented in a similar way by all child classes of AbstractEditController */
  /* Concrete implementation may vary depending on the subject of the edit page                              */
@@ -51,40 +54,17 @@ public class PlayerEditController extends AbstractEditController<PlayerDto> {
    */
   @PostConstruct
   public void init() {
-    super.init(playerService);
+    super.init(tipService);
   }
 
-  /**
-   * This getter serves as wrapper for the current subject object of the abstract controller class
-   *
-   * @return current player dto
-   */
-  public PlayerDto getCurrentPlayer() {
-    return super.getCurrentSubject();
+  public List<TipDto> getTipList() {
+    return tipService.findByPlayerId(1L);
   }
-
-  /**
-   * This getter serves as wrapper for the list selection of the abstract controller class
-   *
-   * @return ordered list of players
-   */
-  public List<PlayerDto> getSelectionList() {
-    return getSubjectList("name", "firstName");
+  
+  public MatchDto mapMatch(Long id){
+    if(matchMap == null){
+      matchMap = super.getMatchList().stream().collect(Collectors.toMap(MatchDto::getId, p -> p));
+    }
+    return matchMap.get(id);
   }
-
-  @Override
-  protected void prePersist() {
-    currentSubject.setPassword(securityService.getSaltedPassword(currentSubject.getPassword()));
-  }
-
-  /* Subject specific selection lists */
-  /**
-   * Array of user roles known by the system
-   *
-   * @return array of roles
-   */
-  public UserRoleType[] getUserRoles() {
-    return UserRoleType.values();
-  }
-
 }

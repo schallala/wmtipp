@@ -18,6 +18,7 @@ package de.toabels.wmtipp.web.controllers;
 
 import de.toabels.wmtipp.model.dto.PlayerDto;
 import de.toabels.wmtipp.services.api.IPlayerService;
+import de.toabels.wmtipp.services.utiils.ISecurityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,10 @@ public class UserSessionController {
 
   @Autowired
   private IPlayerService playerService;
-  
+
+  @Autowired
+  private ISecurityService securityService;
+
   private static final Logger logger = LoggerFactory.getLogger(UserSessionController.class);
 
   private String login;
@@ -60,7 +64,7 @@ public class UserSessionController {
   }
   
   public String validateAndlogin(){
-    currentUser = playerService.loginUser(login, password);
+    currentUser = playerService.loginUser(login, securityService.getSaltedPassword(password));
     return "";
   }
   

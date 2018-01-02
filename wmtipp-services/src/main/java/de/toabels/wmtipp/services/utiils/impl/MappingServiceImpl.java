@@ -35,6 +35,8 @@ import de.toabels.wmtipp.model.dto.RoundDto;
 import de.toabels.wmtipp.model.dto.TeamDto;
 import de.toabels.wmtipp.model.dto.TipDto;
 import de.toabels.wmtipp.services.utiils.IMappingService;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.stereotype.Component;
 
 /**
@@ -83,7 +85,7 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
     }
     return null;
   }
-
+  
   /**
    * Dispatcher method to invoke specific mapper method of DTO object to entity object
    *
@@ -313,6 +315,9 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
     }
     MatchDto dto = new MatchDto();
     dto.setId(match.getId());
+    dto.setStartDate(match.getStartDate());
+    dto.setGoalsTeamOne(match.getGoalsTeamOne());
+    dto.setGoalsTeamTwo(match.getGoalsTeamTwo());
     return dto;
   }
 

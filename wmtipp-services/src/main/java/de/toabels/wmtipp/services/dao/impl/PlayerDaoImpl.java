@@ -31,6 +31,7 @@ public class PlayerDaoImpl extends AbstractGenericDao<Player> implements IPlayer
     setClazz(Player.class);
   }
   
+  @Override
   public Player findByLoginAndPassword(String login, String password){
     Query query = this.entityManager.createQuery("from Player where login = :login and password = :password");
     query.setParameter("login", login);

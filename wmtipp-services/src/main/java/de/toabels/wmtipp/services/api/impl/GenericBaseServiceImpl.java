@@ -21,6 +21,8 @@ import de.toabels.wmtipp.model.dto.AbstractBaseDto;
 import de.toabels.wmtipp.services.api.IGenericBaseService;
 import de.toabels.wmtipp.services.dao.IGenericDao;
 import de.toabels.wmtipp.services.utiils.IMappingService;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
@@ -76,8 +78,27 @@ public abstract class GenericBaseServiceImpl<D extends AbstractBaseDto, E extend
   }
 
   @Override
+  public List<D> saveList(List<D> dtoList) {
+    if(dtoList == null){
+      return dtoList;
+    }
+    List<D> newList = new ArrayList<>();
+    dtoList.forEach((dto) -> {
+      newList.add(save(dto));
+    });
+    return newList;
+  }
+  
+  @Override
   public void delete(D dto) {
     dao.deleteById(dto.getId());
+  }
+
+  @Override
+  public void deleteList(List<D> dtoList) {
+    dtoList.forEach((dto) -> {
+      delete(dto);
+    });
   }
 
   @Override

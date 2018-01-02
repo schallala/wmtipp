@@ -17,6 +17,7 @@
 package de.toabels.wmtipp.services.dao;
 
 import de.toabels.wmtipp.model.db.Tip;
+import java.util.List;
 
 /**
  * DAO class handling database operations on tip entities
@@ -24,5 +25,6 @@ import de.toabels.wmtipp.model.db.Tip;
  * @author abels
  */
 public interface ITipDao extends IGenericDao<Tip>{
-  
+
+  List<Tip> findByPlayerId(Long playerId);  
 }

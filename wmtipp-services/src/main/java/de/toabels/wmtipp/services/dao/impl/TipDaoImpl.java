@@ -18,6 +18,8 @@ package de.toabels.wmtipp.services.dao.impl;
 
 import de.toabels.wmtipp.model.db.Tip;
 import de.toabels.wmtipp.services.dao.ITipDao;
+import java.util.List;
+import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -29,4 +31,11 @@ public class TipDaoImpl extends AbstractGenericDao<Tip> implements ITipDao {
     setClazz(Tip.class);
   }
   
+  @Override
+  public List<Tip> findByPlayerId(Long playerId) {
+    Query query = this.entityManager.createQuery("select t from Tip t where t.player.id = :playerId");
+    query.setParameter("playerId", playerId);
+    List<Tip> list = query.getResultList();
+    return list;
+  }
 }

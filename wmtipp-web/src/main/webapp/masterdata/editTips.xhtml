@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/templates/template.xhtml">
+  <ui:define name="content">
+    <h:outputText value="#{msg['editRounds_title']}" styleClass="pagetitle"/>
+    <h:form>
+      <p:growl id="growl" showDetail="true" sticky="true" />  
+
+      <h:panelGrid style="min-height: 200px;">
+        <p:dataTable value="#{tipEditCtrl.tipList}" var="tip"
+                     rows="10"
+                     paginator="true"
+                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+                     rowsPerPageTemplate="5,10,15">
+          <p:column headerText="Anpfiff" sortBy="#{tip.match.startDate}">
+            <h:outputText value="#{tip.match.startDate}" >
+              <f:convertDateTime pattern="dd.MM.yyyy', ' HH:mm 'Uhr'" /> 
+            </h:outputText>
+          </p:column>
+          <p:column headerText="Begegnung" >
+            <h:outputText value="#{tipEditCtrl.mapMatch(tip.match.id).teamOne.name}" />
+            -
+            <h:outputText value="#{tipEditCtrl.mapMatch(tip.match.id).teamTwo.name}" />
+          </p:column>
+          <p:column headerText="Tipp" sortBy="#{tip.goalsTeamOne}">
+            <h:outputText value="#{tip.goalsTeamOne}" />
+            -
+            <h:outputText value="#{tip.goalsTeamTwo}" />
+          </p:column>
+          <p:column headerText="Ergebnis" sortBy="#{tip.goalsTeamTwo}">
+            <h:outputText value="#{tip.match.goalsTeamOne}" />
+            -
+            <h:outputText value="#{tip.match.goalsTeamTwo}" />
+          </p:column>
+
+        </p:dataTable>
+      </h:panelGrid>
+
+      <h:panelGroup id="listPanel_buttons">
+        <center>
+          <p:commandButton value="#{msg['global_action_edit']}" actionListener="#{roundEditCtrl.edit}" 
+                           update="@form" disabled="#{roundEditCtrl.editMode}"/>
+          <p:commandButton value="#{msg['global_action_delete']}" actionListener="#{roundEditCtrl.delete}" 
+                           update="@form"  disabled="#{roundEditCtrl.editMode}"/>
+        </center>
+      </h:panelGroup>
+      <!-- pseudo responsible -->
+      <p:dataTable value=" "/>
+
+    </h:form>
+
+
+  </ui:define>
+</ui:composition>

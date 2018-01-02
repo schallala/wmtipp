@@ -77,4 +77,4 @@ public abstract class AbstractGenericDao< T extends IEntityBase<T>> implements I
     delete(entity);
   }
 
-}
+  }

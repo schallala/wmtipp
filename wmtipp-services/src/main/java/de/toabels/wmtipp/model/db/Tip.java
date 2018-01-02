@@ -24,6 +24,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -45,10 +47,12 @@ public class Tip implements IEntityBase<Tip>, Serializable {
   @Column(name = "id")
   private Long id;
   @Basic(optional = false)
-  @Column(name = "player_fk")
+  @ManyToOne
+  @JoinColumn(name = "player_fk")
   private Player player;
   @Basic(optional = false)
-  @Column(name = "match_fk")
+  @ManyToOne
+  @JoinColumn(name = "match_fk")
   private Match match;
   @Column(name = "goals_teame_one")
   private Integer goalsTeamOne;

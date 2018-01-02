@@ -86,7 +86,6 @@ public abstract class AbstractEditController<D extends AbstractBaseDto> {
     if (this.subjectService == null) {
       this.subjectService = service;
     }
-    setNewSubjectInstance();
   }
 
   /* subject list for selection */
@@ -104,8 +103,11 @@ public abstract class AbstractEditController<D extends AbstractBaseDto> {
     return editMode;
   }
 
-  /* current subject of crod operations */
+  /* current subject of crud operations */
   public D getCurrentSubject() {
+    if(currentSubject == null){
+      setNewSubjectInstance();
+    }
     return currentSubject;
   }
 
@@ -114,9 +116,23 @@ public abstract class AbstractEditController<D extends AbstractBaseDto> {
   }
 
   /* CRUD actions */
+  protected void prePersist() {
+  }
+
   public void save() {
+    prePersist();
     if (currentSubject != null) {
       D result = (D) subjectService.save(currentSubject);
+      subjectMap = null;
+      editMode = false;
+      growlSuccess(getMessage("global_save_success"), getMessage("global_save_success_detail"));
+    }
+  }
+
+  public void saveList() {
+    prePersist();
+    if (subjectList != null) {
+      subjectService.saveList(subjectList);
       subjectMap = null;
       editMode = false;
       growlSuccess(getMessage("global_save_success"), getMessage("global_save_success_detail"));

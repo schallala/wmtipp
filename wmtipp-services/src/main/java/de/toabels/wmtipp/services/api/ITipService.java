@@ -18,6 +18,7 @@ package de.toabels.wmtipp.services.api;
 
 import de.toabels.wmtipp.model.db.Tip;
 import de.toabels.wmtipp.model.dto.TipDto;
+import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,4 +31,5 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public interface ITipService extends IGenericBaseService<TipDto, Tip> {
   
+  List<TipDto> findByPlayerId(Long playerId);
 }
