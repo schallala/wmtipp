@@ -14,20 +14,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.toabels.wmtipp.web.infrastructure;
+package de.toabels.wmtipp.services.rest;
 
-import de.toabels.wmtipp.services.api.impl.PlayerServiceImpl;
-import org.glassfish.hk2.utilities.binding.AbstractBinder;
-
+import de.toabels.wmtipp.model.dto.TeamDto;
+import de.toabels.wmtipp.services.api.ITeamService;
+import javax.inject.Inject;
+import javax.ws.rs.Path;
+import org.glassfish.jersey.process.internal.RequestScoped;
 
 /**
  *
  * @author abels
  */
-class ApplicationBinder extends AbstractBinder {
+@Path("/team")
+@RequestScoped
+public class TeamResource extends AbstractDtoResource<TeamDto> {
 
-  @Override
-  protected void configure() {
-    bind(PlayerServiceImpl.class).to(PlayerServiceImpl.class);
+  ITeamService teamService;
+
+  @Inject
+  public TeamResource(ITeamService service) {
+    super(service);
+    teamService = service;
   }
+
 }

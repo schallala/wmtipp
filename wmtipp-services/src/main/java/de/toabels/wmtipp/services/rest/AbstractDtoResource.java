@@ -16,26 +16,40 @@
  */
 package de.toabels.wmtipp.services.rest;
 
-import de.toabels.wmtipp.model.dto.PlayerDto;
-import de.toabels.wmtipp.services.api.IPlayerService;
-import javax.inject.Inject;
+import de.toabels.wmtipp.model.dto.AbstractBaseDto;
+import de.toabels.wmtipp.services.api.IGenericBaseService;
+import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import org.glassfish.jersey.process.internal.RequestScoped;
 
 /**
  *
  * @author abels
+ * @param <D>
  */
-@Path("/player")
 @RequestScoped
-public class PlayerResource extends AbstractDtoResource<PlayerDto> {
+public class AbstractDtoResource<D extends AbstractBaseDto> {
 
-  private IPlayerService playerService;
+  private IGenericBaseService service;
 
-  @Inject
-  public PlayerResource(IPlayerService service) {
-    super(service);
-    playerService = service;
+  /**
+   * Each child class has to define its associated DAO class to perform concrete task on database
+   *
+   * @param service
+   */
+  public AbstractDtoResource(IGenericBaseService service) {
+    this.service = service;
+  }
+
+
+  @GET
+  @Path("/{id}")
+  @Produces({MediaType.APPLICATION_JSON})
+  public D get(@PathParam("id") int id) {
+    return (D) service.findById(id);
   }
 
 }
