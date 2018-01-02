@@ -17,12 +17,14 @@
 package de.toabels.wmtipp.services.rest;
 
 import de.toabels.wmtipp.model.dto.PlayerDto;
+import de.toabels.wmtipp.services.api.IPlayerService;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import org.glassfish.jersey.process.internal.RequestScoped;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -32,11 +34,14 @@ import org.glassfish.jersey.process.internal.RequestScoped;
 @RequestScoped
 public class PlayerResource {
 
+  @Autowired
+  private IPlayerService playerService;
+
   @GET
   @Path("/{id}")
   @Produces({MediaType.APPLICATION_JSON})
   public PlayerDto getPlayer(@PathParam("id") int id) {
-    return new PlayerDto(1234L);
+    return playerService.findById(id);
   }
 
 }
