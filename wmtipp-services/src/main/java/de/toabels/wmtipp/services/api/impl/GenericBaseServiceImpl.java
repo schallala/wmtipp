@@ -73,7 +73,7 @@ public abstract class GenericBaseServiceImpl<D extends AbstractBaseDto, E extend
     , 
     @CacheEvict(value = "lists", key = "#root.target.class.name + 'list'")
     , 
-    @CacheEvict(value = "entities", key = "#root.target.class.name + #dto.id", condition = "#dto.id != null")
+    @CacheEvict(value = "entities", key = "#root.target.class.name + #dto.id")
   })
   @Override
   public D save(D dto) {
@@ -123,7 +123,7 @@ public abstract class GenericBaseServiceImpl<D extends AbstractBaseDto, E extend
     return dao.findAll().stream().map(p -> mapper.map(p)).collect(Collectors.toList());
   }
 
-  // only one result of this method is cached - independed of specified order!
+  // only one ordered list per target class will be cached 
   @Cacheable(value = "lists", key = "#root.target.class.name + 'listOrdered'")
   @Override
   public List<D> listOrdered(String... order) {

@@ -73,14 +73,6 @@ public abstract class AbstractEditController<D extends AbstractBaseDto> {
   @Autowired
   private ITeamService teamService;
   
-  private List<MatchDto> matchList;
-
-  private List<GroupDto> groupList;
-
-  private List<RoundDto> roundList;
-
-  private List<TeamDto> teamList;
-
   /* first initialization steps */
   public void init(IGenericBaseService service) {
     if (this.subjectService == null) {
@@ -90,10 +82,8 @@ public abstract class AbstractEditController<D extends AbstractBaseDto> {
 
   /* subject list for selection */
   protected List<D> getSubjectList(String... order) {
-    if (subjectMap == null) {
-      subjectList = subjectService.listOrdered(order);
-      subjectMap = subjectList.stream().collect(Collectors.toMap(AbstractBaseDto::getId, p -> p));
-    }
+    subjectList = subjectService.listOrdered(order);
+    subjectMap = subjectList.stream().collect(Collectors.toMap(AbstractBaseDto::getId, p -> p));
     return subjectList;
   }
 
@@ -123,7 +113,6 @@ public abstract class AbstractEditController<D extends AbstractBaseDto> {
     prePersist();
     if (currentSubject != null) {
       D result = (D) subjectService.save(currentSubject);
-      subjectMap = null;
       editMode = false;
       growlSuccess(getMessage("global_save_success"), getMessage("global_save_success_detail"));
     }
@@ -133,7 +122,6 @@ public abstract class AbstractEditController<D extends AbstractBaseDto> {
     prePersist();
     if (subjectList != null) {
       subjectService.saveList(subjectList);
-      subjectMap = null;
       editMode = false;
       growlSuccess(getMessage("global_save_success"), getMessage("global_save_success_detail"));
     }
@@ -142,7 +130,6 @@ public abstract class AbstractEditController<D extends AbstractBaseDto> {
   public void delete() {
     if (currentSubject != null) {
       subjectService.delete(currentSubject);
-      subjectMap = null;
       growlSuccess(getMessage("global_delete_success"), getMessage("global_delete_success_detail"));
     }
   }
@@ -185,10 +172,7 @@ public abstract class AbstractEditController<D extends AbstractBaseDto> {
    * @return team list
    */
   public List<MatchDto> getMatchList() {
-    if (matchList == null) {
-      matchList = matchService.listOrdered("startDate");
-    }
-    return matchList;
+      return matchService.listOrdered("startDate");
   }
 
   /**
@@ -197,10 +181,7 @@ public abstract class AbstractEditController<D extends AbstractBaseDto> {
    * @return team list
    */
   public List<GroupDto> getGroupList() {
-    if (groupList == null) {
-      groupList = groupService.listOrdered("sortOrder");
-    }
-    return groupList;
+      return groupService.listOrdered("sortOrder");
   }
 
   /**
@@ -209,10 +190,7 @@ public abstract class AbstractEditController<D extends AbstractBaseDto> {
    * @return team list
    */
   public List<RoundDto> getRoundList() {
-    if (roundList == null) {
-      roundList = roundService.listOrdered("sortOrder nulls last");
-    }
-    return roundList;
+      return roundService.listOrdered("sortOrder nulls last");
   }
 
   /**
@@ -221,10 +199,7 @@ public abstract class AbstractEditController<D extends AbstractBaseDto> {
    * @return team list
    */
   public List<TeamDto> getTeamList() {
-    if (teamList == null) {
-      teamList = teamService.listOrdered("name");
-    }
-    return teamList;
+      return teamService.listOrdered("name");
   }
 
   /* Feedback popups */

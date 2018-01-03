@@ -60,9 +60,7 @@ public class TipEditController extends AbstractEditController<TipDto> {
   }
 
   public List<TipDto> getTipList() {
-    if (tipList == null) {
-      tipList = tipService.list();
-    }
+    tipList = tipService.list();
     return tipList;
   }
 
@@ -70,10 +68,10 @@ public class TipEditController extends AbstractEditController<TipDto> {
     List<TipDto> result = new ArrayList();
     tipList.forEach((tip) -> {
       MatchDto match = mapMatch(tip.getMatch().getId());
-      if(match == null || match.getRound() == null || match.getGroup()==null){
+      if (match == null || match.getRound() == null || match.getGroup() == null) {
         logger.info("Ahllo!");
       }
-      if (match.getRound().getId().equals(roundId) 
+      if (match.getRound().getId().equals(roundId)
               && match.getGroup().getId() == null && (groupId == null || match.getGroup().getId().equals(groupId))) {
         result.add(tip);
       } else {
