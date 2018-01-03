@@ -43,7 +43,28 @@
 
         </p:dataTable>
       </h:panelGrid>
-
+<!--
+      <ui:repeat value="#{tipEditCtrl.roundList}" var="round">
+        <p:accordionPanel multiple="true">
+          <p:tab title="#{round.name}" >
+            <h:panelGrid columns="1" cellpadding="10">
+              <ui:repeat value="#{tipEditCtrl.groupList}" var="group">
+                <p:accordionPanel multiple="true" >
+                  <p:tab title="#{group.name}" >
+                    <ui:repeat value="#{tipEditCtrl.getFilteredTipList(round.id, group.id)}" var="tip">
+                      <h:outputText value="#{tip.goalsTeamOne}" />
+                      -
+                      <h:outputText value="#{tip.goalsTeamTwo}" />
+                      <br/>
+                    </ui:repeat>
+                  </p:tab>
+                </p:accordionPanel>
+              </ui:repeat>
+            </h:panelGrid>
+          </p:tab>
+        </p:accordionPanel>
+      </ui:repeat>
+-->
       <h:panelGroup id="listPanel_buttons">
         <center>
           <p:commandButton value="#{msg['global_action_edit']}" actionListener="#{roundEditCtrl.edit}" 

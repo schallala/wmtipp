@@ -22,6 +22,6 @@ public class CachingConfig {
 
   @Bean
   public CacheManager cacheManager() {
-    return new ConcurrentMapCacheManager("tips");
+    return new ConcurrentMapCacheManager("lists", "entities");
   }
 }

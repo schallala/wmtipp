@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 /**
@@ -34,6 +35,7 @@ import org.springframework.stereotype.Controller;
  * @author Torsten Abels <torsten.abels@gmail.com>
  */
 @Controller("playerEditCtrl")
+@Scope("session")
 public class PlayerEditController extends AbstractEditController<PlayerDto> {
 
   @Autowired

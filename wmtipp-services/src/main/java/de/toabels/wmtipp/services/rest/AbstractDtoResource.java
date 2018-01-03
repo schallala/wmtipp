@@ -34,7 +34,7 @@ import org.glassfish.jersey.process.internal.RequestScoped;
 public class AbstractDtoResource<D extends AbstractBaseDto> {
 
   private IGenericBaseService service;
-
+  
   /**
    * Each child class has to define its associated DAO class to perform concrete task on database
    *

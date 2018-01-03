@@ -16,12 +16,10 @@
  */
 package de.toabels.wmtipp.web.controllers.masterdata;
 
-import de.toabels.wmtipp.model.dto.AbstractBaseDto;
 import de.toabels.wmtipp.model.dto.MatchDto;
-import de.toabels.wmtipp.model.dto.RoundDto;
 import de.toabels.wmtipp.model.dto.TipDto;
-import de.toabels.wmtipp.services.api.IRoundService;
 import de.toabels.wmtipp.services.api.ITipService;
+import java.util.ArrayList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
-import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 /**
@@ -39,13 +37,16 @@ import org.springframework.stereotype.Controller;
  * @author Torsten Abels <torsten.abels@gmail.com>
  */
 @Controller("tipEditCtrl")
+@Scope("session")
 public class TipEditController extends AbstractEditController<TipDto> {
 
   @Autowired
   ITipService tipService;
-  
+
+  List<TipDto> tipList;
+
   private Map<Long, MatchDto> matchMap;
-  
+
   private static final Logger logger = LoggerFactory.getLogger(TipEditController.class);
 
   /* Following methods should be implemented in a similar way by all child classes of AbstractEditController */
@@ -58,13 +59,31 @@ public class TipEditController extends AbstractEditController<TipDto> {
     super.init(tipService);
   }
 
-  @Cacheable("tips")
   public List<TipDto> getTipList() {
-    return tipService.list();
+    if (tipList == null) {
+      tipList = tipService.list();
+    }
+    return tipList;
   }
-  
-  public MatchDto mapMatch(Long id){
-    if(matchMap == null){
+
+  public List<TipDto> getFilteredTipList(Long roundId, Long groupId) {
+    List<TipDto> result = new ArrayList();
+    tipList.forEach((tip) -> {
+      MatchDto match = mapMatch(tip.getMatch().getId());
+      if(match == null || match.getRound() == null || match.getGroup()==null){
+        logger.info("Ahllo!");
+      }
+      if (match.getRound().getId().equals(roundId) 
+              && match.getGroup().getId() == null && (groupId == null || match.getGroup().getId().equals(groupId))) {
+        result.add(tip);
+      } else {
+      }
+    });
+    return result;
+  }
+
+  public MatchDto mapMatch(Long id) {
+    if (matchMap == null) {
       matchMap = super.getMatchList().stream().collect(Collectors.toMap(MatchDto::getId, p -> p));
     }
     return matchMap.get(id);

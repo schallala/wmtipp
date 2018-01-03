@@ -25,6 +25,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -61,10 +64,17 @@ public abstract class GenericBaseServiceImpl<D extends AbstractBaseDto, E extend
   public GenericBaseServiceImpl(IGenericDao<E> dao) {
     this.dao = dao;
   }
-  
+
   @Override
   public abstract D getNewObjectInstance();
 
+  @Caching(evict = {
+    @CacheEvict(value = "lists", key = "#root.target.class.name + 'listOrdered'")
+    , 
+    @CacheEvict(value = "lists", key = "#root.target.class.name + 'list'")
+    , 
+    @CacheEvict(value = "entities", key = "#root.target.class.name + #dto.id", condition = "#dto.id != null")
+  })
   @Override
   public D save(D dto) {
     E entity = mapper.map(dto);
@@ -88,6 +98,13 @@ public abstract class GenericBaseServiceImpl<D extends AbstractBaseDto, E extend
     return newList;
   }
 
+  @Caching(evict = {
+    @CacheEvict(value = "lists", key = "#root.target.class.name + 'listOrdered'")
+    , 
+    @CacheEvict(value = "lists", key = "#root.target.class.name + 'list'")
+    , 
+    @CacheEvict(value = "entities", key = "#root.target.class.name + #dto.id")
+  })
   @Override
   public void delete(D dto) {
     dao.deleteById(dto.getId());
@@ -100,16 +117,20 @@ public abstract class GenericBaseServiceImpl<D extends AbstractBaseDto, E extend
     });
   }
 
+  @Cacheable(value = "lists", key = "#root.target.class.name + 'list'")
   @Override
   public List<D> list() {
     return dao.findAll().stream().map(p -> mapper.map(p)).collect(Collectors.toList());
   }
 
+  // only one result of this method is cached - independed of specified order!
+  @Cacheable(value = "lists", key = "#root.target.class.name + 'listOrdered'")
   @Override
   public List<D> listOrdered(String... order) {
     return dao.findAllOrdered(order).stream().map(p -> mapper.map(p)).collect(Collectors.toList());
   }
 
+  @Cacheable(value = "entities", key = "#root.target.class.name + #id")
   @Override
   public D findById(int id) {
     return mapper.map(dao.findOne(id));
