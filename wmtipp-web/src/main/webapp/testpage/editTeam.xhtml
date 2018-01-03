@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <!-- Edit page title -->
+    <h:outputText value="#{msg['editTeams_title']}" styleClass="pagetitle"/>
+    <h:form>
+      <!-- Message popup -->
+      <p:growl id="growl" showDetail="true" sticky="true" />  
+
+      <!-- Edit object area -->
+      <h:panelGrid columns="2" id="thisPage" styleClass="editpage_panel_region">
+        <p:panel id="editPanel" header="#{msg['editTeams_subtitle']}" toggleable="true" 
+                 style="width: 480px;height: 500px;" styleClass="editpage_panel_edit">
+          <h:panelGrid style="height: 200px;" columns="2" cellpadding="5" >
+            <p:outputLabel value="#{msg['global_team_id']}" for="teamId" />
+            <p:inputText id="teamId" value="#{teamEditCtrl.currentTeam.id}" 
+                         disabled="true"/>
+            <p:outputLabel value="#{msg['global_team_name']}" for="name" />
+            <p:inputText id="name" value="#{teamEditCtrl.currentTeam.name}" 
+                         required="true" disabled="#{not teamEditCtrl.editMode}"/>
+
+            <p:outputLabel value="#{msg['global_team_group']}" for="groups"/>
+            <p:selectOneMenu id="groups" value="#{teamEditCtrl.currentTeam.group.id}" 
+                             disabled="#{not teamEditCtrl.editMode}" style="width: 150px;">
+              <f:selectItem itemValue="" itemLabel=" - "/>
+              <f:selectItems value="#{teamEditCtrl.groupList}" 
+                             var="group" itemValue="#{group.id}" itemLabel="#{group.name}"/>
+              <p:column>  
+                #{group.name}
+              </p:column>  
+            </p:selectOneMenu>
+
+            <p:outputLabel value="#{msg['global_team_infolink']}" for="infolink" />
+            <p:inputText id="infolink" value="#{teamEditCtrl.currentTeam.urlInfo}" 
+                         disabled="#{not teamEditCtrl.editMode}"/>
+            <p:outputLabel value="#{msg['global_team_flagfile']}" for="flagfile" />
+            <p:inputText id="flagfile" value="#{teamEditCtrl.currentTeam.urlFlagImage}" 
+                         disabled="#{not teamEditCtrl.editMode}"/>
+          </h:panelGrid>
+          <h:panelGrid style="height: 200px;" columns="2" cellpadding="5" />
+
+          <!-- Edit object action buttons -->
+          <h:panelGroup id="editPanel_buttons">
+            <center>
+              <p:commandButton value="#{msg['global_action_cancel']}" rendered="#{teamEditCtrl.editMode}"
+                               actionListener="#{teamEditCtrl.cancel}" immediate="true"
+                               update="content" />
+              <p:commandButton value="#{msg['global_action_new']}" rendered="#{not teamEditCtrl.editMode}"
+                               actionListener="#{teamEditCtrl.clear}" 
+                               update="content" />
+              <p:commandButton value="Save" actionListener="#{teamEditCtrl.save}" 
+                               update="content" disabled="#{not teamEditCtrl.editMode}"/>
+            </center>
+          </h:panelGroup>  
+        </p:panel>
+
+        <!-- Select object area -->
+        <p:panel id="listPanel" header="#{msg['editTeams_selectionlist']}" toggleable="true" 
+                 style="width: 300px;height: 500px;" styleClass="editpage_panel_list">
+          <h:panelGrid style="height: 400px;">
+            <h:selectOneListbox id="advanced" value="#{teamEditCtrl.currentTeam.id}" 
+                                style="width: 270px;height: 370px;" disabled="#{teamEditCtrl.editMode}"
+                                valueChangeListener="#{teamEditCtrl.subjectChangeListener}">
+              <f:selectItems value="#{teamEditCtrl.selectionList}" var="team" 
+                             itemLabel="#{team.name}" itemValue="#{team.id}" />
+              <p:ajax update="thisPage"/>
+            </h:selectOneListbox>
+          </h:panelGrid>
+
+          <!-- List action buttons -->
+          <h:panelGroup id="listPanel_buttons">
+            <center>
+              <p:commandButton value="#{msg['global_action_edit']}" actionListener="#{teamEditCtrl.edit}" 
+                               update="content" disabled="#{teamEditCtrl.editMode}"/>
+              <p:commandButton value="#{msg['global_action_delete']}" actionListener="#{teamEditCtrl.delete}" 
+                               update="content"  disabled="#{teamEditCtrl.editMode}"/>
+            </center>
+          </h:panelGroup>
+        </p:panel>
+      </h:panelGrid>
+
+    </h:form>
+
+
+</ui:composition>

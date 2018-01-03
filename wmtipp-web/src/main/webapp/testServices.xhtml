@@ -7,13 +7,61 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/WEB-INF/templates/template.xhtml">
   <ui:define name="content">
-    <h1><h:outputText value="Willkommen zu Abels WM-Tippspiel" /></h1>
-    <br />
     <h:form>
+      <p:growl id="growl" showDetail="true" sticky="true" />  
       <h2>Test Services</h2>
 
 
+      <h:panelGrid columns="2">
 
+        <p:panel id="editPanel" header="#{msg['editGroups_subtitle']}" toggleable="true" 
+                 style="min-width: 480px;height: 300px;" styleClass="editpage_panel_edit">
+          <h:panelGrid style="height: 200px;" columns="2" cellpadding="5" >
+            <p:outputLabel value="#{msg['global_group_id']}" for="groupId" />
+            <p:inputText id="groupId" value="#{groupEditCtrl.currentGroup.id}" 
+                         disabled="true"/>
+            <p:outputLabel value="#{msg['global_group_name']}" for="name" />
+            <p:inputText id="name" value="#{groupEditCtrl.currentGroup.name}" 
+                         required="true" disabled="#{not groupEditCtrl.editMode}"/>
+            <p:outputLabel value="#{msg['global_group_sortorder']}" for="sortorder" />
+            <p:inputText id="sortorder" value="#{groupEditCtrl.currentGroup.sortOrder}" 
+                         disabled="#{not groupEditCtrl.editMode}"/>
+          </h:panelGrid>
+          <h:panelGroup id="editPanel_buttons">
+            <center>
+              <p:commandButton value="#{msg['global_action_cancel']}" rendered="#{groupEditCtrl.editMode}"
+                               actionListener="#{groupEditCtrl.cancel}" immediate="true"
+                               update="@form" />
+              <p:commandButton value="#{msg['global_action_new']}" rendered="#{not groupEditCtrl.editMode}"
+                               actionListener="#{groupEditCtrl.clear}" 
+                               update="@form" />
+              <p:commandButton value="Save" actionListener="#{groupEditCtrl.save}" 
+                               update="@form" disabled="#{not groupEditCtrl.editMode}"/>
+            </center>
+          </h:panelGroup>  
+        </p:panel>
+
+        <p:panel id="listPanel" header="#{msg['editGroups_selectionlist']}" toggleable="true" 
+                 style="min-width: 300px;height: 300px;" styleClass="editpage_panel_list">
+          <h:panelGrid style="height: 200px;">
+            <h:selectOneListbox id="advanced" value="#{groupEditCtrl.currentGroup.id}" 
+                                style="min-width: 270px;height: 170px;" disabled="#{groupEditCtrl.editMode}"
+                                valueChangeListener="#{groupEditCtrl.subjectChangeListener}">
+              <f:selectItems value="#{groupEditCtrl.selectionList}" var="tgroup" 
+                             itemLabel="#{tgroup.name}" itemValue="#{tgroup.id}" />
+              <p:ajax update="editPanel,editPanel_buttons,listPanel_buttons"/>
+            </h:selectOneListbox>
+          </h:panelGrid>
+
+          <h:panelGroup id="listPanel_buttons">
+            <center>
+              <p:commandButton value="#{msg['global_action_edit']}" actionListener="#{groupEditCtrl.edit}" 
+                               update="@form" disabled="#{groupEditCtrl.editMode}"/>
+              <p:commandButton value="#{msg['global_action_delete']}" actionListener="#{groupEditCtrl.delete}" 
+                               update="@form"  disabled="#{groupEditCtrl.editMode}"/>
+            </center>
+          </h:panelGroup>
+        </p:panel>
 
       <p:dataTable var="player" value="#{playerListCtrl.playerList}"
                    rows="10"
@@ -34,6 +82,11 @@
         </p:column>
 
       </p:dataTable>
+        <!--
+                
+        <p:panel header="Das ist ein Panel">
+          Lirumlarumlipsum
+        </p:panel>
 
       <p:dataTable var="team" value="#{playerListCtrl.teamList}"
                    rows="10"
@@ -55,7 +108,7 @@
 
       </p:dataTable>
 
-      <p:dataTable var="match" value="#{playerListCtrl.matchList}"
+        <p:dataTable var="match" value="#{playerListCtrl.matchList}"
                    rows="10"
                    paginator="true"
                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
@@ -73,9 +126,9 @@
           <h:outputText value="#{match.goalsTeamTwo}" />
         </p:column>
 
-      </p:dataTable>
+      </p:dataTable>-->
 
-
+      </h:panelGrid>
     </h:form>
   </ui:define>
 </ui:composition>
