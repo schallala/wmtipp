@@ -27,9 +27,8 @@
                          required="true" disabled="#{not teamEditCtrl.editMode}"/>
 
             <p:outputLabel value="#{msg['global_team_group']}" for="groups"/>
-            <p:selectOneMenu id="groups" value="#{teamEditCtrl.currentTeam.group.id}" 
+            <p:selectOneMenu id="groups" value="#{teamEditCtrl.currentTeam.group.id}" required="true"
                              disabled="#{not teamEditCtrl.editMode}" style="width: 150px;">
-              <f:selectItem itemValue="" itemLabel=" - "/>
               <f:selectItems value="#{teamEditCtrl.groupList}" 
                              var="group" itemValue="#{group.id}" itemLabel="#{group.name}"/>
               <p:column>  

@@ -22,6 +22,8 @@ import de.toabels.wmtipp.services.api.IGenericBaseService;
 import de.toabels.wmtipp.services.dao.IGenericDao;
 import de.toabels.wmtipp.services.utiils.IMappingService;
 import java.util.ArrayList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
@@ -45,6 +47,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public abstract class GenericBaseServiceImpl<D extends AbstractBaseDto, E extends IEntityBase<E>> implements IGenericBaseService<D, E> {
 
+  private static final Logger logger = LoggerFactory.getLogger(GenericBaseServiceImpl.class);
+
   private IGenericDao<E> dao;
 
   /*
@@ -62,6 +66,7 @@ public abstract class GenericBaseServiceImpl<D extends AbstractBaseDto, E extend
    * @param dao
    */
   public GenericBaseServiceImpl(IGenericDao<E> dao) {
+    logger.info("GenericBaseServiceImpl initialized with DAO " + dao.getClass().getName());
     this.dao = dao;
   }
 
@@ -78,6 +83,9 @@ public abstract class GenericBaseServiceImpl<D extends AbstractBaseDto, E extend
   @Override
   public D save(D dto) {
     E entity = mapper.map(dto);
+    if(entity == null){
+      return null;
+    }
     if (entity.getId() != null) {
       dao.update(entity);
     } else {

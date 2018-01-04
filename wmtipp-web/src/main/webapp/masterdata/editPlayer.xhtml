@@ -35,7 +35,7 @@
                          required="true" disabled="#{not playerEditCtrl.editMode}"/>
             <p:outputLabel  value="#{msg['global_player_password']}" for="password"/>
             <p:password id="password" value="#{playerEditCtrl.currentPlayer.password}" 
-                        feedback="true"  redisplay="true"
+                        feedback="true"  required="true"
                         disabled="#{not playerEditCtrl.editMode}"/>
             <p:outputLabel value="#{msg['global_player_userrole']}" for="userRole"/>
             <p:selectOneMenu id="userRole" value="#{playerEditCtrl.currentPlayer.userRole}"  
@@ -48,7 +48,8 @@
             </p:selectOneMenu>
             <p:outputLabel value="#{msg['global_player_champion']}" for="predictedChampion"/>
             <p:selectOneMenu id="predictedChampion" value="#{playerEditCtrl.currentPlayer.predictedChampion.id}"
-                             required="true" disabled="#{not playerEditCtrl.editMode}" style="width: 150px;">
+                             disabled="#{not playerEditCtrl.editMode}" style="width: 150px;">
+              <f:selectItem itemValue="" itemLabel=" - "/>
               <f:selectItems value="#{playerEditCtrl.teamList}" 
                              var="team" itemValue="#{team.id}" itemLabel="#{team.name}"/>
               <p:column>  

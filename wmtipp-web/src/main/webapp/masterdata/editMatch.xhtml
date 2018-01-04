@@ -20,7 +20,7 @@
                          disabled="true"/>
             <p:outputLabel value="#{msg['global_match_name']}" for="name" />
             <p:inputText id="name" value="#{matchEditCtrl.currentMatch.name}" 
-                         required="true" disabled="#{not matchEditCtrl.editMode}"/>
+                         disabled="#{not matchEditCtrl.editMode}"/>
 
             <p:outputLabel value="#{msg['global_match_round']}" for="rounds"/>
             <p:selectOneMenu id="rounds" value="#{matchEditCtrl.currentMatch.round.id}"  
@@ -68,11 +68,11 @@
                          disabled="#{not matchEditCtrl.editMode}"/>
             <p:outputLabel value="#{msg['global_match_description']}" for="description" />
             <p:inputText id="description" value="#{matchEditCtrl.currentMatch.description}" 
-                         required="true" disabled="#{not matchEditCtrl.editMode}"/>
+                         disabled="#{not matchEditCtrl.editMode}"/>
             <p:outputLabel value="#{msg['global_match_startdate']}" for="startDate" />
             <p:calendar id="startDate" value="#{matchEditCtrl.currentMatch.startDate}" 
-                        pattern="dd.MM.yyyy HH:mm" showMinute="false"
-                        showOn="button" required="true" disabled="#{not matchEditCtrl.editMode}">
+                        pattern="dd.MM.yyyy HH:mm" showMinute="false" required="true"
+                        showOn="button" disabled="#{not matchEditCtrl.editMode}">
             </p:calendar>
 
           </h:panelGrid>

@@ -35,12 +35,13 @@ public class CachingConfig {
   @Scheduled(fixedRate = ONE_DAY)
   @CacheEvict(value = "lists", allEntries = true)
   public void clearCache() {
-    logger.info("Cache cleared!");
+    logger.info("Cache cleared.");
   }
     
   
   @Bean
   public CacheManager cacheManager() {
+    logger.info("Cache manager intialized.");
     return new ConcurrentMapCacheManager("lists", "entities");
   }
 }

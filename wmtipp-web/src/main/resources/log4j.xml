@@ -11,9 +11,12 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="org.application">
-		<level value="debug" />
-	</logger>	
+    <logger name="de.toabels.wmtipp.web">
+      <level value="info" />
+    </logger>	
+    <logger name="de.toabels.wmtipp.web.services">
+      <level value="info" />
+    </logger>	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">
 		<level value="info" />

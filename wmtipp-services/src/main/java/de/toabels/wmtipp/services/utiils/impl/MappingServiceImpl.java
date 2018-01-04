@@ -153,7 +153,7 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
    */
   private Group map(GroupDto dto) {
     // TAKE CARE: group is not mandatory
-    if (dto == null || dto.getId() == null) {
+    if (dto == null){// || dto.getId() == null) {
       return null;
     }
     Group group = new Group();

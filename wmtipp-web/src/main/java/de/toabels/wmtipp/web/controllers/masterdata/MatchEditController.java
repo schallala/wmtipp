@@ -70,7 +70,14 @@ public class MatchEditController extends AbstractEditController<MatchDto> {
     this.autoMatchSelection = autoMatchSelection;
   }
 
-  /**
+  @Override
+  protected void prePersist() {
+    // delete not required subentities
+    if (currentSubject.getGroup().getId() == null) {
+      currentSubject.setGroup(null);
+    }
+  }
+ /**
    * This getter serves as wrapper for the list selection of the abstract controller class
    *
    * @return ordered list of players

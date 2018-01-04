@@ -77,6 +77,10 @@ public class PlayerEditController extends AbstractEditController<PlayerDto> {
   @Override
   protected void prePersist() {
     currentSubject.setPassword(securityService.getSaltedPassword(currentSubject.getPassword()));
+    // delete not required subentities
+    if (currentSubject.getPredictedChampion().getId() == null){
+      currentSubject.setPredictedChampion(null);
+    }
   }
 
   /* Subject specific selection lists */
