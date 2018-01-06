@@ -73,6 +73,13 @@ public class PlayerEditController extends AbstractEditController<PlayerDto> {
   public List<PlayerDto> getSelectionList() {
     return getSubjectList("name", "firstName");
   }
+  
+  @Override
+  public void save(){
+    // encrypt password
+    currentSubject.setPassword(securityService.getSaltedPassword(currentSubject.getPassword()));
+    super.save();
+  }
 
   /* Subject specific selection lists */
   /**

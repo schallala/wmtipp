@@ -26,9 +26,9 @@
             </h:outputText>
           </p:column>
           <p:column headerText="Begegnung" >
-            <h:outputText value="#{tipEditCtrl.mapMatch(tip.match.id).teamOne.name}" />
+            <h:outputText value="#{tip.match.teamOne.name}" />
             -
-            <h:outputText value="#{tipEditCtrl.mapMatch(tip.match.id).teamTwo.name}" />
+            <h:outputText value="#{tip.match.teamTwo.name}" />
           </p:column>
           <p:column headerText="Tipp" sortBy="#{tip.goalsTeamOne}">
             <h:outputText value="#{tip.goalsTeamOne}" />
