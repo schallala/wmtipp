@@ -40,6 +40,8 @@ public class MessageDto extends AbstractBaseDto {
   private Boolean messageRead;
 
   public MessageDto() {
+    this.sender = new PlayerDto();
+    this.recipient = new PlayerDto();
   }
 
   public PlayerDto getSender() {

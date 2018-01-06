@@ -37,7 +37,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class TipServiceImpl extends GenericBaseServiceImpl<TipDto, Tip> implements ITipService {
 
   ITipDao tipDao;
-  
+
   @Inject
   public TipServiceImpl(ITipDao dao) {
     super(dao);
@@ -51,7 +51,7 @@ public class TipServiceImpl extends GenericBaseServiceImpl<TipDto, Tip> implemen
     object.setPlayer(new PlayerDto());
     return object;
   }
-  
+
   @Override
   public List<TipDto> findByPlayerId(Long playerId){
     return tipDao.findByPlayerId(playerId).stream().map(p -> mapper.map(p)).collect(Collectors.toList());

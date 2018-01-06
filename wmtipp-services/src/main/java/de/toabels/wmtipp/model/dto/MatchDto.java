@@ -68,6 +68,10 @@ public class MatchDto extends AbstractBaseDto {
   public MatchDto() {
   }
 
+  public MatchDto(Long id) {
+    super(id);
+  }
+
   public RoundDto getRound() {
     return round;
   }

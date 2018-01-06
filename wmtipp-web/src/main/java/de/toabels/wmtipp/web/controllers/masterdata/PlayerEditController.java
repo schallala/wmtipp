@@ -74,15 +74,6 @@ public class PlayerEditController extends AbstractEditController<PlayerDto> {
     return getSubjectList("name", "firstName");
   }
 
-  @Override
-  protected void prePersist() {
-    currentSubject.setPassword(securityService.getSaltedPassword(currentSubject.getPassword()));
-    // delete not required subentities
-    if (currentSubject.getPredictedChampion().getId() == null){
-      currentSubject.setPredictedChampion(null);
-    }
-  }
-
   /* Subject specific selection lists */
   /**
    * Array of user roles known by the system

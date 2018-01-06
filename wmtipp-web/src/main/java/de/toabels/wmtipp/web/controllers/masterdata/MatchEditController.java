@@ -18,6 +18,7 @@ package de.toabels.wmtipp.web.controllers.masterdata;
 
 import de.toabels.wmtipp.model.dto.MatchDto;
 import de.toabels.wmtipp.services.api.IMatchService;
+import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,6 +54,17 @@ public class MatchEditController extends AbstractEditController<MatchDto> {
     super.init(matchService);
   }
 
+  private Date getCurrentMaxDate() {
+    // get current max start date of tournament, alternatively current date
+    Date maxDate = new Date();
+    for (MatchDto dto : getMatchList()) {
+      if (maxDate.before(dto.getStartDate())) {
+        maxDate = dto.getStartDate();
+      }
+    }
+    return maxDate;
+  }
+
   /**
    * This getter serves as wrapper for the current subject object of the abstract controller class
    *
@@ -70,14 +82,7 @@ public class MatchEditController extends AbstractEditController<MatchDto> {
     this.autoMatchSelection = autoMatchSelection;
   }
 
-  @Override
-  protected void prePersist() {
-    // delete not required subentities
-    if (currentSubject.getGroup().getId() == null) {
-      currentSubject.setGroup(null);
-    }
-  }
- /**
+  /**
    * This getter serves as wrapper for the list selection of the abstract controller class
    *
    * @return ordered list of players

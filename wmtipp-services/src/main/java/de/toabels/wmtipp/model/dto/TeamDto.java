@@ -60,6 +60,10 @@ public class TeamDto extends AbstractBaseDto {
     this.tournamentState = 0;
   }
 
+  public TeamDto(Long id) {
+    super(id);
+  }
+
   public String getName() {
     return name;
   }

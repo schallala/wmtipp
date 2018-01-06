@@ -19,6 +19,8 @@ package de.toabels.wmtipp.web.controllers;
 import de.toabels.wmtipp.model.dto.PlayerDto;
 import de.toabels.wmtipp.services.api.IPlayerService;
 import de.toabels.wmtipp.services.utiils.ISecurityService;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +40,9 @@ public class UserSessionController {
   private static final Logger logger = LoggerFactory.getLogger(UserSessionController.class);
 
   private String login;
-  
+
   private String password;
-  
+
   private PlayerDto currentUser;
 
   public String getLogin() {
@@ -62,13 +64,15 @@ public class UserSessionController {
   public PlayerDto getCurrentUser() {
     return currentUser;
   }
-  
-  public String validateAndlogin(){
+
+  public String validateAndlogin() {
     currentUser = playerService.loginUser(login, securityService.getSaltedPassword(password));
     return "";
   }
-  
-  public String invalidateLogin(){
+
+  public String invalidateLogin() {
+    HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+    session.invalidate();
     currentUser = null;
     return "";
   }

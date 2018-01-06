@@ -105,12 +105,7 @@ public abstract class AbstractEditController<D extends AbstractBaseDto> {
     this.currentSubject = subject;
   }
 
-  /* CRUD actions */
-  protected void prePersist() {
-  }
-
   public void save() {
-    prePersist();
     if (currentSubject != null) {
       D result = (D) subjectService.save(currentSubject);
       editMode = false;
@@ -119,7 +114,6 @@ public abstract class AbstractEditController<D extends AbstractBaseDto> {
   }
 
   public void saveList() {
-    prePersist();
     if (subjectList != null) {
       subjectService.saveList(subjectList);
       editMode = false;
@@ -200,6 +194,15 @@ public abstract class AbstractEditController<D extends AbstractBaseDto> {
    */
   public List<TeamDto> getTeamList() {
       return teamService.listOrdered("name");
+  }
+  
+  public TeamDto mapTeam(Long id) {
+    for (TeamDto dto : getTeamList()) {
+      if (id.equals(dto.getId())) {
+        return dto;
+      }
+    }
+    return null;
   }
 
   /* Feedback popups */

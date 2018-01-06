@@ -52,4 +52,4 @@ public class MatchServiceImpl extends GenericBaseServiceImpl<MatchDto, Match> im
     object.setTeamTwo(new TeamDto());
     return object;
   }
-}
+  }
