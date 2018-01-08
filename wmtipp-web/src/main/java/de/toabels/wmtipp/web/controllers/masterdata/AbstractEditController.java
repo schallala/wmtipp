@@ -19,11 +19,13 @@ package de.toabels.wmtipp.web.controllers.masterdata;
 import de.toabels.wmtipp.model.dto.AbstractBaseDto;
 import de.toabels.wmtipp.model.dto.GroupDto;
 import de.toabels.wmtipp.model.dto.MatchDto;
+import de.toabels.wmtipp.model.dto.PlayerDto;
 import de.toabels.wmtipp.model.dto.RoundDto;
 import de.toabels.wmtipp.model.dto.TeamDto;
 import de.toabels.wmtipp.services.api.IGenericBaseService;
 import de.toabels.wmtipp.services.api.IGroupService;
 import de.toabels.wmtipp.services.api.IMatchService;
+import de.toabels.wmtipp.services.api.IPlayerService;
 import de.toabels.wmtipp.services.api.IRoundService;
 import de.toabels.wmtipp.services.api.ITeamService;
 
@@ -72,7 +74,10 @@ public abstract class AbstractEditController<D extends AbstractBaseDto> {
 
   @Autowired
   private ITeamService teamService;
-  
+
+  @Autowired
+  private IPlayerService playerService;
+
   /* first initialization steps */
   public void init(IGenericBaseService service) {
     if (this.subjectService == null) {
@@ -184,7 +189,16 @@ public abstract class AbstractEditController<D extends AbstractBaseDto> {
    * @return team list
    */
   public List<RoundDto> getRoundList() {
-      return roundService.listOrdered("sortOrder nulls last");
+    return roundService.listOrdered("sortOrder nulls last");
+  }
+
+  /**
+   * List of players for select box
+   *
+   * @return player list
+   */
+  public List<PlayerDto> getPlayerList() {
+    return playerService.listOrdered("name");
   }
 
   /**

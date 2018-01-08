@@ -25,6 +25,7 @@ import de.toabels.wmtipp.services.dao.ITipDao;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,6 +53,7 @@ public class TipServiceImpl extends GenericBaseServiceImpl<TipDto, Tip> implemen
     return object;
   }
 
+  @Cacheable(value = "lists", key = "#root.target.class.name + 'findByPlayerId' + #playerId")
   @Override
   public List<TipDto> findByPlayerId(Long playerId){
     return tipDao.findByPlayerId(playerId).stream().map(p -> mapper.map(p)).collect(Collectors.toList());

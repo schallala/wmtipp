@@ -33,7 +33,8 @@ public class TipDaoImpl extends AbstractGenericDao<Tip> implements ITipDao {
   
   @Override
   public List<Tip> findByPlayerId(Long playerId) {
-    Query query = this.entityManager.createQuery("select t from Tip t where t.player.id = :playerId");
+    Query query = this.entityManager.createQuery(
+            "select t from Tip t where t.player.id = :playerId order by t.match.startDate");
     query.setParameter("playerId", playerId);
     List<Tip> list = query.getResultList();
     return list;
