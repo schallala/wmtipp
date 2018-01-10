@@ -11,38 +11,51 @@
     <h:form>
       <p:growl id="growl" showDetail="true" sticky="true" />  
 
-      <p:selectOneMenu id="playerSelection" value="#{tipEditCtrl.selectedPlayerId}" 
-                       style="width: 150px;" >
-        <f:selectItem itemValue="" itemLabel=" - "/>
-        <f:selectItems value="#{tipEditCtrl.playerList}" 
-                       var="player" itemValue="#{player.id}" itemLabel="#{player.firstName} #{player.name}"/>
-        <p:ajax update="@this,playerTipList"/>
-      </p:selectOneMenu>
+      <p:panel id="playerPanel">
+        <p:selectOneMenu id="playerSelection" value="#{tipEditCtrl.selectedPlayerId}" 
+                         style="width: 150px;" >
+          <f:selectItem itemValue="" itemLabel=" - "/>
+          <f:selectItems value="#{tipEditCtrl.playerList}" 
+                         var="player" itemValue="#{player.id}" itemLabel="#{player.firstName} #{player.name}"/>
+          <p:ajax listener="#{tipEditCtrl.onPlayerSelected()}" update="@this,playerTipList,playerPanel"/>
+        </p:selectOneMenu>
+        <p:panelGrid columns="2" style="margin-top: 16px;">
+          <h:outputText value="Name"/>
+          <h:outputText value="#{tipEditCtrl.selectedPlayer.firstName} #{tipEditCtrl.selectedPlayer.name}"/>
+          <h:outputText value="Exakte Tipps"/>
+          <h:outputText value="#{tipEditCtrl.selectedPlayer.correctTips}" style="float: right"/>
+          <h:outputText value="Richtige Tendenz"/>
+          <h:outputText value="#{tipEditCtrl.selectedPlayer.correctTrends}"  style="float: right"/>
+          <h:outputText value="Punkte gesamt"/>
+          <h:outputText value="#{tipEditCtrl.selectedPlayer.score}" style="float: right"/>
+        </p:panelGrid>
+      </p:panel>
+
       <p:blockUI block="content" trigger="playerSelection" />
 
       <h:panelGrid id="playerTipList">
         <ui:repeat value="#{tipEditCtrl.roundList}" var="round" >
           <p:accordionPanel >
-            <p:tab title="#{round.name}" >
+            <p:tab title="#{round.name}" titleStyle="font-size: 150%;" >
               <h:panelGrid columns="1" cellpadding="10" style="min-width: 400px;" >
                 <ui:repeat value="#{tipEditCtrl.roundGroupListMap.get(round.id)}" var="group">
                   <p:accordionPanel >
                     <p:tab title="#{group.name}" >
                       <h:panelGrid columns="1" cellpadding="10" style="min-width: 360px;">
-                        <p:dataTable value="#{tipEditCtrl.groupMatchListMap.get(group.id)}" var="match">
-                          <p:column>
+                        <p:dataTable value="#{tipEditCtrl.groupMatchListMap.get(group.id)}" var="match" style="border-style: hidden;">
+                          <p:column headerText="Anpfiff">
                             <h:outputText value="#{match.startDate}">
                               <f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
                             </h:outputText>
                             <h:outputText value=" Uhr: "  />
                           </p:column>
-                          <p:column>
+                          <p:column headerText="Begegnung">
                             <h:outputText value="#{match.teamOne.name} - #{match.teamTwo.name}"/>
                           </p:column>
-                          <p:column>
+                          <p:column headerText="Ergebnis">
                             <h:outputText value="#{match.goalsTeamOne} - #{match.goalsTeamTwo}"/>
                           </p:column>
-                          <p:column>
+                          <p:column headerText="Tipp">
                             <h:outputText value="#{tipEditCtrl.matchTipMap.get(match.id).goalsTeamOne} - #{tipEditCtrl.matchTipMap.get(match.id).goalsTeamTwo}"/>
                           </p:column>
                         </p:dataTable>
@@ -52,20 +65,22 @@
                 </ui:repeat>
                 <h:panelGrid columns="1" cellpadding="10" style="min-width: 360px;"
                              >
-                  <p:dataTable value="#{tipEditCtrl.roundMatchListMap.get(round.id)}" var="roundMatch" emptyMessage="">
-                    <p:column>
+                  <p:dataTable value="#{tipEditCtrl.roundMatchListMap.get(round.id)}" 
+                               rendered="#{not empty(tipEditCtrl.roundMatchListMap.get(round.id))}"
+                               var="roundMatch" emptyMessage=" ">
+                    <p:column headerText="Anpfiff">
                       <h:outputText value="#{roundMatch.startDate}">
                         <f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
                       </h:outputText>
                       <h:outputText value=" Uhr: "  />
                     </p:column>
-                    <p:column>
+                    <p:column headerText="Begegnung">
                       <h:outputText value="#{roundMatch.teamOne.name} - #{roundMatch.teamTwo.name}"/>
                     </p:column>
-                    <p:column>
+                    <p:column headerText="Ergebnis">
                       <h:outputText value="#{roundMatch.goalsTeamOne} - #{roundMatch.goalsTeamTwo}"/>
                     </p:column>
-                    <p:column>
+                    <p:column headerText="Tipp">
                       <h:outputText value="#{tipEditCtrl.matchTipMap.get(roundMatch.id).goalsTeamOne} - #{tipEditCtrl.matchTipMap.get(roundMatch.id).goalsTeamTwo}"/>
                     </p:column>
                   </p:dataTable>

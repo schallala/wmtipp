@@ -71,8 +71,6 @@ public class TipEditController extends AbstractEditController<TipDto> {
   }
 
   private void initMaps(){
-//    List<MatchDto> roundMatchList = new ArrayList<>();
-//    List<MatchDto> groupMatchList = new ArrayList<>();
     List<GroupDto> roundGroupList;
             
     // init mapping of groups to rounds, matches to group, matches to round with empty lists
@@ -99,8 +97,6 @@ public class TipEditController extends AbstractEditController<TipDto> {
     tipList = tipService.findByPlayerId(selectedPlayerId);
     matchTipMap = tipList.stream().collect(Collectors.toMap(p -> p.getMatch().getId(), p -> p));
     logger.info("Maps initialized!");
-
-    logger.info("Prüfe mal die Maps ...");
   }
 
   public Map<Long, List<GroupDto>> getRoundGroupListMap() {
@@ -133,10 +129,10 @@ public class TipEditController extends AbstractEditController<TipDto> {
 
   public void setSelectedPlayerId(Long selectedPlayerId) {
     this.selectedPlayerId = selectedPlayerId;
-    initMaps();
   }
 
   public void onPlayerSelected() {
+    initMaps();
     logger.info("New player selected: " + getSelectedPlayer());
   }
 
