@@ -5,7 +5,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
   <h:head>
-    <title>JSF 2 Spring 4 JPA 2 Spielwiese</title>
+    <title>Abels WM Tippspiel 2016</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <h:outputStylesheet name="css/screen.css" />
   </h:head>
@@ -22,58 +22,54 @@
       </h:panelGroup>
     </h:panelGroup>
 
-    <h:panelGrid columns="3"  styleClass="top-aligned-columns">
+    <p:panelGrid columns="3" columnClasses="ui-grid-col-3,ui-grid-col-10" layout="grid" styleClass="ui-panelgrid-blank">
+      <!--<p:panel id="menu_left" header="Links" style="margin-top:20px;width: 150px;">-->
+      <p:menu  id="menu_left"   style="margin-top:20px;width: 170px;" >
+        <p:submenu label="Ajax">
+          <p:menuitem value="Home"  outcome="/home.jsf" />
+          <p:menuitem value="Fahrplan" outcome="/schedule.jsf" />
+          <p:menuitem value="Spieler bearbeiten" outcome="/masterdata/editPlayer.jsf" />
+          <p:menuitem value="Teams bearbeiten" outcome="/masterdata/editTeam.jsf" />
+          <p:menuitem value="Gruppen bearbeiten" outcome="/masterdata/editGroup.jsf" />
+          <p:menuitem value="Runden bearbeiten" outcome="/masterdata/editRound.jsf" />
+          <p:menuitem value="Spiele bearbeiten" outcome="/masterdata/editMatch.jsf" />
+          <p:menuitem value="Tippzettel" outcome="/masterdata/editTips.jsf" />
+          <p:menuitem value="Test Services" outcome="/testServices.jsf" />
+        </p:submenu>
+      </p:menu>
 
-      <h:panelGroup id="sidebar_left" >
-        <p:menu style="min-width: 150px;"  >
-          <p:submenu label="Ajax">
-            <p:menuitem value="Home"  outcome="/home.jsf" />
-            <p:menuitem value="Fahrplan" outcome="/schedule.jsf" />
-            <p:menuitem value="Spieler bearbeiten" outcome="/masterdata/editPlayer.jsf" />
-            <p:menuitem value="Teams bearbeiten" outcome="/masterdata/editTeam.jsf" />
-            <p:menuitem value="Gruppen bearbeiten" outcome="/masterdata/editGroup.jsf" />
-            <p:menuitem value="Runden bearbeiten" outcome="/masterdata/editRound.jsf" />
-            <p:menuitem value="Spiele bearbeiten" outcome="/masterdata/editMatch.jsf" />
-            <p:menuitem value="Tippzettel" outcome="/masterdata/editTips.jsf" />
-            <p:menuitem value="Test Services" outcome="/testServices.jsf" />
-          </p:submenu>
-        </p:menu>
-      </h:panelGroup>
+      <p:panelGrid id="content" columns="1" layout="grid" styleClass="ui-panelgrid-blank"  >
+        <center>
+          <ui:insert name="content">Main Content</ui:insert>
+        </center>
+      </p:panelGrid>
 
-      <h:panelGroup id="container" layout="block">
-        <h:panelGroup id="content" layout="block">
+      <p:panel id="menu_right" header="User" style="margin-top:20px;width: 170px;">
+        <h:form>
+          <h:panelGrid columns="2" rendered="#{userSessionCtrl.currentUser == null}" style="width: 170px;">
+            <p:outputLabel for="login" value="Login: "/>
+            <p:inputText id="login" value="#{userSessionCtrl.login}" style="width: 80px;"/>
+            <p:outputLabel for="password" value="Passwort: "/>
+            <p:password id="password" value="#{userSessionCtrl.password}" style="width: 80px;"/>
+          </h:panelGrid>
           <center>
-            <ui:insert name="content">Main Content</ui:insert>
-          </center>
-        </h:panelGroup>
-      </h:panelGroup>
-
-      <h:panelGroup id="sidebar_right">
-        <p:panel header="User" style="min-width: 150px;"  >
-          <h:form>
-            <p:panelGrid columns="2" rendered="#{userSessionCtrl.currentUser == null}">
-              <p:outputLabel for="login" value="Login: "/>
-              <p:inputText id="login" value="#{userSessionCtrl.login}" style="width: 80px;"/>
-              <p:outputLabel for="password" value="Passwort: "/>
-              <p:password id="password" value="#{userSessionCtrl.password}" style="width: 80px;"/>
+            <p:panelGrid columns="2" rendered="#{userSessionCtrl.currentUser != null}">
+              Hallo #{userSessionCtrl.currentUser.firstName} #{userSessionCtrl.currentUser.name}!
             </p:panelGrid>
-            <center>
-              <p:panelGrid columns="2" rendered="#{userSessionCtrl.currentUser != null}">
-                Hallo #{userSessionCtrl.currentUser.firstName} #{userSessionCtrl.currentUser.name}!
-              </p:panelGrid>
-              <p:commandButton value="Login" actionListener="#{userSessionCtrl.validateAndlogin}" style="margin-top: 5px;"
-                               rendered="#{userSessionCtrl.currentUser == null}" update="sidebar_right"/>
-              <p:commandButton value="Logout" actionListener="#{userSessionCtrl.invalidateLogin}" style="margin-top: 5px;" 
-                               rendered="#{userSessionCtrl.currentUser != null}" update="sidebar_right"/>
-            </center>
-          </h:form>
-        </p:panel>
-      </h:panelGroup>
+            <p:commandButton value="Login" actionListener="#{userSessionCtrl.validateAndlogin}" style="margin-top: 5px;"
+                             rendered="#{userSessionCtrl.currentUser == null}" update="menu_right"/>
+            <p:commandButton value="Logout" actionListener="#{userSessionCtrl.invalidateLogin}" style="margin-top: 5px;" 
+                             rendered="#{userSessionCtrl.currentUser != null}" update="menu_right"/>
+          </center>
+        </h:form>
+      </p:panel>
+      <p:sticky target="header" />
 
-    </h:panelGrid>
+    </p:panelGrid >
+
 
     <h:panelGroup id="footer" layout="block"><br />
-      Developed by Torsten Abels, source code on <p:link href="https://github.com/schallala/" value="GitHub" target="_blank"/> 
+      Developed by Torsten Abels, source code on <p:link href="https://github.com/schallala/wmtipp" value="GitHub" target="_blank"/> 
     </h:panelGroup>
 
   </h:body>
