@@ -92,6 +92,9 @@ public abstract class AbstractEditController<D extends AbstractBaseDto> {
     return subjectList;
   }
 
+  protected void setSubjectList(List<D> list){
+    subjectList =list; 
+  }
 
   /* edit mode flag */
   public boolean isEditMode() {
@@ -122,7 +125,7 @@ public abstract class AbstractEditController<D extends AbstractBaseDto> {
     if (subjectList != null) {
       subjectService.saveList(subjectList);
       editMode = false;
-      growlSuccess(getMessage("global_save_success"), getMessage("global_save_success_detail"));
+      growlSuccess(getMessage("global_save_success"), getMessage("global_save_list_success_detail"));
     }
   }
 

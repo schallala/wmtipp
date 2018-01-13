@@ -47,7 +47,7 @@ public class PlayerDto extends AbstractBaseDto {
 
   private String password;
 
-  private boolean tipsVisible;
+  private Boolean tipsVisible;
 
   private UserRoleType userRole;
 
@@ -147,11 +147,11 @@ public class PlayerDto extends AbstractBaseDto {
     this.password = password;
   }
 
-  public boolean getTipsVisible() {
+  public Boolean getTipsVisible() {
     return tipsVisible;
   }
 
-  public void setTipsVisible(boolean tipsVisible) {
+  public void setTipsVisible(Boolean tipsVisible) {
     this.tipsVisible = tipsVisible;
   }
 

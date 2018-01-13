@@ -21,6 +21,7 @@ import de.toabels.wmtipp.model.dto.MatchDto;
 import de.toabels.wmtipp.model.dto.PlayerDto;
 import de.toabels.wmtipp.model.dto.TipDto;
 import de.toabels.wmtipp.services.api.ITipService;
+import de.toabels.wmtipp.web.controllers.UserSessionController;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -46,6 +47,9 @@ public class TipEditController extends AbstractEditController<TipDto> {
   @Autowired
   ITipService tipService;
 
+  @Autowired
+  UserSessionController userSession;
+
   List<TipDto> tipList;
 
   Long selectedPlayerId;
@@ -70,27 +74,27 @@ public class TipEditController extends AbstractEditController<TipDto> {
     super.init(tipService);
   }
 
-  private void initMaps(){
+  private void initMaps() {
     List<GroupDto> roundGroupList;
-            
+
     // init mapping of groups to rounds, matches to group, matches to round with empty lists
     for (MatchDto match : getMatchList()) {
-      if(match.getGroup().getId() != null){
+      if (match.getGroup().getId() != null) {
         roundGroupListMap.put(match.getRound().getId(), new ArrayList<>());
         groupMatchListMap.put(match.getGroup().getId(), new ArrayList<>());
-      }else{
+      } else {
         roundMatchListMap.put(match.getRound().getId(), new ArrayList<>());
       }
     }
-    
+
     for (MatchDto match : getMatchList()) {
       if (match.getGroup().getId() != null) {
         roundGroupList = roundGroupListMap.get(match.getRound().getId());
-        if(!roundGroupList.contains(match.getGroup())){
+        if (!roundGroupList.contains(match.getGroup())) {
           roundGroupListMap.get(match.getRound().getId()).add(match.getGroup());
         }
         groupMatchListMap.get(match.getGroup().getId()).add(match);
-      }else{
+      } else {
         roundMatchListMap.get(match.getRound().getId()).add(match);
       }
     }
@@ -114,7 +118,7 @@ public class TipEditController extends AbstractEditController<TipDto> {
   public Map<Long, TipDto> getMatchTipMap() {
     return matchTipMap;
   }
-  
+
   public List<TipDto> getTipList() {
     tipList = tipService.findByPlayerId(selectedPlayerId);
     matchTipMap = tipList.stream().collect(Collectors.toMap(p -> p.getMatch().getId(), p -> p));
@@ -124,6 +128,11 @@ public class TipEditController extends AbstractEditController<TipDto> {
 
   /* Player selection stuff */
   public Long getSelectedPlayerId() {
+    // preselect logged in user
+    if (selectedPlayerId == null && userSession.getCurrentUser() != null) {
+      selectedPlayerId = userSession.getCurrentUser().getId();
+      onPlayerSelected();
+    }
     return selectedPlayerId;
   }
 
@@ -138,6 +147,13 @@ public class TipEditController extends AbstractEditController<TipDto> {
 
   public PlayerDto getSelectedPlayer() {
     return getPlayerList().stream().collect(Collectors.toMap(PlayerDto::getId, p -> p)).get(selectedPlayerId);
+  }
+  
+  @Override
+  public void saveList(){
+    logger.info("Save tip list ...");
+    setSubjectList(tipList);
+    super.saveList();
   }
 
 }

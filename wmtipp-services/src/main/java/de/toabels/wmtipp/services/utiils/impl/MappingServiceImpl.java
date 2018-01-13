@@ -35,6 +35,7 @@ import de.toabels.wmtipp.model.dto.RoundDto;
 import de.toabels.wmtipp.model.dto.TeamDto;
 import de.toabels.wmtipp.model.dto.TipDto;
 import de.toabels.wmtipp.services.utiils.IMappingService;
+import java.util.Date;
 import org.springframework.stereotype.Component;
 
 /**
@@ -586,8 +587,8 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
     tip.setGoalsTeamTwo(dto.getGoalsTeamTwo());
     tip.setTrend(dto.getTrend());
     tip.setPlayerScore(dto.getPlayerScore());
-    tip.setCreatedAt(dto.getCreatedAt());
-    tip.setUpdatedAt(dto.getUpdatedAt());
+    tip.setCreatedAt(dto.getCreatedAt() != null ? dto.getCreatedAt() : new Date());
+    tip.setUpdatedAt(new Date());
     return tip;
   }
 

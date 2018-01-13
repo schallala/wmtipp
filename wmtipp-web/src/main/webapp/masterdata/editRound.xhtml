@@ -19,14 +19,15 @@
             <p:inputText id="roundId" value="#{roundEditCtrl.currentRound.id}" 
                          disabled="true"/>
             <p:outputLabel value="#{msg['global_round_name']}" for="name" />
-            <p:inputText id="name" value="#{roundEditCtrl.currentRound.name}" 
+            <p:inputText id="name" value="#{roundEditCtrl.currentRound.name}"  
                          required="true" disabled="#{not roundEditCtrl.editMode}"/>
             <p:outputLabel value="#{msg['global_round_sortorder']}" for="sortorder" />
             <p:inputText id="sortorder" value="#{roundEditCtrl.currentRound.sortOrder}" 
                          disabled="#{not roundEditCtrl.editMode}"/>
             <p:outputLabel value="#{msg['global_round_approve']}" for="approve"/>
-            <p:selectBooleanCheckbox id="approve" value="#{roundEditCtrl.currentRound.approved}"  
-                                     disabled="#{not roundEditCtrl.editMode}"/>
+            <p:selectBooleanButton id="approve" value="#{roundEditCtrl.currentRound.approved}" 
+                                   onIcon="ui-icon-check" offIcon="ui-icon-close" style="width:60px"
+                                   onLabel="Ja" offLabel="Nein" disabled="#{not roundEditCtrl.editMode}"/>
           </h:panelGrid>
           <h:panelGroup id="editPanel_buttons">
             <center>

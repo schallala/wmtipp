@@ -54,17 +54,6 @@ body {
     background-attachment: fixed;
 }
 
-#sidebar_left {
-	min-height: 170px;
-	padding: 4px;
-}
-
-#sidebar_right {
-  min-height: 170px;
-  padding: 4px;
-}
-
-
 #container {
 	padding: 8px;
 }

@@ -8,16 +8,14 @@
                 template="/WEB-INF/templates/template.xhtml">
   <ui:define name="content">
     <h:outputText value="Tippzettel" styleClass="pagetitle"/>
-    <h:form>
-      <p:growl id="growl" showDetail="true" sticky="true" />  
       <p:panel id="playerPanel">
-        <center>
+        <h:form id="playerForm">
+          <center>
           <p:selectOneMenu id="playerSelection" value="#{tipEditCtrl.selectedPlayerId}" 
                            style="width: 150px;" >
-            <f:selectItem itemValue="" itemLabel=" - "/>
             <f:selectItems value="#{tipEditCtrl.playerList}" 
                            var="player" itemValue="#{player.id}" itemLabel="#{player.firstName} #{player.name}"/>
-            <p:ajax listener="#{tipEditCtrl.onPlayerSelected()}" update="@this,playerTipList,playerPanel"/>
+            <p:ajax listener="#{tipEditCtrl.onPlayerSelected()}" update="@this,tipForm:playerTipList,playerPanel"/>
           </p:selectOneMenu>
           <p:panelGrid columns="2" style="margin-top: 16px;">
             <h:outputText value="Name"/>
@@ -30,14 +28,26 @@
             <h:outputText value="#{tipEditCtrl.selectedPlayer.score}" style="float: right"/>
           </p:panelGrid>
         </center>
+        </h:form>
       </p:panel>
 
-      <p:blockUI block="content" trigger="playerSelection" />
+      <p:blockUI block="content" trigger="playerForm:playerSelection" />
 
-      <h:panelGrid id="playerTipList">
-        <ui:repeat value="#{tipEditCtrl.roundList}" var="round" >
-          <p:accordionPanel >
-            <p:tab title="#{round.name}" titleStyle="font-size: 150%;" >
+      <h:form id="tipForm">
+        <p:growl id="growl" showDetail="true" sticky="true" />  
+        <h:panelGroup id="listPanel_buttons_top" style="padding-top: 20px;">
+          <center>
+            <p:commandButton value="#{msg['global_action_edit']}" actionListener="#{tipEditCtrl.edit}" 
+                             update="@form" disabled="#{tipEditCtrl.editMode}"/>
+            <p:commandButton value="#{msg['global_action_save']}" actionListener="#{tipEditCtrl.saveList}" 
+                             update="@form"  disabled="#{not tipEditCtrl.editMode}"/>
+          </center>
+        </h:panelGroup>
+
+        <h:panelGrid id="playerTipList">
+          <ui:repeat value="#{tipEditCtrl.roundList}" var="round" >
+            <p:accordionPanel >
+              <p:tab title="#{round.name}" titleStyle="font-size: 150%;" >
               <h:panelGrid columns="1" cellpadding="1" style="min-width: 400px;" >
                 <ui:repeat value="#{tipEditCtrl.roundGroupListMap.get(round.id)}" var="group">
                   <p:accordionPanel rendered="#{not empty(tipEditCtrl.groupMatchListMap)}" >
@@ -58,11 +68,21 @@
                             <p:graphicImage url="../resources/graphics/#{match.teamTwo.urlFlagImage}" style="padding-right: 10px;float: left;"/>                            
                             <h:outputText value="#{match.teamTwo.name}"/>
                           </p:column>
-                          <p:column headerText="Ergebnis" style="border-color: transparent;width: 55px;">
-                            <h:outputText value="#{match.goalsTeamOne} - #{match.goalsTeamTwo}"/>
+                          <p:column headerText="Ergebnis" style="border-color: transparent;width: 70px;">
+                            <center>
+                              <h:outputText value="#{match.goalsTeamOne} - #{match.goalsTeamTwo}"/>
+                            </center>
                           </p:column>
-                          <p:column headerText="Tipp" style="border-color: transparent;width: 55px;">
-                            <h:outputText value="#{tipEditCtrl.matchTipMap.get(match.id).goalsTeamOne} - #{tipEditCtrl.matchTipMap.get(match.id).goalsTeamTwo}"/>
+                          <p:column headerText="Tipp" style="border-color: transparent;width: 70px;">
+                            <center>
+                              <h:outputText value="#{tipEditCtrl.matchTipMap.get(match.id).goalsTeamOne} - #{tipEditCtrl.matchTipMap.get(match.id).goalsTeamTwo}"
+                                            rendered="#{not tipEditCtrl.editMode}"/>
+                              <h:panelGroup rendered="#{tipEditCtrl.editMode}">
+                                <p:inputText value="#{tipEditCtrl.matchTipMap.get(match.id).goalsTeamOne}" style="width: 16px;"/>
+                                - 
+                                <p:inputText value="#{tipEditCtrl.matchTipMap.get(match.id).goalsTeamTwo}" style="width: 16px;"/>
+                              </h:panelGroup>
+                            </center>
                           </p:column>
                         </p:dataTable>
                       </h:panelGrid>
@@ -74,11 +94,6 @@
                   <p:dataTable value="#{tipEditCtrl.roundMatchListMap.get(round.id)}" 
                                rendered="#{not empty(tipEditCtrl.roundMatchListMap.get(round.id))}"
                                var="roundMatch" emptyMessage=" ">
-                    <p:column headerText="Datum" style="border-color: transparent;width: 80px;">
-                      <h:outputText value="#{roundMatch.startDate}">
-                        <f:convertDateTime pattern="dd.MM.yyyy" />
-                      </h:outputText>
-                    </p:column>
                     <p:column headerText="Begegnung" style="border-color: transparent;">
                       <h:outputText value="#{roundMatch.teamOne.name}"/>
                       <p:graphicImage url="../resources/graphics/#{roundMatch.teamOne.urlFlagImage}" style="padding-left: 10px;float: right;"/>   
@@ -87,11 +102,21 @@
                       <p:graphicImage url="../resources/graphics/#{roundMatch.teamTwo.urlFlagImage}" style="padding-right: 10px;float: left;"/>                            
                       <h:outputText value="#{roundMatch.teamTwo.name}"/>
                     </p:column>
-                    <p:column headerText="Ergebnis" style="border-color: transparent;width: 55px;">
+                    <p:column headerText="Ergebnis" style="border-color: transparent;width: 70px;">
+                      <center>
                       <h:outputText value="#{roundMatch.goalsTeamOne} - #{roundMatch.goalsTeamTwo}"/>
+                      </center>
                     </p:column>
-                    <p:column headerText="Tipp" style="border-color: transparent;width: 55px;">
-                      <h:outputText value="#{tipEditCtrl.matchTipMap.get(match.id).goalsTeamOne} - #{tipEditCtrl.matchTipMap.get(match.id).goalsTeamTwo}"/>
+                    <p:column headerText="Tipp" style="border-color: transparent;width: 70px;">
+                      <center>
+                        <h:outputText value="#{tipEditCtrl.matchTipMap.get(roundMatch.id).goalsTeamOne} - #{tipEditCtrl.matchTipMap.get(roundMatch.id).goalsTeamTwo}"
+                                    rendered="#{not tipEditCtrl.editMode}"/>
+                      <h:panelGroup rendered="#{tipEditCtrl.editMode}">
+                      <p:inputText value="#{tipEditCtrl.matchTipMap.get(roundMatch.id).goalsTeamOne}" style="width: 16px;"/>
+                      - 
+                      <p:inputText value="#{tipEditCtrl.matchTipMap.get(roundMatch.id).goalsTeamTwo}" style="width: 16px;"/>
+                      </h:panelGroup>
+                      </center>
                     </p:column>
                   </p:dataTable>
                 </h:panelGrid>
@@ -100,14 +125,14 @@
           </p:accordionPanel>
         </ui:repeat>
       </h:panelGrid>
-      <!--      <h:panelGroup id="listPanel_buttons">
-              <center>
-                <p:commandButton value="#{msg['global_action_edit']}" actionListener="#{roundEditCtrl.edit}" 
-                                 update="@form" disabled="#{roundEditCtrl.editMode}"/>
-                <p:commandButton value="#{msg['global_action_delete']}" actionListener="#{roundEditCtrl.delete}" 
-                                 update="@form"  disabled="#{roundEditCtrl.editMode}"/>
-              </center>
-            </h:panelGroup>-->
+      <h:panelGroup id="listPanel_buttons" style="padding-top: 20px;">
+        <center>
+          <p:commandButton value="#{msg['global_action_edit']}" actionListener="#{tipEditCtrl.edit}" 
+                           update="@form" disabled="#{tipEditCtrl.editMode}"/>
+          <p:commandButton value="#{msg['global_action_save']}" actionListener="#{tipEditCtrl.saveList}" 
+                           update="@form"  disabled="#{not tipEditCtrl.editMode}"/>
+        </center>
+      </h:panelGroup>
       <!-- pseudo responsible -->
       <p:dataTable value=" "/>
 

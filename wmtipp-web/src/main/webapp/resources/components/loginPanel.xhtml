@@ -1,0 +1,31 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:composite="http://java.sun.com/jsf/composite">
+
+  <composite:interface>
+    <composite:attribute name="panelTitle" default="User"/>
+  </composite:interface>
+
+  <composite:implementation>
+    <p:panel header="#{cc.attrs.panelTitle}" style="width: 180px;">
+      <h:form>
+        <h:panelGrid columns="2" rendered="#{userSessionCtrl.currentUser == null}" style="width: 180px;">
+          <p:outputLabel for="loginBox" value="Login: "/>
+          <p:inputText id="loginBox" value="#{userSessionCtrl.login}" style="width: 80px;"/>
+          <p:outputLabel for="passwordBox" value="Passwort: "/>
+          <p:password id="passwordBox" value="#{userSessionCtrl.password}" style="width: 80px;"/>
+        </h:panelGrid>
+        <center>
+          <p:panelGrid columns="2" rendered="#{userSessionCtrl.currentUser != null}">
+            Hallo #{userSessionCtrl.currentUser.firstName}!
+          </p:panelGrid>
+          <p:commandButton value="Login" actionListener="#{userSessionCtrl.validateAndlogin}" style="margin-top: 5px;"
+                           rendered="#{userSessionCtrl.currentUser == null}" update="@form,content"/>
+          <p:commandButton value="Logout" actionListener="#{userSessionCtrl.invalidateLogin}" style="margin-top: 5px;" 
+                           rendered="#{userSessionCtrl.currentUser != null}" update="@form,content"/>
+        </center>
+      </h:form>
+    </p:panel>
+  </composite:implementation>
+</html>

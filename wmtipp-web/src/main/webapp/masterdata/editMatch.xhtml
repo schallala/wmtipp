@@ -11,7 +11,7 @@
     <h:form>
       <p:growl id="growl" showDetail="true" sticky="true" />  
 
-      <p:panelGrid columns="2" styleClass="editpage_panel_region">
+      <p:panelGrid columns="2" styleClass="editpage_panel_region" layout="grid" style="vertical-align: top;">
         <p:panel id="editPanel" header="#{msg['editMatches_subtitle']}" toggleable="true" 
                  style="min-width: 350px;min-height: 500px;" styleClass="editpage_panel_edit">
           <h:panelGrid style="min-height: 400px;" columns="2" cellpadding="5" >
@@ -97,7 +97,7 @@
         </p:panel>
 
         <p:panel id="listPanel" header="#{msg['editMatches_selectionlist']}" toggleable="true" 
-                 style="min-width: 350px;min-height: 520px;" styleClass="editpage_panel_list">
+                 style="min-width: 350px;min-height: 500px;" styleClass="editpage_panel_list">
           <h:panelGrid style="min-height: 455px;">
             <h:selectOneListbox id="advanced" value="#{matchEditCtrl.currentMatch.id}" 
                                 style="min-width: 330px;height: 420px;" disabled="#{matchEditCtrl.editMode}" 
@@ -107,7 +107,7 @@
               <p:ajax update="editPanel,editPanel_buttons,listPanel_buttons"/>
             </h:selectOneListbox>
           </h:panelGrid>
-          <h:panelGroup id="listPanel_buttons" >
+          <h:panelGroup  id="listPanel_buttons" >
             <center>
               <p:commandButton value="#{msg['global_action_edit']}" actionListener="#{matchEditCtrl.edit}" 
                                update="@form" disabled="#{matchEditCtrl.editMode}"/>
