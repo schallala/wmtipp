@@ -17,6 +17,7 @@
 package de.toabels.wmtipp.model.dto;
 
 import de.toabels.wmtipp.model.types.UserRoleType;
+import java.util.Date;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -52,6 +53,8 @@ public class PlayerDto extends AbstractBaseDto {
   private UserRoleType userRole;
 
   private String login;
+
+  private Date lastActivity;
 
   public PlayerDto() {
     this.feePaid = false;
@@ -169,6 +172,14 @@ public class PlayerDto extends AbstractBaseDto {
 
   public void setLogin(String login) {
     this.login = login;
+  }
+
+  public Date getLastActivity() {
+    return lastActivity;
+  }
+
+  public void setLastActivity(Date lastActivity) {
+    this.lastActivity = lastActivity;
   }
 
   @Override

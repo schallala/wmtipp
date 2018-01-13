@@ -18,6 +18,7 @@ package de.toabels.wmtipp.model.db;
 
 import de.toabels.wmtipp.model.types.UserRoleType;
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,6 +30,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -75,9 +78,11 @@ public class Player implements IEntityBase<Player>, Serializable {
   @Enumerated(EnumType.STRING)
   private UserRoleType userRole;
   @Basic(optional = false)
-  @Column(name = "login")
-  
+  @Column(name = "login")  
   private String login;
+  @Column(name = "last_activity")
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date lastActivity;
 
   public Player() {
   }
@@ -200,6 +205,15 @@ public class Player implements IEntityBase<Player>, Serializable {
     this.login = login;
   }
 
+  public Date getLastActivity() {
+    return lastActivity;
+  }
+
+  public void setLastActivity(Date lastActivity) {
+    this.lastActivity = lastActivity;
+  }
+
+  
   @Override
   public int hashCode() {
     int hash = 0;

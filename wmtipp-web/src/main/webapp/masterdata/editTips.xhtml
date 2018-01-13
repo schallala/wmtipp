@@ -38,7 +38,9 @@
         <h:panelGroup id="listPanel_buttons_top" style="padding-top: 20px;">
           <center>
             <p:commandButton value="#{msg['global_action_edit']}" actionListener="#{tipEditCtrl.edit}" 
-                             update="@form" disabled="#{tipEditCtrl.editMode}"/>
+                             update="@form" rendered="#{not tipEditCtrl.editMode}"/>
+            <p:commandButton value="#{msg['global_action_cancel']}" actionListener="#{tipEditCtrl.cancel}" 
+                             update="@form"  rendered="#{tipEditCtrl.editMode}"/>
             <p:commandButton value="#{msg['global_action_save']}" actionListener="#{tipEditCtrl.saveList}" 
                              update="@form"  disabled="#{not tipEditCtrl.editMode}"/>
           </center>
@@ -128,7 +130,9 @@
       <h:panelGroup id="listPanel_buttons" style="padding-top: 20px;">
         <center>
           <p:commandButton value="#{msg['global_action_edit']}" actionListener="#{tipEditCtrl.edit}" 
-                           update="@form" disabled="#{tipEditCtrl.editMode}"/>
+                           update="@form" rendered="#{not tipEditCtrl.editMode}"/>
+          <p:commandButton value="#{msg['global_action_cancel']}" actionListener="#{tipEditCtrl.cancel}" 
+                           update="@form"  rendered="#{tipEditCtrl.editMode}"/>
           <p:commandButton value="#{msg['global_action_save']}" actionListener="#{tipEditCtrl.saveList}" 
                            update="@form"  disabled="#{not tipEditCtrl.editMode}"/>
         </center>

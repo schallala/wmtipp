@@ -19,6 +19,8 @@ package de.toabels.wmtipp.web.controllers;
 import de.toabels.wmtipp.model.dto.PlayerDto;
 import de.toabels.wmtipp.services.api.IPlayerService;
 import de.toabels.wmtipp.services.utiils.ISecurityService;
+import java.util.ArrayList;
+import java.util.List;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
@@ -75,6 +77,13 @@ public class UserSessionController {
     session.invalidate();
     currentUser = null;
     return "";
+  }
+  
+  public List<PlayerDto> getLoggedInUsers(){
+    if(currentUser == null){
+      return new ArrayList<>();
+    }
+    return playerService.getLoggedInUsers(currentUser);
   }
 
 }

@@ -18,6 +18,7 @@ package de.toabels.wmtipp.services.api;
 
 import de.toabels.wmtipp.model.dto.PlayerDto;
 import de.toabels.wmtipp.model.db.Player;
+import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,5 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public interface IPlayerService extends IGenericBaseService<PlayerDto, Player> {
 
-  PlayerDto loginUser(String login, String password);  
+  PlayerDto loginUser(String login, String password); 
+  
+  List<PlayerDto> getLoggedInUsers(PlayerDto player);
 }

@@ -433,6 +433,7 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
     dto.setFirstName(player.getFirstName());
     dto.setEmail(player.getEmail());
     dto.setLogin(player.getLogin());
+    dto.setLastActivity(player.getLastActivity());
     dto.setUserRole(player.getUserRole());
     dto.setTipsVisible(player.getTipsVisible());
     dto.setPassword(player.getPassword());
@@ -461,6 +462,7 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
     player.setFirstName(dto.getFirstName());
     player.setEmail(dto.getEmail());
     player.setLogin(dto.getLogin());
+    player.setLastActivity(dto.getLastActivity());
     player.setUserRole(dto.getUserRole());
     player.setTipsVisible(dto.getTipsVisible());
     player.setPassword(dto.getPassword());

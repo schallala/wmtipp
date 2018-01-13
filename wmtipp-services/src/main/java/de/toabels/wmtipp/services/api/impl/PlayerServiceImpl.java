@@ -21,6 +21,8 @@ import de.toabels.wmtipp.model.db.Player;
 import de.toabels.wmtipp.model.dto.TeamDto;
 import de.toabels.wmtipp.services.api.IPlayerService;
 import de.toabels.wmtipp.services.dao.IPlayerDao;
+import java.util.Date;
+import java.util.List;
 import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +36,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class PlayerServiceImpl extends GenericBaseServiceImpl<PlayerDto, Player> implements IPlayerService {
 
   IPlayerDao playerDao;
-
+  
   @Inject
   public PlayerServiceImpl(IPlayerDao dao) {
     super(dao);
@@ -56,5 +58,13 @@ public class PlayerServiceImpl extends GenericBaseServiceImpl<PlayerDto, Player>
       return mapper.map(result);
     }
     return null;
+  }
+  
+  @Override
+  public List<PlayerDto> getLoggedInUsers(PlayerDto player){
+    // set last activity of calling user
+    player.setLastActivity(new Date());
+    super.save(player);
+    return super.listOrdered("lastActivity desc");
   }
 }

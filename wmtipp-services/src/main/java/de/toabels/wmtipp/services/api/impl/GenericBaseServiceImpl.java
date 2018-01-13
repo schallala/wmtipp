@@ -125,7 +125,7 @@ public abstract class GenericBaseServiceImpl<D extends AbstractBaseDto, E extend
     });
   }
 
-  @Cacheable(value = "lists", key = "#root.target.class.name + 'list'")
+//  @Cacheable(value = "lists", key = "#root.target.class.name + 'list'")
   @Override
   public List<D> list() {
     return dao.findAll().stream().map(p -> mapper.map(p)).collect(Collectors.toList());
