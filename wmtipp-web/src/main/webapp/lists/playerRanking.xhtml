@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/templates/template.xhtml">
+  <ui:define name="content">
+    <h:outputText value="#{msg['playerRanking_title']}" styleClass="pagetitle"/>
+    <h:form>
+      <p:growl id="growl" showDetail="true" sticky="true" />  
+
+
+
+      <p:dataTable var="player" value="#{playerRankingCtrl.ranking}"
+                   rows="50" stickyHeader="true" rowIndexVar="position"
+                   paginator="true"
+                   paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+                   rowsPerPageTemplate="10,25,50,100"                     >
+        <p:column headerText="#{msg['global_player_rank']}"  sortBy="#{position}" style="border-color: lightskyblue;" width="10%">
+          <h:outputText value="#{position + 1}"  style="float: right"/>
+        </p:column>
+        <p:column headerText="#{msg['global_player_login']}" sortBy="#{player.login}" style="border-color: lightskyblue;" width="10%">
+          <h:outputText value="#{player.login}" />
+        </p:column>
+        <p:column headerText="#{msg['global_player_name']}"  sortBy="#{player.name}" style="border-color: lightskyblue;" width="20%">
+          <h:outputText value="#{player.name}" />
+        </p:column>
+        <p:column headerText="#{msg['global_player_firstname']}"  sortBy="#{player.firstName}" style="border-color: lightskyblue;" width="20%">
+          <h:outputText value="#{player.firstName}" />
+        </p:column>
+        <p:column headerText="#{msg['global_player_correctTrends']}"  sortBy="#{player.correctTrends}" style="border-color: lightskyblue;" width="10%">
+          <h:outputText value="#{player.correctTrends}"  style="float: right"/>
+        </p:column>
+        <p:column headerText="#{msg['global_player_correctTips']}"  sortBy="#{player.correctTips}" style="border-color: lightskyblue;" width="10%">
+          <h:outputText value="#{player.correctTips}"  style="float: right"/>
+        </p:column>
+        <p:column headerText="#{msg['global_player_score']}"  sortBy="#{player.score}" style="border-color: lightskyblue;" width="10%">
+          <h:outputText value="#{player.score}"  style="float: right"/>
+        </p:column>
+
+      </p:dataTable>
+
+
+    </h:form>
+  </ui:define>
+</ui:composition>

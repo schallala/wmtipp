@@ -13,9 +13,9 @@
   <h:body id="page">
 
     <h:panelGroup  layout="block">
-      <h:panelGroup layout="block" style="background: #62b3d4;padding-top: 10px;padding-left: 5px;">
-        <p:clock mode="client"  pattern="dd.MM.yyyy - HH:mm:ss" />
-      </h:panelGroup>
+      <!--      <h:panelGroup layout="block" style="background: #62b3d4;padding-top: 10px;padding-left: 5px;">
+              <p:clock mode="client"  pattern="dd.MM.yyyy - HH:mm:ss" />
+            </h:panelGroup>-->
       <h:panelGroup id="header" layout="block">
         <h:graphicImage  url="/resources/graphics/2018.png" style="padding-right: 50px" />
         <h:graphicImage  url="/resources/graphics/header.de.png"  />
@@ -31,6 +31,8 @@
             <p:menuitem value="Home"  outcome="/home.jsf" />
             <p:menuitem value="Fahrplan" outcome="/schedule.jsf" />
             <p:menuitem value="Test Services" outcome="/testServices.jsf" />
+            <p:menuitem value="Tippzettel" outcome="/masterdata/editTips.jsf" />
+            <p:menuitem value="Rangliste" outcome="/lists/playerRanking.jsf" />
           </p:submenu>
           <p:submenu label="Stammdaten">
             <p:menuitem value="Spieler bearbeiten" outcome="/masterdata/editPlayer.jsf" />
@@ -38,7 +40,6 @@
             <p:menuitem value="Gruppen bearbeiten" outcome="/masterdata/editGroup.jsf" />
             <p:menuitem value="Runden bearbeiten" outcome="/masterdata/editRound.jsf" />
             <p:menuitem value="Spiele bearbeiten" outcome="/masterdata/editMatch.jsf" />
-            <p:menuitem value="Tippzettel" outcome="/masterdata/editTips.jsf" />
           </p:submenu>
         </p:menu>
       </p:panelGrid>
@@ -50,7 +51,7 @@
 
       <p:panelGrid id="menuright" columns="1" layout="grid" style="float: right">
         <wmc:loginPanel panelTitle="User"/>
-      <p:sticky target="header" />
+        <p:sticky target="header" />
       </p:panelGrid>
     </p:panelGrid >
 

@@ -17,17 +17,8 @@
 package de.toabels.wmtipp.web.controllers.masterdata;
 
 import de.toabels.wmtipp.model.dto.AbstractBaseDto;
-import de.toabels.wmtipp.model.dto.GroupDto;
-import de.toabels.wmtipp.model.dto.MatchDto;
-import de.toabels.wmtipp.model.dto.PlayerDto;
-import de.toabels.wmtipp.model.dto.RoundDto;
 import de.toabels.wmtipp.model.dto.TeamDto;
 import de.toabels.wmtipp.services.api.IGenericBaseService;
-import de.toabels.wmtipp.services.api.IGroupService;
-import de.toabels.wmtipp.services.api.IMatchService;
-import de.toabels.wmtipp.services.api.IPlayerService;
-import de.toabels.wmtipp.services.api.IRoundService;
-import de.toabels.wmtipp.services.api.ITeamService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,10 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Abstract base class to manage CRUD operations on master data objects
@@ -46,7 +34,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author Torsten Abels <torsten.abels@gmail.com>
  * @param <D> - DTO class of page subject
  */
-public abstract class AbstractEditController<D extends AbstractBaseDto> {
+public abstract class AbstractEditController<D extends AbstractBaseDto> extends AbstractController {
 
   private IGenericBaseService subjectService;
 
@@ -62,22 +50,6 @@ public abstract class AbstractEditController<D extends AbstractBaseDto> {
 
   protected boolean editMode;
 
-  /* define lookup services for listboces in central spot */
-  @Autowired
-  private IMatchService matchService;
-
-  @Autowired
-  private IGroupService groupService;
-
-  @Autowired
-  private IRoundService roundService;
-
-  @Autowired
-  private ITeamService teamService;
-
-  @Autowired
-  private IPlayerService playerService;
-
   /* first initialization steps */
   public void init(IGenericBaseService service) {
     if (this.subjectService == null) {
@@ -92,8 +64,8 @@ public abstract class AbstractEditController<D extends AbstractBaseDto> {
     return subjectList;
   }
 
-  protected void setSubjectList(List<D> list){
-    subjectList =list; 
+  protected void setSubjectList(List<D> list) {
+    subjectList = list;
   }
 
   /* edit mode flag */
@@ -103,7 +75,7 @@ public abstract class AbstractEditController<D extends AbstractBaseDto> {
 
   /* current subject of crud operations */
   public D getCurrentSubject() {
-    if(currentSubject == null){
+    if (currentSubject == null) {
       setNewSubjectInstance();
     }
     return currentSubject;
@@ -167,52 +139,6 @@ public abstract class AbstractEditController<D extends AbstractBaseDto> {
     }
   }
 
-  /* Subject specific selection lists */
-  /**
-   * List of matches for select box
-   *
-   * @return team list
-   */
-  public List<MatchDto> getMatchList() {
-      return matchService.listOrdered("startDate");
-  }
-
-  /**
-   * List of groups for select box
-   *
-   * @return team list
-   */
-  public List<GroupDto> getGroupList() {
-      return groupService.listOrdered("sortOrder");
-  }
-
-  /**
-   * List of rounds for select box
-   *
-   * @return team list
-   */
-  public List<RoundDto> getRoundList() {
-    return roundService.listOrdered("sortOrder nulls last");
-  }
-
-  /**
-   * List of players for select box
-   *
-   * @return player list
-   */
-  public List<PlayerDto> getPlayerList() {
-    return playerService.listOrdered("name");
-  }
-
-  /**
-   * List of teams for select box
-   *
-   * @return team list
-   */
-  public List<TeamDto> getTeamList() {
-      return teamService.listOrdered("name");
-  }
-  
   public TeamDto mapTeam(Long id) {
     for (TeamDto dto : getTeamList()) {
       if (id.equals(dto.getId())) {
@@ -220,24 +146,6 @@ public abstract class AbstractEditController<D extends AbstractBaseDto> {
       }
     }
     return null;
-  }
-
-  /* Feedback popups */
-  private void growlSuccess(String summary, String detail) {
-    FacesContext context = FacesContext.getCurrentInstance();
-    context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail));
-  }
-
-  private void growlFailure(String summary, String detail) {
-    FacesContext context = FacesContext.getCurrentInstance();
-    context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, detail));
-  }
-
-  private String getMessage(String key) {
-    if (messageBundle == null) {
-      messageBundle = ResourceBundle.getBundle("messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
-    }
-    return messageBundle.getString(key);
   }
 
 }
