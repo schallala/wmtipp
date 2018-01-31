@@ -36,7 +36,7 @@ import de.toabels.wmtipp.model.dto.TeamDto;
 import de.toabels.wmtipp.model.dto.TipDto;
 import de.toabels.wmtipp.services.utiils.IMappingService;
 import java.util.Date;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  *
@@ -44,7 +44,7 @@ import org.springframework.stereotype.Component;
  * @param <D>
  * @param <E>
  */
-@Component
+@Service
 public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase<E>> implements IMappingService<D, E> {
 
   /**

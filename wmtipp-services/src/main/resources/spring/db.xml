@@ -12,7 +12,7 @@
 	<!-- Scans within the base package of the application for @Components to configure as beans -->
 	<bean id="placeholderConfig"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="location" value="classpath:spring/db.properties" />
+		<property name="location" value="classpath:db/db.properties" />
 	</bean>
 
 	<bean id="entityManagerFactory"
@@ -20,13 +20,13 @@
 		<property name="jpaVendorAdapter">
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
 				<property name="showSql" value="true" />
-				<property name="generateDdl" value="true" />
+				<property name="generateDdl" value="${db.generateDdl}" />
 				<property name="databasePlatform" value="${db.dialect}" />
 			</bean>
 		</property>		
 	</bean>
 
-	<bean id="dataSource" class="org.apache.tomcat.dbcp.dbcp2.BasicDataSource"
+	<bean id="dataSource" class="org.apache.tomcat.dbcp.dbcp2.BasicDataSource" 
 		destroy-method="close">
 		<property name="driverClassName" value="${db.driver}" />
 		<property name="url" value="${db.url}" />

@@ -37,6 +37,13 @@
       <artifactId>hsqldb</artifactId>
     </dependency>
 
+    <!-- database migration with flyway -->
+    <dependency>
+        <groupId>org.flywaydb</groupId>
+        <artifactId>flyway-core</artifactId>
+        <version>5.0.6</version>
+    </dependency>
+
     <!-- Spring Dependencies -->
     <dependency>
       <groupId>org.springframework</groupId>
