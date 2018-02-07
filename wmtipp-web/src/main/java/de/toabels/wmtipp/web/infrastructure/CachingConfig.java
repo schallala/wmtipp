@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package de.toabels.wmtipp.web.infrastructure;
 
 import static javax.management.timer.Timer.ONE_DAY;
@@ -27,21 +26,27 @@ import org.springframework.scheduling.annotation.Scheduled;
 @EnableScheduling
 public class CachingConfig {
 
-  private static final Logger logger = LoggerFactory.getLogger(CachingConfig.class);
+    private static final Logger logger = LoggerFactory.getLogger(CachingConfig.class);
 
-  /**
-   * Scheduled cache eviting to avoid memory problems
-   */
-  @Scheduled(fixedRate = ONE_DAY)
-  @CacheEvict(value = "lists", allEntries = true)
-  public void clearCache() {
-    logger.info("Cache cleared.");
-  }
-    
-  
-  @Bean
-  public CacheManager cacheManager() {
-    logger.info("Cache manager intialized.");
-    return new ConcurrentMapCacheManager("lists", "entities");
-  }
+    /**
+     * Scheduled cache eviting to avoid memory problems
+     */
+    @Scheduled(fixedRate = ONE_DAY)
+    @CacheEvict(value = "lists", allEntries = true)
+    public void clearCache() {
+        logger.info("Cache cleared.");
+    }
+
+    /**
+     * Define caches:
+     * lists: master data lists 
+     * entities: master data entities
+     * tips: tip lists per player and competition
+     * @return 
+     */
+    @Bean
+    public CacheManager cacheManager() {
+        logger.info("Cache manager intialized.");
+        return new ConcurrentMapCacheManager("lists", "entities", "tips");
+    }
 }

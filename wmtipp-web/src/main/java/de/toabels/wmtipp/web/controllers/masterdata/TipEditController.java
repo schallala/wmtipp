@@ -44,116 +44,116 @@ import org.springframework.stereotype.Controller;
 @Scope("session")
 public class TipEditController extends AbstractEditController<TipDto> {
 
-  @Autowired
-  ITipService tipService;
+    @Autowired
+    ITipService tipService;
 
-  @Autowired
-  UserSessionController userSession;
+    @Autowired
+    UserSessionController userSession;
 
-  List<TipDto> tipList;
+    List<TipDto> tipList;
 
-  Long selectedPlayerId;
+    Long selectedPlayerId;
 
-  private final Map<Long, List<MatchDto>> roundMatchListMap = new HashMap<>();
+    private final Map<Long, List<MatchDto>> roundMatchListMap = new HashMap<>();
 
-  private final Map<Long, List<GroupDto>> roundGroupListMap = new HashMap<>();
+    private final Map<Long, List<GroupDto>> roundGroupListMap = new HashMap<>();
 
-  private final Map<Long, List<MatchDto>> groupMatchListMap = new HashMap<>();
+    private final Map<Long, List<MatchDto>> groupMatchListMap = new HashMap<>();
 
-  private Map<Long, TipDto> matchTipMap = new HashMap<>();
+    private Map<Long, TipDto> matchTipMap = new HashMap<>();
 
-  private static final Logger logger = LoggerFactory.getLogger(TipEditController.class);
+    private static final Logger logger = LoggerFactory.getLogger(TipEditController.class);
 
-  /* Following methods should be implemented in a similar way by all child classes of AbstractEditController */
+    /* Following methods should be implemented in a similar way by all child classes of AbstractEditController */
  /* Concrete implementation may vary depending on the subject of the edit page                              */
-  /**
-   * Init method calls super.init with specific service instance
-   */
-  @PostConstruct
-  public void init() {
-    super.init(tipService);
-  }
-
-  private void initMaps() {
-    List<GroupDto> roundGroupList;
-
-    // init mapping of groups to rounds, matches to group, matches to round with empty lists
-    for (MatchDto match : getMatchList()) {
-      if (match.getGroup().getId() != null) {
-        roundGroupListMap.put(match.getRound().getId(), new ArrayList<>());
-        groupMatchListMap.put(match.getGroup().getId(), new ArrayList<>());
-      } else {
-        roundMatchListMap.put(match.getRound().getId(), new ArrayList<>());
-      }
+    /**
+     * Init method calls super.init with specific service instance
+     */
+    @PostConstruct
+    public void init() {
+        super.init(tipService);
     }
 
-    for (MatchDto match : getMatchList()) {
-      if (match.getGroup().getId() != null) {
-        roundGroupList = roundGroupListMap.get(match.getRound().getId());
-        if (!roundGroupList.contains(match.getGroup())) {
-          roundGroupListMap.get(match.getRound().getId()).add(match.getGroup());
+    private void initMaps() {
+        List<GroupDto> roundGroupList;
+
+        // init mapping of groups to rounds, matches to group, matches to round
+        for (MatchDto match : getMatchList()) {
+            if (match.getGroup().getId() != null) {
+                roundGroupListMap.put(match.getRound().getId(), new ArrayList<>());
+                groupMatchListMap.put(match.getGroup().getId(), new ArrayList<>());
+            } else {
+                roundMatchListMap.put(match.getRound().getId(), new ArrayList<>());
+            }
         }
-        groupMatchListMap.get(match.getGroup().getId()).add(match);
-      } else {
-        roundMatchListMap.get(match.getRound().getId()).add(match);
-      }
+
+        for (MatchDto match : getMatchList()) {
+            if (match.getGroup().getId() != null) {
+                roundGroupList = roundGroupListMap.get(match.getRound().getId());
+                if (!roundGroupList.contains(match.getGroup())) {
+                    roundGroupListMap.get(match.getRound().getId()).add(match.getGroup());
+                }
+                groupMatchListMap.get(match.getGroup().getId()).add(match);
+            } else {
+                roundMatchListMap.get(match.getRound().getId()).add(match);
+            }
+        }
+        tipList = tipService.findByPlayerId(selectedPlayerId);
+        matchTipMap = tipList.stream().collect(Collectors.toMap(p -> p.getMatch().getId(), p -> p));
+        logger.info("Maps initialized!");
     }
-    tipList = tipService.findByPlayerId(selectedPlayerId);
-    matchTipMap = tipList.stream().collect(Collectors.toMap(p -> p.getMatch().getId(), p -> p));
-    logger.info("Maps initialized!");
-  }
 
-  public Map<Long, List<GroupDto>> getRoundGroupListMap() {
-    return roundGroupListMap;
-  }
-
-  public Map<Long, List<MatchDto>> getGroupMatchListMap() {
-    return groupMatchListMap;
-  }
-
-  public Map<Long, List<MatchDto>> getRoundMatchListMap() {
-    return roundMatchListMap;
-  }
-
-  public Map<Long, TipDto> getMatchTipMap() {
-    return matchTipMap;
-  }
-
-  public List<TipDto> getTipList() {
-    tipList = tipService.findByPlayerId(selectedPlayerId);
-    matchTipMap = tipList.stream().collect(Collectors.toMap(p -> p.getMatch().getId(), p -> p));
-    logger.info("Maps initialized!");
-    return tipList;
-  }
-
-  /* Player selection stuff */
-  public Long getSelectedPlayerId() {
-    // preselect logged in user
-    if (selectedPlayerId == null && userSession.getCurrentUser() != null) {
-      selectedPlayerId = userSession.getCurrentUser().getId();
-      onPlayerSelected();
+    public Map<Long, List<GroupDto>> getRoundGroupListMap() {
+        return roundGroupListMap;
     }
-    return selectedPlayerId;
-  }
 
-  public void setSelectedPlayerId(Long selectedPlayerId) {
-    this.selectedPlayerId = selectedPlayerId;
-  }
+    public Map<Long, List<MatchDto>> getGroupMatchListMap() {
+        return groupMatchListMap;
+    }
 
-  public void onPlayerSelected() {
-    initMaps();
-    logger.info("New player selected: " + getSelectedPlayer());
-  }
+    public Map<Long, List<MatchDto>> getRoundMatchListMap() {
+        return roundMatchListMap;
+    }
 
-  public PlayerDto getSelectedPlayer() {
-    return getPlayerList().stream().collect(Collectors.toMap(PlayerDto::getId, p -> p)).get(selectedPlayerId);
-  }
-  
-  @Override
-  public void saveList(){
-    logger.info("Save tip list ...");
-    setSubjectList(tipList);
-    super.saveList();
-  }
+    public Map<Long, TipDto> getMatchTipMap() {
+        return matchTipMap;
+    }
+
+    public List<TipDto> getTipList() {
+        tipList = tipService.findByPlayerId(selectedPlayerId);
+        matchTipMap = tipList.stream().collect(Collectors.toMap(p -> p.getMatch().getId(), p -> p));
+        logger.info("Maps initialized!");
+        return tipList;
+    }
+
+    /* Player selection stuff */
+    public Long getSelectedPlayerId() {
+        // preselect logged in user
+        if (selectedPlayerId == null && userSession.getCurrentUser() != null) {
+            selectedPlayerId = userSession.getCurrentUser().getId();
+            onPlayerSelected();
+        }
+        return selectedPlayerId;
+    }
+
+    public void setSelectedPlayerId(Long selectedPlayerId) {
+        this.selectedPlayerId = selectedPlayerId;
+    }
+
+    public void onPlayerSelected() {
+        initMaps();
+        logger.info("New player selected: " + getSelectedPlayer());
+    }
+
+    public PlayerDto getSelectedPlayer() {
+        return getPlayerList().stream().collect(Collectors.toMap(PlayerDto::getId, p -> p)).get(selectedPlayerId);
+    }
+
+    @Override
+    public void saveList() {
+        logger.info("Save tip list ...");
+        setSubjectList(tipList);
+        super.saveList();
+    }
 
 }

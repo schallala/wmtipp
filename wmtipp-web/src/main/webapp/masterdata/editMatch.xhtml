@@ -43,8 +43,9 @@
             </p:selectOneMenu>
             <p:outputLabel value="#{msg['global_match_teamone']}" for="teamsone"/>
             <p:selectOneMenu id="teamsone" value="#{matchEditCtrl.currentMatch.teamOne.id}"  
-                             required="true" disabled="#{not matchEditCtrl.editMode}"  style="width: 150px;">
-              <f:selectItems value="#{matchEditCtrl.teamList}" 
+                             required="false" disabled="#{not matchEditCtrl.editMode}"  style="width: 150px;">
+                <f:selectItem itemValue="" itemLabel=" - "/>
+                <f:selectItems value="#{matchEditCtrl.teamList}" 
                              var="teamOne" itemValue="#{teamOne.id}" itemLabel="#{teamOne.name}"/>
               <p:column>  
                 #{teamOne.name}
@@ -52,8 +53,9 @@
             </p:selectOneMenu>
             <p:outputLabel value="#{msg['global_match_teamtwo']}" for="teamstwo"/>
             <p:selectOneMenu id="teamstwo" value="#{matchEditCtrl.currentMatch.teamTwo.id}"  
-                             required="true" disabled="#{not matchEditCtrl.editMode}"  style="width: 150px;">
-              <f:selectItems value="#{matchEditCtrl.teamList}" 
+                             required="false" disabled="#{not matchEditCtrl.editMode}"  style="width: 150px;">
+                <f:selectItem itemValue="" itemLabel=" - "/>
+                <f:selectItems value="#{matchEditCtrl.teamList}" 
                              var="teamTwo" itemValue="#{teamTwo.id}" itemLabel="#{teamTwo.name}"/>
               <p:column>  
                 #{teamTwo.name}
@@ -71,6 +73,7 @@
                          disabled="#{not matchEditCtrl.editMode}"/>
             <p:outputLabel value="#{msg['global_match_startdate']}" for="startDate" />
             <p:calendar id="startDate" value="#{matchEditCtrl.currentMatch.startDate}" 
+                        pagedate="#{matchEditCtrl.currentMaxDate}"
                         pattern="dd.MM.yyyy HH:mm" showMinute="false" required="true"
                         showOn="button" disabled="#{not matchEditCtrl.editMode}">
             </p:calendar>
@@ -103,7 +106,7 @@
                                 style="min-width: 330px;height: 420px;" disabled="#{matchEditCtrl.editMode}" 
                                 valueChangeListener="#{matchEditCtrl.subjectChangeListener}">
               <f:selectItems value="#{matchEditCtrl.selectionList}" var="match" itemValue="#{match.id}" 
-                             itemLabel="#{match.teamOne.name} - #{match.teamOne.name} (#{match.round.name} #{match.group.id != null ? ', ' : ''}#{match.group.name})"/>
+                             itemLabel="#{match.teamOne.name} - #{match.teamTwo.name} (#{match.round.name} #{match.group.id != null ? ', ' : ''}#{match.group.name})"/>
               <p:ajax update="editPanel,editPanel_buttons,listPanel_buttons"/>
             </h:selectOneListbox>
           </h:panelGrid>

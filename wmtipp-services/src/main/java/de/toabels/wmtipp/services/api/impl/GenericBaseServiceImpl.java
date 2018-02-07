@@ -36,8 +36,9 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Generic DAO implementation of common persistence tasks
  *
- * All methods are working on DTO objects and never directly return entity objects to calling methods. Mapping between
- * DTO and entity objects is done by a generic mapping servicee, where mapping rules are specified.
+ * All methods are working on DTO objects and never directly return entity
+ * objects to calling methods. Mapping between DTO and entity objects is done by
+ * a generic mapping servicee, where mapping rules are specified.
  *
  * @author abels
  * @param <D> - DTO object
@@ -47,100 +48,98 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public abstract class GenericBaseServiceImpl<D extends AbstractBaseDto, E extends IEntityBase<E>> implements IGenericBaseService<D, E> {
 
-  private static final Logger logger = LoggerFactory.getLogger(GenericBaseServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(GenericBaseServiceImpl.class);
 
-  private IGenericDao<E> dao;
+    private IGenericDao<E> dao;
 
-  /*
+    /*
    * Child classes get direct access to the mapper in order to implement offer additional methods with mapping.
-   */
-  @Inject
-  protected IMappingService<D, E> mapper;
+     */
+    @Inject
+    protected IMappingService<D, E> mapper;
 
-  public GenericBaseServiceImpl() {
-  }
-
-  /**
-   * Each child class has to define its associated DAO class to perform concrete task on database
-   *
-   * @param dao
-   */
-  public GenericBaseServiceImpl(IGenericDao<E> dao) {
-    logger.info("GenericBaseServiceImpl initialized with DAO " + dao.getClass().getName());
-    this.dao = dao;
-  }
-
-  @Override
-  public abstract D getNewObjectInstance();
-
-  @Caching(evict = {
-    @CacheEvict(value = "lists", key = "#root.target.class.name + 'listOrdered'")
-    , 
-    @CacheEvict(value = "lists", key = "#root.target.class.name + 'list'")
-    , 
-    @CacheEvict(value = "entities", key = "#root.target.class.name + #dto.id")
-  })
-  @Override
-  public D save(D dto) {
-    E entity = mapper.map(dto);
-    if(entity == null){
-      return null;
+    public GenericBaseServiceImpl() {
     }
-    if (entity.getId() != null) {
-      dao.update(entity);
-    } else {
-      dao.create(entity);
+
+    /**
+     * Each child class has to define its associated DAO class to perform
+     * concrete task on database
+     *
+     * @param dao
+     */
+    public GenericBaseServiceImpl(IGenericDao<E> dao) {
+        logger.info("GenericBaseServiceImpl initialized with DAO " + dao.getClass().getSimpleName());
+        this.dao = dao;
     }
-    return mapper.map(entity);
-  }
 
-  @Override
-  public List<D> saveList(List<D> dtoList) {
-    if (dtoList == null) {
-      return dtoList;
+    @Override
+    public abstract D getNewObjectInstance();
+
+    @Caching(evict = {
+        @CacheEvict(value = "lists", allEntries = true)
+        , 
+        @CacheEvict(value = "entities", key = "#root.target.class.simpleName + #result.id")
+    })
+    @Override
+    public D save(D dto) {
+        E entity = mapper.map(dto);
+        if (entity == null) {
+            return null;
+        }
+        if (entity.getId() != null) {
+            dao.update(entity);
+        } else {
+            dao.create(entity);
+        }
+        return mapper.map(entity);
     }
-    List<D> newList = new ArrayList<>();
-    dtoList.forEach((dto) -> {
-      newList.add(save(dto));
-    });
-    return newList;
-  }
 
-  @Caching(evict = {
-    @CacheEvict(value = "lists", key = "#root.target.class.name + 'listOrdered'")
-    , 
-    @CacheEvict(value = "lists", key = "#root.target.class.name + 'list'")
-    , 
-    @CacheEvict(value = "entities", key = "#root.target.class.name + #dto.id")
-  })
-  @Override
-  public void delete(D dto) {
-    dao.deleteById(dto.getId());
-  }
+    @Override
+    public List<D> saveList(List<D> dtoList) {
+        if (dtoList == null) {
+            return dtoList;
+        }
+        List<D> newList = new ArrayList<>();
+        dtoList.forEach((dto) -> {
+            newList.add(save(dto));
+        });
+        return newList;
+    }
 
-  @Override
-  public void deleteList(List<D> dtoList) {
-    dtoList.forEach((dto) -> {
-      delete(dto);
-    });
-  }
+    @Caching(evict = {
+        @CacheEvict(value = "lists", allEntries = true)
+        , 
+        @CacheEvict(value = "entities", key = "#root.target.class.simpleName + #dto.id")
+    })
+    @Override
+    public void delete(D dto) {
+        dao.deleteById(dto.getId());
+    }
 
-//  @Cacheable(value = "lists", key = "#root.target.class.name + 'list'")
-  @Override
-  public List<D> list() {
-    return dao.findAll().stream().map(p -> mapper.map(p)).collect(Collectors.toList());
-  }
+    @Override
+    public void deleteList(List<D> dtoList) {
+        dtoList.forEach((dto) -> {
+            delete(dto);
+        });
+    }
 
-  // only one ordered list per target class will be cached 
-  @Cacheable(value = "lists", key = "#root.target.class.name + 'listOrdered'")
-  @Override
-  public List<D> listOrdered(String... order) {
-    return dao.findAllOrdered(order).stream().map(p -> mapper.map(p)).collect(Collectors.toList());
-  }
+    @Cacheable(value = "lists", key = "#root.target.class.simpleName + 'list'")
+    @Override
+    public List<D> list() {
+        return dao.findAll().stream().map(p -> mapper.map(p)).collect(Collectors.toList());
+    }
 
-  @Cacheable(value = "entities", key = "#root.target.class.name + #id")
-  @Override
-  public D findById(int id) {
-    return mapper.map(dao.findOne(id));
-  }
+    // only one ordered list per target class will be cached 
+    @Cacheable(value = "lists", key = "#root.target.class.simpleName + 'listOrdered'")
+    @Override
+    public List<D> listOrdered(String... order) {
+        List<E> liste = dao.findAllOrdered(order);
+        return liste.stream().map(p -> mapper.map(p)).collect(Collectors.toList());
+    }
+
+    @Cacheable(value = "entities", key = "#root.target.class.simpleName + #id")
+    @Override
+    public D findById(int id) {
+        return mapper.map(dao.findOne(id));
+    }
 }

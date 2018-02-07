@@ -55,7 +55,7 @@ public class DatabaseMigrationServiceImpl implements IDatabaseMigrationService {
         // Create the Flyway instance
         Flyway flyway = new Flyway();
         // skip flyway migration if auto generation is enabled by config
-        if(Boolean.getBoolean(dbGenerateDdl)){
+        if(Boolean.parseBoolean(dbGenerateDdl)){
             logger.info("Database auto generation is enabled ... migration is skipped.");
             return;
         }

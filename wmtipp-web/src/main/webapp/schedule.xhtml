@@ -6,54 +6,56 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 template="/WEB-INF/templates/template.xhtml">
-  <ui:define name="content">
-    <h1><h:outputText value="Fahrplan" /></h1>
-    <br />
-    <h:form>
+    <ui:define name="content">
+        <h1><h:outputText value="Fahrplan" styleClass="pagetitle" /></h1>
+        <br />
+        <h:form>
 
-        <p:dataTable var="match" value="#{matchListCtrl.matchList}" 
-                     rows="10" paginator="true"
-                   paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
-                   rowsPerPageTemplate="5,10,15"                     >
-        <p:column headerText="Name"  sortBy="#{match.name}">
-          <h:outputText value="#{match.name}" />
-        </p:column>
-        <p:column headerText="Mannschaft 1"  sortBy="#{match.teamOne.name}" style="text-align: right">
-          <h:outputText value="#{match.teamOne.name}" />
-          <p:graphicImage url="resources/graphics/#{match.teamOne.urlFlagImage}" style="padding-left: 20px"/>
-        </p:column>
-        <p:column headerText="Mannschaft 2"  sortBy="#{match.teamTwo.name}" style="text-align: left">
-          <p:graphicImage url="resources/graphics/#{match.teamTwo.urlFlagImage}" style="padding-right: 20px"/>
-          <h:outputText value="#{match.teamTwo.name}" />
-        </p:column>
-        <p:column headerText="Anstoß"  sortBy="#{match.startDate}">
-          <h:outputText value="#{match.startDate}" >
-            <f:convertDateTime pattern="dd.MM.yyyy"/>
-          </h:outputText>
-          <h:outputText value=","/><br/>
-          <h:outputText value="#{match.startDate}" >
-            <f:convertDateTime pattern="HH:mm"/>
-          </h:outputText>
-          <h:outputText value=" Uhr"/>
-        </p:column>
-        <p:column headerText="Ergebnis" style="text-align: center">
-          <h:outputText value="#{match.goalsTeamOne} : #{match.goalsTeamTwo}"/>
-        </p:column>
-      </p:dataTable>
+            <p:dataTable var="match" value="#{matchListCtrl.matchList}" 
+                         rows="16" paginator="true"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+                         rowsPerPageTemplate="5,10,15"                     >
+                <p:column headerText="Name"  sortBy="#{match.name}" style="border-color: transparent;">
+                    <h:outputText value="#{match.name}" />
+                </p:column>
+                <p:column headerText="Mannschaft 1"  sortBy="#{match.teamOne.name}" style="border-color: transparent;text-align: right">
+                    <h:outputText value="#{match.teamOne.name}" />
+                    <p:graphicImage url="resources/graphics/wm2018/flags/#{match.teamOne.urlFlagImage}" style="padding-left: 20px"/>
+                </p:column>
+                <p:column headerText="Mannschaft 2"  sortBy="#{match.teamTwo.name}" style="border-color: transparent;text-align: left">
+                    <p:graphicImage url="resources/graphics/wm2018/flags/#{match.teamTwo.urlFlagImage}" style="padding-right: 20px"/>
+                    <h:outputText value="#{match.teamTwo.name}" />
+                </p:column>
+                <p:column headerText="Anstoß"  sortBy="#{match.startDate}" style="border-color: transparent;">
+                    <h:outputText value="#{match.startDate}" >
+                        <f:convertDateTime pattern="dd.MM.yyyy"/>
+                    </h:outputText>
+                    <h:outputText value=","/><br/>
+                    <h:outputText value="#{match.startDate}" >
+                        <f:convertDateTime pattern="HH:mm"/>
+                    </h:outputText>
+                    <h:outputText value=" Uhr"/>
+                </p:column>
+                <p:column headerText="Ergebnis" style="text-align: center;border-color: transparent;">
+                    <h:outputText value="#{match.goalsTeamOne} : #{match.goalsTeamTwo}"/>
+                </p:column>
+            </p:dataTable>
+            
+            <p:commandButton action="#{matchListCtrl.testFootballData()}" value="Test Webservice"/>
 
-      <br/>
+            <br/>
 
-      <ui:repeat value="#{matchListCtrl.panels}" var="panel">
-        <p:accordionPanel multiple="true">
-          <p:tab title="#{panel}">
-            <h:panelGrid columns="2" cellpadding="10">
-              <h:outputText
-                value="The story begins as Don Vito Corleone..." />
-            </h:panelGrid>
-          </p:tab>
-        </p:accordionPanel>
-      </ui:repeat>
+            <ui:repeat value="#{matchListCtrl.panels}" var="panel">
+                <p:accordionPanel multiple="true">
+                    <p:tab title="#{panel}">
+                        <h:panelGrid columns="2" cellpadding="10">
+                            <h:outputText
+                                value="The story begins as Don Vito Corleone..." />
+                        </h:panelGrid>
+                    </p:tab>
+                </p:accordionPanel>
+            </ui:repeat>
 
-    </h:form>
-  </ui:define>
+        </h:form>
+    </ui:define>
 </ui:composition>

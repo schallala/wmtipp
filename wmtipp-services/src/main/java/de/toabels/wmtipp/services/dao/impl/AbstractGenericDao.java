@@ -26,55 +26,56 @@ import org.springframework.stereotype.Repository;
 @Repository
 public abstract class AbstractGenericDao< T extends IEntityBase<T>> implements IGenericDao<T> {
 
-  private Class< T> clazz;
+    private Class< T> clazz;
 
-  @PersistenceContext
-  protected EntityManager entityManager;
+    @PersistenceContext
+    protected EntityManager entityManager;
 
-  @Override
-  public final void setClazz(Class< T> clazzToSet) {
-    this.clazz = clazzToSet;
-  }
-
-  @Override
-  public T findOne(long id) {
-    return (T) entityManager.find(clazz, id);
-  }
-
-  @Override
-  public List< T> findAll() {
-    return entityManager.createQuery("from " + clazz.getName()).getResultList();
-  }
-
-  @Override
-  public List< T> findAllOrdered(String... orderBy) {
-    String orderByString = null;
-    for (String str : orderBy) {
-      orderByString = (orderByString == null) ? " order by " + str : orderByString + ", " + str;
+    @Override
+    public final void setClazz(Class< T> clazzToSet) {
+        this.clazz = clazzToSet;
     }
-    return entityManager.createQuery("from " + clazz.getName() + orderByString).getResultList();
-  }
 
-  @Override
-  public void create(T entity) {
-    entityManager.persist(entity);
-    entityManager.flush();
-  }
+    @Override
+    public T findOne(long id) {
+        return (T) entityManager.find(clazz, id);
+    }
 
-  @Override
-  public void update(T entity) {
-    entityManager.merge(entity);
-  }
+    @Override
+    public List< T> findAll() {
+        return entityManager.createQuery("from " + clazz.getName()).getResultList();
+    }
 
-  @Override
-  public void delete(T entity) {
-    entityManager.remove(entity);
-  }
+    @Override
+    public List< T> findAllOrdered(String... orderBy) {
+        String orderByString = null;
+        for (String str : orderBy) {
+            orderByString = (orderByString == null) ? " order by " + str : orderByString + ", " + str;
+        }
+        return entityManager.createQuery("from " + clazz.getName() + orderByString).getResultList();
+    }
 
-  @Override
-  public void deleteById(long entityId) {
-    T entity = findOne(entityId);
-    delete(entity);
-  }
+    @Override
+    public void create(T entity) {
+        entityManager.persist(entity);
+        entityManager.flush();
+        entityManager.refresh(entity);
+    }
+
+    @Override
+    public void update(T entity) {
+        entityManager.merge(entity);
+    }
+
+    @Override
+    public void delete(T entity) {
+        entityManager.remove(entity);
+    }
+
+    @Override
+    public void deleteById(long entityId) {
+        T entity = findOne(entityId);
+        delete(entity);
+    }
 
 }

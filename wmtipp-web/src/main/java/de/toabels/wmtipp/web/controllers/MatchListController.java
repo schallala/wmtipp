@@ -18,6 +18,7 @@ package de.toabels.wmtipp.web.controllers;
 
 import de.toabels.wmtipp.model.dto.MatchDto;
 import de.toabels.wmtipp.services.api.IMatchService;
+import java.net.URI;
 
 import java.util.List;
 
@@ -26,34 +27,64 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import java.util.ArrayList;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
+import org.glassfish.jersey.client.ClientConfig;
 import org.springframework.stereotype.Controller;
 
 @Controller("matchListCtrl")
 @Scope("request")
 public class MatchListController {
 
-	private static final Logger logger = LoggerFactory.getLogger(MatchListController.class);
+    private static final Logger logger = LoggerFactory.getLogger(MatchListController.class);
 
     private List<String> panels = new ArrayList<String>();
 
-	@Autowired
-	private IMatchService matchService;
+    @Autowired
+    private IMatchService matchService;
 
-	
-	public List<MatchDto> getMatchList() {
-      return matchService.listOrdered("startDate");
-	}
+    public List<MatchDto> getMatchList() {
+        return matchService.listOrdered("startDate");
+    }
 
-  public List<String> getPanels() {
-    panels.add("Panel1");
-    panels.add("Panel2");
-    panels.add("Panel3");
-    return panels;
-  }
+    public List<String> getPanels() {
+        panels.add("Panel1");
+        panels.add("Panel2");
+        panels.add("Panel3");
+        return panels;
+    }
 
-  public void setPanels(List<String> panels) {
-    this.panels = panels;
-  }
-    
-    
+    public void setPanels(List<String> panels) {
+        this.panels = panels;
+    }
+
+    public void testFootballData() {
+        ClientConfig config = new ClientConfig();
+        
+        Client client = ClientBuilder.newClient(config);
+
+        WebTarget target = client.target(getBaseURI());
+
+        String response = target.path("v1").
+                path("competitions").
+                request().header("Authorization", "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX").
+                accept(MediaType.APPLICATION_JSON).
+                get(Response.class)
+                .toString();
+
+        String plainAnswer
+                = target.path("v1").path("competitions").request().accept(MediaType.TEXT_PLAIN).get(String.class);
+
+        System.out.println(response);
+        System.out.println(plainAnswer);
+    }
+
+    private static URI getBaseURI() {
+        return UriBuilder.fromUri("http://api.football-data.org/").build();
+    }
+
 }

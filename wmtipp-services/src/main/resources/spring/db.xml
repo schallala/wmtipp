@@ -12,7 +12,8 @@
 	<!-- Scans within the base package of the application for @Components to configure as beans -->
 	<bean id="placeholderConfig"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="location" value="classpath:db/db.properties" />
+            <property name="location" value="classpath:db/db.properties" />
+            <!--<property name="ignoreUnresolvablePlaceholders" value="true" />-->
 	</bean>
 
 	<bean id="entityManagerFactory"

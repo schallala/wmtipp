@@ -54,7 +54,7 @@ public class MatchEditController extends AbstractEditController<MatchDto> {
     super.init(matchService);
   }
 
-  private Date getCurrentMaxDate() {
+  public Date getCurrentMaxDate() {
     // get current max start date of tournament, alternatively current date
     Date maxDate = new Date();
     for (MatchDto dto : getMatchList()) {
