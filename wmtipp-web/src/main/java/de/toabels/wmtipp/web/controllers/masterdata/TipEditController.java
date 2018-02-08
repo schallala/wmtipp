@@ -153,7 +153,7 @@ public class TipEditController extends AbstractEditController<TipDto> {
     public void saveList() {
         logger.info("Save tip list ...");
         setSubjectList(tipList);
-        super.saveList();
+        tipService.saveList(tipList);
     }
 
 }

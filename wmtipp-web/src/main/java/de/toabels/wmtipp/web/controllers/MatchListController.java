@@ -17,6 +17,7 @@
 package de.toabels.wmtipp.web.controllers;
 
 import de.toabels.wmtipp.model.dto.MatchDto;
+import de.toabels.wmtipp.model.external.FdoCompetition;
 import de.toabels.wmtipp.services.api.IMatchService;
 import java.net.URI;
 
@@ -27,6 +28,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import java.util.ArrayList;
+import java.util.Arrays;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
@@ -34,6 +38,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.jackson.internal.jackson.jaxrs.json.JacksonJsonProvider;
 import org.springframework.stereotype.Controller;
 
 @Controller("matchListCtrl")
@@ -43,6 +48,10 @@ public class MatchListController {
     private static final Logger logger = LoggerFactory.getLogger(MatchListController.class);
 
     private List<String> panels = new ArrayList<String>();
+
+    private List<FdoCompetition> competitions = new ArrayList<>();
+    
+    private String selectedYear;
 
     @Autowired
     private IMatchService matchService;
@@ -62,25 +71,46 @@ public class MatchListController {
         this.panels = panels;
     }
 
+    public List<FdoCompetition> getCompetitions() {
+        return competitions;
+    }
+
+    public void setCompetitions(List<FdoCompetition> competitions) {
+        this.competitions = competitions;
+    }
+
+    public String getSelectedYear() {
+        return selectedYear;
+    }
+
+    public void setSelectedYear(String selectedYear) {
+        this.selectedYear = selectedYear;
+    }
+
+    
     public void testFootballData() {
         ClientConfig config = new ClientConfig();
-        
-        Client client = ClientBuilder.newClient(config);
 
+        Client client = ClientBuilder.newClient(config);
+        client.register(JacksonJsonProvider.class);
         WebTarget target = client.target(getBaseURI());
 
-        String response = target.path("v1").
-                path("competitions").
-                request().header("Authorization", "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX").
+        Response response = target.path("v1").
+                path("competitions").queryParam("season", selectedYear).
+                request().
+                //                header("Authorization", "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX").
                 accept(MediaType.APPLICATION_JSON).
-                get(Response.class)
-                .toString();
+                get();
 
-        String plainAnswer
-                = target.path("v1").path("competitions").request().accept(MediaType.TEXT_PLAIN).get(String.class);
+        FdoCompetition[] result = response.readEntity(FdoCompetition[].class);
+        this.competitions.clear();
+        for(FdoCompetition comp : result){
+            this.competitions.add(comp);
+        }
+        
+        response.close();
+        client.close();
 
-        System.out.println(response);
-        System.out.println(plainAnswer);
     }
 
     private static URI getBaseURI() {

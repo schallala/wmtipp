@@ -30,6 +30,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public interface ITipService extends IGenericBaseService<TipDto, Tip> {
-  
+
+  List<TipDto> saveList(List<TipDto> dtoList);
+
   List<TipDto> findByPlayerId(Long playerId);
 }

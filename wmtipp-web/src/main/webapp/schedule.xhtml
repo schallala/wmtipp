@@ -9,7 +9,7 @@
     <ui:define name="content">
         <h1><h:outputText value="Fahrplan" styleClass="pagetitle" /></h1>
         <br />
-        <h:form>
+        <h:form >
 
             <p:dataTable var="match" value="#{matchListCtrl.matchList}" 
                          rows="16" paginator="true"
@@ -40,11 +40,42 @@
                     <h:outputText value="#{match.goalsTeamOne} : #{match.goalsTeamTwo}"/>
                 </p:column>
             </p:dataTable>
-            
-            <p:commandButton action="#{matchListCtrl.testFootballData()}" value="Test Webservice"/>
 
             <br/>
+            <p:panel id="competitionPanel">
+                <p:commandButton id="testWS" actionListener="#{matchListCtrl.testFootballData()}" 
+                                 onclick="PF('block').show()" 
+                                 oncomplete="PF('block').hide()"
+                                 value="Test Webservice" update="competitionTable"/>
+                <p:selectOneMenu id="yearSelection" value="#{matchListCtrl.selectedYear}" 
+                                 style="width: 150px;" >
+                    <f:selectItem itemLabel="2018" itemValue="2018"/>
+                    <f:selectItem itemLabel="2017" itemValue="2017"/>
+                    <f:selectItem itemLabel="2016" itemValue="2016"/>
+                    <f:selectItem itemLabel="2015" itemValue="2015"/>
+                </p:selectOneMenu>
 
+                <p:dataTable id="competitionTable" var="competition" value="#{matchListCtrl.competitions}" 
+                             rows="20" paginator="true"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+                             rowsPerPageTemplate="5,10,15,20"                     >
+                    <p:column headerText="ID"  sortBy="#{competition.id}" style="border-color: transparent;">
+                        <h:outputText value="#{competition.id}" />
+                    </p:column>
+                    <p:column headerText="Name"  sortBy="#{competition.caption}" style="border-color: transparent;">
+                        <h:outputText value="#{competition.caption}" />
+                    </p:column>
+                    <p:column headerText="Liga"  sortBy="#{competition.league}" style="border-color: transparent;">
+                        <h:outputText value="#{competition.league}" />
+                    </p:column>
+                    <p:column headerText="Jahr"  sortBy="#{competition.year}" style="border-color: transparent;">
+                        <h:outputText value="#{competition.year}" />
+                    </p:column>
+                </p:dataTable>
+                <!--<p:blockUI block="competitionTable" trigger="testWS" />-->
+                <p:blockUI block="content" widgetVar="block"/>
+            </p:panel>
+            <br/>
             <ui:repeat value="#{matchListCtrl.panels}" var="panel">
                 <p:accordionPanel multiple="true">
                     <p:tab title="#{panel}">
