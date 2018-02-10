@@ -13,7 +13,7 @@
 
       <p:panelGrid columns="2" styleClass="editpage_panel_region" layout="grid" style="vertical-align: top;">
         <p:panel id="editPanel" header="#{msg['editMatches_subtitle']}" toggleable="true" 
-                 style="min-width: 350px;min-height: 500px;" styleClass="editpage_panel_edit">
+                 style="min-height: 500px;min-width: 320px;" styleClass="editpage_panel_edit">
           <h:panelGrid style="min-height: 400px;" columns="2" cellpadding="5" >
             <p:outputLabel value="#{msg['global_match_id']}" for="matchId" />
             <p:inputText id="matchId" value="#{matchEditCtrl.currentMatch.id}" 
@@ -73,9 +73,9 @@
                          disabled="#{not matchEditCtrl.editMode}"/>
             <p:outputLabel value="#{msg['global_match_startdate']}" for="startDate" />
             <p:calendar id="startDate" value="#{matchEditCtrl.currentMatch.startDate}" 
-                        pagedate="#{matchEditCtrl.currentMaxDate}"
+                        pagedate="#{matchEditCtrl.currentMaxDate}" style="width: 50px;"
                         pattern="dd.MM.yyyy HH:mm" showMinute="false" required="true"
-                        showOn="button" disabled="#{not matchEditCtrl.editMode}">
+                        disabled="#{not matchEditCtrl.editMode}">
             </p:calendar>
 
           </h:panelGrid>
@@ -100,10 +100,10 @@
         </p:panel>
 
         <p:panel id="listPanel" header="#{msg['editMatches_selectionlist']}" toggleable="true" 
-                 style="min-width: 350px;min-height: 500px;" styleClass="editpage_panel_list">
+                 style="min-width: 320px;min-height: 500px;" styleClass="editpage_panel_list">
           <h:panelGrid style="min-height: 455px;">
             <h:selectOneListbox id="advanced" value="#{matchEditCtrl.currentMatch.id}" 
-                                style="min-width: 330px;height: 420px;" disabled="#{matchEditCtrl.editMode}" 
+                                style="min-width: 300px;height: 420px;" disabled="#{matchEditCtrl.editMode}" 
                                 valueChangeListener="#{matchEditCtrl.subjectChangeListener}">
               <f:selectItems value="#{matchEditCtrl.selectionList}" var="match" itemValue="#{match.id}" 
                              itemLabel="#{match.teamOne.name} - #{match.teamTwo.name} (#{match.round.name} #{match.group.id != null ? ', ' : ''}#{match.group.name})"/>

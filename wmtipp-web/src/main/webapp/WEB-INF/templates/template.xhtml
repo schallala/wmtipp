@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:wmc="http://java.sun.com/jsf/composite/components"      
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+          xmlns:wmc="http://java.sun.com/jsf/composite/components"      
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Abels WM Tippspiel 2016</title>
@@ -23,10 +24,11 @@
             </h:panelGroup>
         </h:panelGroup>
 
-    <p:panelGrid columns="3" columnClasses="ui-grid-col-3,ui-grid-col-10,ui-grid-col-3" layout="grid" styleClass="ui-panelgrid-blank">
+    <p:panelGrid columns="3" columnClasses="ui-grid-col-2,ui-grid-col-14,ui-grid-col-2" layout="grid" styleClass="ui-panelgrid-blank" >
             <!--<p:panel id="menu_left" header="Links" style="margin-top:20px;width: 150px;">-->
             <p:panelGrid id="menuleft" columns="1" layout="grid" style="float: left">
-                <p:menu  id="menu_left"   style="width: 180px;" >
+                <p:panel id="horizontal" header=" " toggleable="true" toggleOrientation="horizontal" style="background-color: transparent">
+                    <p:menu  id="menu_left"   >
                     <p:submenu label="Krimskrams">
                         <p:menuitem value="Home"  outcome="/home.jsf" />
                         <p:menuitem value="Fahrplan" outcome="/schedule.jsf" />
@@ -42,8 +44,9 @@
                         <p:menuitem value="Spiele bearbeiten" outcome="/masterdata/editMatch.jsf" />
                     </p:submenu>
                 </p:menu>
+                </p:panel>
             </p:panelGrid>
-            <p:panelGrid id="content" columns="1" layout="grid" styleClass="ui-panelgrid-blank"  >
+            <p:panelGrid id="content" columns="1" layout="grid" styleClass="ui-panelgrid-blank" style="float: left;" >
                 <center>
                     <ui:insert name="content">Main Content</ui:insert>
                 </center>

@@ -26,30 +26,44 @@ public class FdoCompetition {
 
     @JsonProperty("id")
     private Long id;
-    
+
     @JsonProperty("caption")
     private String caption;
-    
+
     @JsonProperty("league")
     private String league;
-    
+
     @JsonProperty("year")
     private Long year;
-    
+
     @JsonProperty("currentMatchday")
     private Long currentMatchday;
-    
+
     @JsonProperty("numberOfMatchdays")
     private Long numberOfMatchdays;
-    
+
     @JsonProperty("numberOfTeams")
     private Long numberOfTeams;
-    
+
     @JsonProperty("numberOfGames")
     private Long numberOfGames;
-    
+
     @JsonProperty("lastUpdated")
     private String lastUpdated;
+
+    public FdoCompetition clone() {
+        FdoCompetition target = new FdoCompetition();
+        target.caption = this.caption;
+        target.currentMatchday = this.currentMatchday;
+        target.id = this.id;
+        target.lastUpdated = this.lastUpdated;
+        target.league = this.league;
+        target.numberOfGames = this.numberOfGames;
+        target.numberOfMatchdays = this.numberOfMatchdays;
+        target.numberOfTeams = this.numberOfTeams;
+        target.year = this.year;
+        return target;
+    }
 
     public Long getId() {
         return id;
@@ -123,5 +137,4 @@ public class FdoCompetition {
         this.lastUpdated = lastUpdated;
     }
 
-    
 }

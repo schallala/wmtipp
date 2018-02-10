@@ -8,11 +8,6 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<context:component-scan base-package="de.toabels.wmtipp" />
 
-<!-- 	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" /> -->
-<!-- 	<bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor"> -->
-<!-- 		<property name="validator" ref="validator" /> -->
-<!-- 	</bean> -->
-
 	<import resource="classpath:spring/db.xml" />
 
 </beans>

@@ -12,8 +12,13 @@
 	<!-- Scans within the base package of the application for @Components to configure as beans -->
 	<bean id="placeholderConfig"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-            <property name="location" value="classpath:db/db.properties" />
-            <!--<property name="ignoreUnresolvablePlaceholders" value="true" />-->
+            <property name="locations"> 
+                <list> 
+                    <value>classpath:db/db.properties</value>
+                    <value>file:${user.home}/.wmtipp/wmtipp.properties</value>
+                </list>
+            </property>
+            <property name="ignoreUnresolvablePlaceholders" value="true" />
 	</bean>
 
 	<bean id="entityManagerFactory"

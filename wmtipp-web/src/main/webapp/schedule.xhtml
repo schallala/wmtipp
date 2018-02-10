@@ -12,7 +12,7 @@
         <h:form >
 
             <p:dataTable var="match" value="#{matchListCtrl.matchList}" 
-                         rows="16" paginator="true"
+                         rows="10" paginator="true"
                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
                          rowsPerPageTemplate="5,10,15"                     >
                 <p:column headerText="Name"  sortBy="#{match.name}" style="border-color: transparent;">
@@ -56,7 +56,7 @@
                 </p:selectOneMenu>
 
                 <p:dataTable id="competitionTable" var="competition" value="#{matchListCtrl.competitions}" 
-                             rows="20" paginator="true"
+                             rows="10" paginator="true"
                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
                              rowsPerPageTemplate="5,10,15,20"                     >
                     <p:column headerText="ID"  sortBy="#{competition.id}" style="border-color: transparent;">
@@ -72,6 +72,25 @@
                         <h:outputText value="#{competition.year}" />
                     </p:column>
                 </p:dataTable>
+
+                <p:dataTable id="teamTable" var="team" value="#{matchListCtrl.teams}" 
+                             rows="10" paginator="true"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+                             rowsPerPageTemplate="5,10,15,20"                     >
+                    <p:column headerText="ID"  sortBy="#{team.id}" style="border-color: transparent;">
+                        <h:outputText value="#{team.id}" />
+                    </p:column>
+                    <p:column headerText="Name"  sortBy="#{team.name}" style="border-color: transparent;">
+                        <h:outputText value="#{team.name}" />
+                    </p:column>
+                    <p:column headerText="Kurzname"  sortBy="#{team.shortname}" style="border-color: transparent;">
+                        <h:outputText value="#{team.shortname}" />
+                    </p:column>
+                    <p:column headerText="Url"  sortBy="#{team.crestUrl}" style="border-color: transparent;">
+                        <h:outputText value="#{team.crestUrl}" />
+                    </p:column>
+                </p:dataTable>
+
                 <!--<p:blockUI block="competitionTable" trigger="testWS" />-->
                 <p:blockUI block="content" widgetVar="block"/>
             </p:panel>

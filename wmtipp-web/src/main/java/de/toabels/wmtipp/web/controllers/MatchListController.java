@@ -18,8 +18,9 @@ package de.toabels.wmtipp.web.controllers;
 
 import de.toabels.wmtipp.model.dto.MatchDto;
 import de.toabels.wmtipp.model.external.FdoCompetition;
+import de.toabels.wmtipp.model.external.FdoTeam;
 import de.toabels.wmtipp.services.api.IMatchService;
-import java.net.URI;
+import de.toabels.wmtipp.services.utiils.IResultService;
 
 import java.util.List;
 
@@ -28,30 +29,24 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import java.util.ArrayList;
-import java.util.Arrays;
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriBuilder;
-import org.glassfish.jersey.client.ClientConfig;
-import org.glassfish.jersey.jackson.internal.jackson.jaxrs.json.JacksonJsonProvider;
 import org.springframework.stereotype.Controller;
 
 @Controller("matchListCtrl")
-@Scope("request")
+@Scope("session")
 public class MatchListController {
 
     private static final Logger logger = LoggerFactory.getLogger(MatchListController.class);
 
     private List<String> panels = new ArrayList<String>();
 
-    private List<FdoCompetition> competitions = new ArrayList<>();
-    
+    private List<FdoCompetition> competitions;
+
+    private List<FdoTeam> teams;
+
     private String selectedYear;
+
+    @Autowired
+    private IResultService resultService;
 
     @Autowired
     private IMatchService matchService;
@@ -79,6 +74,15 @@ public class MatchListController {
         this.competitions = competitions;
     }
 
+    public List<FdoTeam> getTeams() {
+        return teams;
+    }
+
+    public void setTeams(List<FdoTeam> teams) {
+        this.teams = teams;
+    }
+
+    
     public String getSelectedYear() {
         return selectedYear;
     }
@@ -87,34 +91,8 @@ public class MatchListController {
         this.selectedYear = selectedYear;
     }
 
-    
-    public void testFootballData() {
-        ClientConfig config = new ClientConfig();
-
-        Client client = ClientBuilder.newClient(config);
-        client.register(JacksonJsonProvider.class);
-        WebTarget target = client.target(getBaseURI());
-
-        Response response = target.path("v1").
-                path("competitions").queryParam("season", selectedYear).
-                request().
-                //                header("Authorization", "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX").
-                accept(MediaType.APPLICATION_JSON).
-                get();
-
-        FdoCompetition[] result = response.readEntity(FdoCompetition[].class);
-        this.competitions.clear();
-        for(FdoCompetition comp : result){
-            this.competitions.add(comp);
-        }
-        
-        response.close();
-        client.close();
-
+    public void testFootballData(){
+        competitions = resultService.findCompetitionsByYear(selectedYear);
+//        teams = resultService.findTeamsByCompetition(competitions.get(0).getId().toString());
     }
-
-    private static URI getBaseURI() {
-        return UriBuilder.fromUri("http://api.football-data.org/").build();
-    }
-
 }
