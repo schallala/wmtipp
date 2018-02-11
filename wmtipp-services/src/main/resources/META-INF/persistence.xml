@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence       http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-  <persistence-unit name="dataSource"  transaction-type="RESOURCE_LOCAL">
-    <!--properties>
-      <property name="hibernate.show_sql" value="true"/>
-      <property name="hibernate.cache.provider_class" value="org.hibernate.cache.HashtableCacheProvider"/>
-      <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/sample"/>
-      <property name="javax.persistence.jdbc.user" value="app"/>
-      <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
-      <property name="javax.persistence.jdbc.password" value="app"/>
-    </properties-->
-    <class>de.toabels.wmtipp.model.db.Tip</class>
-    <class>de.toabels.wmtipp.model.db.Group</class>
-    <class>de.toabels.wmtipp.model.db.Match</class>
-    <class>de.toabels.wmtipp.model.db.Message</class>
-    <class>de.toabels.wmtipp.model.db.News</class>
-    <class>de.toabels.wmtipp.model.db.Player</class>
-    <class>de.toabels.wmtipp.model.db.Round</class>
-    <class>de.toabels.wmtipp.model.db.Team</class>
-  </persistence-unit>
+    <persistence-unit name="dataSource"  transaction-type="RESOURCE_LOCAL">
+        <!--properties>
+          <property name="hibernate.show_sql" value="true"/>
+          <property name="hibernate.cache.provider_class" value="org.hibernate.cache.HashtableCacheProvider"/>
+          <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/sample"/>
+          <property name="javax.persistence.jdbc.user" value="app"/>
+          <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
+          <property name="javax.persistence.jdbc.password" value="app"/>
+        </properties-->
+        <class>de.toabels.wmtipp.model.db.Competition</class>
+        <class>de.toabels.wmtipp.model.db.Tip</class>
+        <class>de.toabels.wmtipp.model.db.Group</class>
+        <class>de.toabels.wmtipp.model.db.Match</class>
+        <class>de.toabels.wmtipp.model.db.Message</class>
+        <class>de.toabels.wmtipp.model.db.News</class>
+        <class>de.toabels.wmtipp.model.db.Player</class>
+        <class>de.toabels.wmtipp.model.db.Round</class>
+        <class>de.toabels.wmtipp.model.db.Team</class>
+    </persistence-unit>
 </persistence>

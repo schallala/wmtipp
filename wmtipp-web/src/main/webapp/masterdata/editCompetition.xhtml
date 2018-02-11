@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/templates/template.xhtml">
+  <ui:define name="content">
+      <h:outputText value="#{msg['editCompetition_title']}" styleClass="pagetitle"/>
+    <h:form>
+      <p:growl id="growl" showDetail="true" sticky="true" />  
+
+      <p:panelGrid columns="2" styleClass="editpage_panel_region">
+        <p:panel id="editPanel" header="#{msg['editCompetition_subtitle']}" toggleable="true" 
+                 style="min-width: 350px;height: 600px;" styleClass="editpage_panel_edit">
+          <h:panelGrid style="height: 200px;" columns="2" cellpadding="5" >
+            <p:outputLabel value="#{msg['global_competition_id']}" for="competitionId" />
+            <p:inputText id="competitionId" value="#{competitionEditCtrl.currentCompetition.id}" 
+                         disabled="true"/>
+            <p:outputLabel value="#{msg['global_competition_name']}" for="name" />
+            <p:inputText id="name" value="#{competitionEditCtrl.currentCompetition.name}" 
+                         required="true" disabled="#{not competitionEditCtrl.editMode}"/>
+            <p:outputLabel value="#{msg['global_competition_shortname']}" for="shortname" />
+            <p:inputText id="shortname" value="#{competitionEditCtrl.currentCompetition.shortname}" 
+                         required="true" disabled="#{not competitionEditCtrl.editMode}"/>
+            <p:outputLabel value="#{msg['global_competition_title']}" for="title" />
+            <p:inputText id="title" value="#{competitionEditCtrl.currentCompetition.title}" 
+                         required="true" disabled="#{not competitionEditCtrl.editMode}"/>
+
+            <p:outputLabel value="#{msg['global_competition_scoreCorrectWinner']}" 
+                           for="scoreCorrectWinner" />
+            <p:inputText id="scoreCorrectWinner" 
+                         value="#{competitionEditCtrl.currentCompetition.scoreCorrectWinner}" 
+                         required="true" disabled="#{not competitionEditCtrl.editMode}"/>
+            <p:outputLabel value="#{msg['global_competition_scoreCorrectTip']}" 
+                           for="scoreCorrectTip" />
+            <p:inputText id="scoreCorrectTip" 
+                         value="#{competitionEditCtrl.currentCompetition.scoreCorrectTip}" 
+                         required="true" disabled="#{not competitionEditCtrl.editMode}"/>
+            <p:outputLabel value="#{msg['global_competition_scoreCorrectTrend']}" 
+                           for="scoreCorrectTrend" />
+            <p:inputText id="scoreCorrectTrend" 
+                         value="#{competitionEditCtrl.currentCompetition.scoreCorrectTrend}" 
+                         required="true" disabled="#{not competitionEditCtrl.editMode}"/>
+            <p:outputLabel value="#{msg['global_competition_autoGenerateMatches']}" 
+                           for="autoGenerateMatches" />
+            <p:selectBooleanButton id="autoGenerateMatches" 
+                                   value="#{competitionEditCtrl.currentCompetition.autoGenerateMatches}" 
+                                   onIcon="ui-icon-check" offIcon="ui-icon-close" style="width:60px"
+                                   onLabel="Ja" offLabel="Nein" disabled="#{not competitionEditCtrl.editMode}"/>
+            <p:outputLabel value="#{msg['global_competition_autoReleaseRounds']}" 
+                           for="autoReleaseRounds" />
+            <p:selectBooleanButton id="autoReleaseRounds" 
+                                   value="#{competitionEditCtrl.currentCompetition.autoReleaseRounds}" 
+                                   onIcon="ui-icon-check" offIcon="ui-icon-close" style="width:60px"
+                                   onLabel="Ja" offLabel="Nein" disabled="#{not competitionEditCtrl.editMode}"/>
+            <p:outputLabel value="#{msg['global_competition_sortOrder']}" for="sortOrder" />
+            <p:inputText id="sortOrder" value="#{competitionEditCtrl.currentCompetition.sortOrder}" 
+                         required="true" disabled="#{not competitionEditCtrl.editMode}"/>
+
+<!--            private String name;
+            private String tournamentName;
+            private String tournamentShortname;
+            private String imagePath;
+            private String flagsPath;
+
+            private Long scoreCorrectWinner;
+            private Long scoreCorrectTip;
+            private Long scoreCorrectTrend;
+
+
+-->
+
+
+          </h:panelGrid>
+          <h:panelGroup id="editPanel_buttons">
+            <center>
+              <p:commandButton value="#{msg['global_action_cancel']}" rendered="#{competitionEditCtrl.editMode}"
+                               actionListener="#{competitionEditCtrl.cancel}" immediate="true"
+                               update="@form" />
+              <p:commandButton value="#{msg['global_action_new']}" rendered="#{not competitionEditCtrl.editMode}"
+                               actionListener="#{competitionEditCtrl.clear}" 
+                               update="@form" />
+              <p:commandButton value="Save" actionListener="#{competitionEditCtrl.save}" 
+                               update="@form" disabled="#{not competitionEditCtrl.editMode}"/>
+            </center>
+          </h:panelGroup>  
+          <!-- pseudo responsible -->
+          <p:dataTable value=" "/>
+        </p:panel>
+
+        <p:panel id="listPanel" header="#{msg['editGroups_selectionlist']}" toggleable="true" 
+                 style="min-width: 350px;height: 300px;" styleClass="editpage_panel_list">
+          <h:panelGrid style="height: 200px;">
+              <h:selectOneListbox id="advanced" value="#{competitionEditCtrl.currentCompetition.id}" 
+                                style="min-width: 270px;height: 170px;" disabled="#{competitionEditCtrl.editMode}"
+                                valueChangeListener="#{competitionEditCtrl.subjectChangeListener}">
+              <f:selectItems value="#{competitionEditCtrl.selectionList}" var="competition" 
+                             itemLabel="#{competition.name}" itemValue="#{competition.id}" />
+              <p:ajax update="editPanel,editPanel_buttons,listPanel_buttons"/>
+            </h:selectOneListbox>
+          </h:panelGrid>
+
+          <h:panelGroup id="listPanel_buttons">
+            <center>
+              <p:commandButton value="#{msg['global_action_edit']}" actionListener="#{competitionEditCtrl.edit}" 
+                               update="@form" disabled="#{competitionEditCtrl.editMode}"/>
+              <p:commandButton value="#{msg['global_action_delete']}" actionListener="#{competitionEditCtrl.delete}" 
+                               update="@form"  disabled="#{competitionEditCtrl.editMode}"/>
+            </center>
+          </h:panelGroup>
+          <!-- pseudo responsible -->
+          <p:dataTable value=" "/>
+        </p:panel>
+      </p:panelGrid>
+
+    </h:form>
+  </ui:define>
+</ui:composition>

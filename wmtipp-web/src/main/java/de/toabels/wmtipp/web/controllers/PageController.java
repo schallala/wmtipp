@@ -31,7 +31,7 @@ public class PageController {
   private static final Logger logger = LoggerFactory.getLogger(PageController.class);
 
   public String getCurrentPage() {
-    return currentPage == null ? PageEnum.EDIT_NEW_PLAYER.getOutcome() : currentPage;
+    return currentPage;
   }
 
   public void setCurrentPage(PageEnum page) {
