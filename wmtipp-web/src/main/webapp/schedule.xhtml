@@ -46,7 +46,7 @@
                 <p:commandButton id="testWS" actionListener="#{matchListCtrl.testFootballData()}" 
                                  onclick="PF('block').show()" 
                                  oncomplete="PF('block').hide()"
-                                 value="Test Webservice" update="competitionTable"/>
+                                 value="Test Webservice" update="competitionTable,teamTable"/>
                 <p:selectOneMenu id="yearSelection" value="#{matchListCtrl.selectedYear}" 
                                  style="width: 150px;" >
                     <f:selectItem itemLabel="2018" itemValue="2018"/>
@@ -77,8 +77,8 @@
                              rows="10" paginator="true"
                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
                              rowsPerPageTemplate="5,10,15,20"                     >
-                    <p:column headerText="ID"  sortBy="#{team.id}" style="border-color: transparent;">
-                        <h:outputText value="#{team.id}" />
+                    <p:column headerText="ID"  sortBy="#{team.code}" style="border-color: transparent;">
+                        <h:outputText value="#{team.code}" />
                     </p:column>
                     <p:column headerText="Name"  sortBy="#{team.name}" style="border-color: transparent;">
                         <h:outputText value="#{team.name}" />

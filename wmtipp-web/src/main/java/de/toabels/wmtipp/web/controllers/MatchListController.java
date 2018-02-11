@@ -82,7 +82,6 @@ public class MatchListController {
         this.teams = teams;
     }
 
-    
     public String getSelectedYear() {
         return selectedYear;
     }
@@ -91,8 +90,9 @@ public class MatchListController {
         this.selectedYear = selectedYear;
     }
 
-    public void testFootballData(){
+    public void testFootballData() {
         competitions = resultService.findCompetitionsByYear(selectedYear);
-//        teams = resultService.findTeamsByCompetition(competitions.get(0).getId().toString());
+        teams = resultService.findTeamsByCompetition(competitions.get(0).getId().toString());
+        resultService.findFixturesByCompetition("452");
     }
 }

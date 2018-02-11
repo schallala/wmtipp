@@ -17,14 +17,16 @@
 package de.toabels.wmtipp.services.utiils.impl;
 
 import de.toabels.wmtipp.model.external.FdoCompetition;
+import de.toabels.wmtipp.model.external.FdoFixture;
+import de.toabels.wmtipp.model.external.FdoFixtureList;
 import de.toabels.wmtipp.model.external.FdoTeam;
+import de.toabels.wmtipp.model.external.FdoTeamList;
 import de.toabels.wmtipp.services.utiils.IResultService;
 import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
@@ -50,33 +52,60 @@ public class FootballDataOrgService implements IResultService {
         return UriBuilder.fromUri(SERVICE_BASE_URL).build();
     }
 
-    private WebTarget getTarget(String path) {
+    private Client getClient() {
         ClientConfig config = new ClientConfig();
         Client client = ClientBuilder.newClient(config);
         client.register(JacksonJsonProvider.class);
-        WebTarget target = client.target(getBaseURI()).path(path);
-        return target;
+        return client;
     }
 
     @Override
     public List<FdoCompetition> findCompetitionsByYear(String selectedYear) {
-        Response response = getTarget(COMPETITIONS_SERVICE).
+        Client client = getClient();
+        Response response = client.target(getBaseURI()).
+                path(COMPETITIONS_SERVICE).
                 queryParam("season", selectedYear).
                 request().
                 header("Authorization", authToken).
+                header("X-Response-Control", "minified").
                 accept(MediaType.APPLICATION_JSON).
                 get();
-        return Arrays.asList(response.readEntity(FdoCompetition[].class));
+        List<FdoCompetition> result = Arrays.asList(response.readEntity(FdoCompetition[].class));
+        response.close();
+        client.close();
+        return result;
     }
 
     @Override
     public List<FdoTeam> findTeamsByCompetition(String id) {
-        Response response = getTarget(COMPETITIONS_SERVICE).path(id).path("/teams").
+        Client client = getClient();
+        Response response = client.target(getBaseURI()).
+                path(COMPETITIONS_SERVICE).path(id).path("/teams").
                 request().
-                header("Authorization", authToken).
+                header("X-Auth-Token", authToken).
+                header("X-Response-Control", "minified").
                 accept(MediaType.APPLICATION_JSON).
                 get();
-        return Arrays.asList(response.readEntity(FdoTeam[].class));
+        FdoTeamList teams = response.readEntity(FdoTeamList.class);
+        response.close();
+        client.close();
+        return teams.getTeams();
+    }
+
+    @Override
+    public List<FdoFixture> findFixturesByCompetition(String id) {
+        Client client = getClient();
+        Response response = client.target(getBaseURI()).
+                path(COMPETITIONS_SERVICE).path(id).path("/fixtures").
+                request().
+                header("X-Auth-Token", authToken).
+                header("X-Response-Control", "minified").
+                accept(MediaType.APPLICATION_JSON).
+                get();
+        FdoFixtureList fixtures = response.readEntity(FdoFixtureList.class);
+        response.close();
+        client.close();
+        return fixtures.getFixtures();
     }
 
 }

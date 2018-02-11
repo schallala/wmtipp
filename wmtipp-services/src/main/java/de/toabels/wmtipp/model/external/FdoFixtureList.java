@@ -14,22 +14,37 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.toabels.wmtipp.services.utiils;
+package de.toabels.wmtipp.model.external;
 
-import de.toabels.wmtipp.model.external.FdoCompetition;
-import de.toabels.wmtipp.model.external.FdoFixture;
-import de.toabels.wmtipp.model.external.FdoTeam;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 /**
  *
  * @author abels
  */
-public interface IResultService {
+public class FdoFixtureList {
 
-    List<FdoCompetition> findCompetitionsByYear(String selectedYear);    
-    
-    List<FdoTeam> findTeamsByCompetition(String id);
-    
-    List<FdoFixture> findFixturesByCompetition(String id);
+    @JsonProperty("count")
+    private Integer count;
+
+    @JsonProperty("teams")
+    private List<FdoFixture> fixtures;
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
+    public List<FdoFixture> getFixtures() {
+        return fixtures;
+    }
+
+    public void setFixtures(List<FdoFixture> fixtures) {
+        this.fixtures = fixtures;
+    }
+
 }
