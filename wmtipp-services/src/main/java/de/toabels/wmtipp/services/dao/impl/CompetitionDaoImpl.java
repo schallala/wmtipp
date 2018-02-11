@@ -27,5 +27,5 @@ public class CompetitionDaoImpl extends AbstractGenericDao<Competition> implemen
         super();
         setClazz(Competition.class);
     }
-
+    
 }

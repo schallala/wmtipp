@@ -17,12 +17,19 @@
 package de.toabels.wmtipp.model.db;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -33,7 +40,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "community")
 @XmlRootElement
-public class BettingCommunity implements IEntityBase<BettingCommunity>, Serializable {
+public class Community implements IEntityBase<Community>, Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -50,25 +57,7 @@ public class BettingCommunity implements IEntityBase<BettingCommunity>, Serializ
     @Basic(optional = false)
     @Column(name = "title")
     private String title;
-    @Basic(optional = false)
-    @Column(name = "t_type_name")
-    private String tournamentName;
-    @Basic(optional = false)
-    @Column(name = "t_type_shortname")
-    private String tournamentShortname;
-    @Basic(optional = false)
-    @Column(name = "image_path")
-    private String imagePath;
-    @Basic(optional = false)
-    @Column(name = "flags_path")
-    private String flagsPath;
- 
-    @Basic(optional = false)
-    @Column(name = "points_win")
-    private Long pointsWin;
-    @Basic(optional = false)
-    @Column(name = "points_draw")
-    private Long pointsDraw;
+
     @Basic(optional = false)
     @Column(name = "score_correct_winner")
     private Long scoreCorrectWinner;
@@ -79,34 +68,29 @@ public class BettingCommunity implements IEntityBase<BettingCommunity>, Serializ
     @Column(name = "score_correct_trend")
     private Long scoreCorrectTrend;
 
-    @Basic(optional = false)
-    @Column(name = "auto_generate_matches")
-    private boolean autoGenerateMatches;
-    @Basic(optional = false)
-    @Column(name = "auto_release_round")
-    private boolean autoReleaseRounds;
-    
     @Column(name = "sort_order")
     private Integer sortOrder;
 
-    public BettingCommunity() {
-    }
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "community_player", joinColumns = {
+        @JoinColumn(name = "COMMUNITY_ID", nullable = false, updatable = false)},
+            inverseJoinColumns = {
+                @JoinColumn(name = "PLAYER_ID",
+                        nullable = false, updatable = false)})
+    List<Player> playerList = new ArrayList<Player>(0);
 
-    public BettingCommunity(Long id) {
-        this.id = id;
-    }
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "community_competition", joinColumns = {
+        @JoinColumn(name = "COMMUNITY_ID", nullable = false, updatable = false)},
+            inverseJoinColumns = {
+                @JoinColumn(name = "COMPETITION_ID",
+                        nullable = false, updatable = false)})
+    List<Competition> competitionList = new ArrayList<Competition>(0);
 
-    public BettingCommunity(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    @Override
     public Long getId() {
         return id;
     }
 
-    @Override
     public void setId(Long id) {
         this.id = id;
     }
@@ -135,54 +119,6 @@ public class BettingCommunity implements IEntityBase<BettingCommunity>, Serializ
         this.title = title;
     }
 
-    public String getTournamentName() {
-        return tournamentName;
-    }
-
-    public void setTournamentName(String tournamentName) {
-        this.tournamentName = tournamentName;
-    }
-
-    public String getTournamentShortname() {
-        return tournamentShortname;
-    }
-
-    public void setTournamentShortname(String tournamentShortname) {
-        this.tournamentShortname = tournamentShortname;
-    }
-
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
-
-    public String getFlagsPath() {
-        return flagsPath;
-    }
-
-    public void setFlagsPath(String flagsPath) {
-        this.flagsPath = flagsPath;
-    }
-
-    public Long getPointsWin() {
-        return pointsWin;
-    }
-
-    public void setPointsWin(Long pointsWin) {
-        this.pointsWin = pointsWin;
-    }
-
-    public Long getPointsDraw() {
-        return pointsDraw;
-    }
-
-    public void setPointsDraw(Long pointsDraw) {
-        this.pointsDraw = pointsDraw;
-    }
-
     public Long getScoreCorrectWinner() {
         return scoreCorrectWinner;
     }
@@ -207,29 +143,28 @@ public class BettingCommunity implements IEntityBase<BettingCommunity>, Serializ
         this.scoreCorrectTrend = scoreCorrectTrend;
     }
 
-    public boolean isAutoGenerateMatches() {
-        return autoGenerateMatches;
-    }
-
-    public void setAutoGenerateMatches(boolean autoGenerateMatches) {
-        this.autoGenerateMatches = autoGenerateMatches;
-    }
-
-    public boolean isAutoReleaseRounds() {
-        return autoReleaseRounds;
-    }
-
-    public void setAutoReleaseRounds(boolean autoReleaseRounds) {
-        this.autoReleaseRounds = autoReleaseRounds;
-    }
-
-    
     public Integer getSortOrder() {
         return sortOrder;
     }
 
     public void setSortOrder(Integer sortOrder) {
         this.sortOrder = sortOrder;
+    }
+
+    public List<Player> getPlayerList() {
+        return playerList;
+    }
+
+    public void setPlayerList(List<Player> playerList) {
+        this.playerList = playerList;
+    }
+
+    public List<Competition> getCompetitionList() {
+        return competitionList;
+    }
+
+    public void setCompetitionList(List<Competition> competitionList) {
+        this.competitionList = competitionList;
     }
 
     @Override
@@ -242,10 +177,10 @@ public class BettingCommunity implements IEntityBase<BettingCommunity>, Serializ
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof BettingCommunity)) {
+        if (!(object instanceof Community)) {
             return false;
         }
-        BettingCommunity other = (BettingCommunity) object;
+        Community other = (Community) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -254,7 +189,7 @@ public class BettingCommunity implements IEntityBase<BettingCommunity>, Serializ
 
     @Override
     public String toString() {
-        return "de.toabels.wmtipp.model.db.Group[ id=" + id + " ]";
+        return "de.toabels.wmtipp.model.db.BettingCommunity[ id=" + id + " ]";
     }
 
 }

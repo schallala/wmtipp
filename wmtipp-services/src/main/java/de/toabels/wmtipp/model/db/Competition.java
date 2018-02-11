@@ -17,12 +17,16 @@
 package de.toabels.wmtipp.model.db;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -89,6 +93,9 @@ public class Competition implements IEntityBase<Competition>, Serializable {
     @Column(name = "sort_order")
     private Integer sortOrder;
 
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "competitionList")
+    private List<Community> communityList = new ArrayList<Community>(0);
+    
     public Competition() {
     }
 
@@ -232,6 +239,14 @@ public class Competition implements IEntityBase<Competition>, Serializable {
         this.sortOrder = sortOrder;
     }
 
+    public List<Community> getCommunityList() {
+        return communityList;
+    }
+
+    public void setCommunityList(List<Community> communityList) {
+        this.communityList = communityList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -254,7 +269,7 @@ public class Competition implements IEntityBase<Competition>, Serializable {
 
     @Override
     public String toString() {
-        return "de.toabels.wmtipp.model.db.Group[ id=" + id + " ]";
+        return "de.toabels.wmtipp.model.db.Competition[ id=" + id + " ]";
     }
 
 }

@@ -54,7 +54,8 @@
             <p:selectBooleanButton id="autoReleaseRounds" 
                                    value="#{competitionEditCtrl.currentCompetition.autoReleaseRounds}" 
                                    onIcon="ui-icon-check" offIcon="ui-icon-close" style="width:60px"
-                                   onLabel="Ja" offLabel="Nein" disabled="#{not competitionEditCtrl.editMode}"/>
+                                   onLabel="#{msg['global_yes']}" offLabel="#{msg['global_no']}" 
+                                   disabled="#{not competitionEditCtrl.editMode}"/>
             <p:outputLabel value="#{msg['global_competition_sortOrder']}" for="sortOrder" />
             <p:inputText id="sortOrder" value="#{competitionEditCtrl.currentCompetition.sortOrder}" 
                          required="true" disabled="#{not competitionEditCtrl.editMode}"/>
