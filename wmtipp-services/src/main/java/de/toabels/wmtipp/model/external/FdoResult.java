@@ -22,39 +22,39 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  *
  * @author abels
  */
-public class FdoResult {
-
-    @JsonProperty("goalsHomeTeam")
-    private Integer goalsHomeTeam;
-
-    @JsonProperty("goalsAwayTeam")
-    private Integer goalsAwayTeam;
+public class FdoResult extends SimpleResult{
 
     @JsonProperty("halfTime")
-    private Object halfTime;
+    private SimpleResult halfTime;
 
-    public Integer getGoalsHomeTeam() {
-        return goalsHomeTeam;
-    }
+    @JsonProperty("extraTime")
+    private SimpleResult extraTime;
 
-    public void setGoalsHomeTeam(Integer goalsHomeTeam) {
-        this.goalsHomeTeam = goalsHomeTeam;
-    }
+    @JsonProperty("penaltyShootout")
+    private SimpleResult penaltyShootout;
 
-    public Integer getGoalsAwayTeam() {
-        return goalsAwayTeam;
-    }
-
-    public void setGoalsAwayTeam(Integer goalsAwayTeam) {
-        this.goalsAwayTeam = goalsAwayTeam;
-    }
-
-    public Object getHalfTime() {
+    public SimpleResult getHalfTime() {
         return halfTime;
     }
 
-    public void setHalfTime(Object halfTime) {
+    public void setHalfTime(SimpleResult halfTime) {
         this.halfTime = halfTime;
+    }
+
+    public SimpleResult getExtraTime() {
+        return extraTime;
+    }
+
+    public void setExtraTime(SimpleResult extraTime) {
+        this.extraTime = extraTime;
+    }
+
+    public SimpleResult getPenaltyShootout() {
+        return penaltyShootout;
+    }
+
+    public void setPenaltyShootout(SimpleResult penaltyShootout) {
+        this.penaltyShootout = penaltyShootout;
     }
 
 }

@@ -17,34 +17,31 @@
 package de.toabels.wmtipp.model.external;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.List;
 
 /**
  *
  * @author abels
  */
-public class FdoFixtureList {
+public class SimpleResult {
+    @JsonProperty("goalsHomeTeam")
+    private Integer goalsHomeTeam;
+    @JsonProperty("goalsAwayTeam")
+    private Integer goalsAwayTeam;
 
-    @JsonProperty("count")
-    private Integer count;
-
-    @JsonProperty("fixtures")
-    private List<FdoFixture> fixtures;
-
-    public Integer getCount() {
-        return count;
+    public Integer getGoalsHomeTeam() {
+        return goalsHomeTeam;
     }
 
-    public void setCount(Integer count) {
-        this.count = count;
+    public void setGoalsHomeTeam(Integer goalsHomeTeam) {
+        this.goalsHomeTeam = goalsHomeTeam;
     }
 
-    public List<FdoFixture> getFixtures() {
-        return fixtures;
+    public Integer getGoalsAwayTeam() {
+        return goalsAwayTeam;
     }
 
-    public void setFixtures(List<FdoFixture> fixtures) {
-        this.fixtures = fixtures;
+    public void setGoalsAwayTeam(Integer goalsAwayTeam) {
+        this.goalsAwayTeam = goalsAwayTeam;
     }
-
+    
 }

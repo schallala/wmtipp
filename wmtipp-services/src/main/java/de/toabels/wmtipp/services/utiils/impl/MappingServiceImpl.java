@@ -164,7 +164,6 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
         }
         dto.setId(competition.getId());
         dto.setName(competition.getName());
-        dto.setAutoGenerateMatches(competition.get);
         dto.setSortOrder(competition.getSortOrder());
         return dto;
     }

@@ -107,7 +107,7 @@ public class FdoFixture {
         this.awayTeamId = awayTeamId;
     }
 
-    public Object getResult() {
+    public FdoResult getResult() {
         return result;
     }
 

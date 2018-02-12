@@ -93,6 +93,6 @@ public class MatchListController {
     public void testFootballData() {
         competitions = resultService.findCompetitionsByYear(selectedYear);
         teams = resultService.findTeamsByCompetition(competitions.get(0).getId().toString());
-        resultService.findFixturesByCompetition("452");
+        resultService.findFixturesByCompetition(competitions.get(0).getId().toString());
     }
 }
