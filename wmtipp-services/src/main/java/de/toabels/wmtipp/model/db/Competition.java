@@ -55,12 +55,6 @@ public class Competition implements IEntityBase<Competition>, Serializable {
     @Column(name = "title")
     private String title;
     @Basic(optional = false)
-    @Column(name = "t_type_name")
-    private String tournamentName;
-    @Basic(optional = false)
-    @Column(name = "t_type_shortname")
-    private String tournamentShortname;
-    @Basic(optional = false)
     @Column(name = "image_path")
     private String imagePath;
     @Basic(optional = false)
@@ -140,22 +134,6 @@ public class Competition implements IEntityBase<Competition>, Serializable {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getTournamentName() {
-        return tournamentName;
-    }
-
-    public void setTournamentName(String tournamentName) {
-        this.tournamentName = tournamentName;
-    }
-
-    public String getTournamentShortname() {
-        return tournamentShortname;
-    }
-
-    public void setTournamentShortname(String tournamentShortname) {
-        this.tournamentShortname = tournamentShortname;
     }
 
     public String getImagePath() {

@@ -68,16 +68,6 @@ public class Community implements IEntityBase<Community>, Serializable {
     @Column(name = "score_correct_trend")
     private Long scoreCorrectTrend;
 
-    @Column(name = "sort_order")
-    private Integer sortOrder;
-
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "community_player", joinColumns = {
-        @JoinColumn(name = "COMMUNITY_ID", nullable = false, updatable = false)},
-            inverseJoinColumns = {
-                @JoinColumn(name = "PLAYER_ID",
-                        nullable = false, updatable = false)})
-    List<Player> playerList = new ArrayList<Player>(0);
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "community_competition", joinColumns = {
@@ -141,22 +131,6 @@ public class Community implements IEntityBase<Community>, Serializable {
 
     public void setScoreCorrectTrend(Long scoreCorrectTrend) {
         this.scoreCorrectTrend = scoreCorrectTrend;
-    }
-
-    public Integer getSortOrder() {
-        return sortOrder;
-    }
-
-    public void setSortOrder(Integer sortOrder) {
-        this.sortOrder = sortOrder;
-    }
-
-    public List<Player> getPlayerList() {
-        return playerList;
-    }
-
-    public void setPlayerList(List<Player> playerList) {
-        this.playerList = playerList;
     }
 
     public List<Competition> getCompetitionList() {

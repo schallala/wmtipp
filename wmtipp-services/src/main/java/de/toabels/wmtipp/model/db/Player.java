@@ -16,7 +16,6 @@
  */
 package de.toabels.wmtipp.model.db;
 
-import de.toabels.wmtipp.model.types.UserRoleType;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,15 +23,11 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -61,35 +56,14 @@ public class Player implements IEntityBase<Player>, Serializable {
     private String phone;
     @Column(name = "email")
     private String email;
-    @ManyToOne
-    @JoinColumn(name = "predicted_champion")
-    private Team predictedChampion;
-    @Column(name = "fee_paid")
-    private Boolean feePaid;
-    @Column(name = "score")
-    private Integer score;
-    @Column(name = "correct_tips")
-    private Integer correctTips;
-    @Column(name = "correct_trends")
-    private Integer correctTrends;
     @Column(name = "password")
     private String password;
-    @Basic(optional = false)
-    @Column(name = "tips_visible")
-    private Boolean tipsVisible;
-    @Basic(optional = false)
-    @Column(name = "user_role")
-    @Enumerated(EnumType.STRING)
-    private UserRoleType userRole;
     @Basic(optional = false)
     @Column(name = "login")
     private String login;
     @Column(name = "last_activity")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastActivity;
-
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "playerList")
-    private List<Community> communityList = new ArrayList<Community>(0);
 
     public Player() {
     }
@@ -140,68 +114,12 @@ public class Player implements IEntityBase<Player>, Serializable {
         this.email = email;
     }
 
-    public Team getPredictedChampion() {
-        return predictedChampion;
-    }
-
-    public void setPredictedChampion(Team predictedChampion) {
-        this.predictedChampion = predictedChampion;
-    }
-
-    public Boolean getFeePaid() {
-        return feePaid;
-    }
-
-    public void setFeePaid(Boolean feePaid) {
-        this.feePaid = feePaid;
-    }
-
-    public Integer getScore() {
-        return score;
-    }
-
-    public void setScore(Integer score) {
-        this.score = score;
-    }
-
-    public Integer getCorrectTips() {
-        return correctTips;
-    }
-
-    public void setCorrectTips(Integer correctTips) {
-        this.correctTips = correctTips;
-    }
-
-    public Integer getCorrectTrends() {
-        return correctTrends;
-    }
-
-    public void setCorrectTrends(Integer correctTrends) {
-        this.correctTrends = correctTrends;
-    }
-
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Boolean getTipsVisible() {
-        return tipsVisible;
-    }
-
-    public void setTipsVisible(Boolean tipsVisible) {
-        this.tipsVisible = tipsVisible;
-    }
-
-    public UserRoleType getUserRole() {
-        return userRole;
-    }
-
-    public void setUserRole(UserRoleType userRole) {
-        this.userRole = userRole;
     }
 
     public String getLogin() {
@@ -218,14 +136,6 @@ public class Player implements IEntityBase<Player>, Serializable {
 
     public void setLastActivity(Date lastActivity) {
         this.lastActivity = lastActivity;
-    }
-
-    public List<Community> getCommunityList() {
-        return communityList;
-    }
-
-    public void setCommunityList(List<Community> communityList) {
-        this.communityList = communityList;
     }
 
     @Override

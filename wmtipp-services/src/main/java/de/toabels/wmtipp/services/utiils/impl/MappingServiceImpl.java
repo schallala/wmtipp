@@ -16,6 +16,7 @@
  */
 package de.toabels.wmtipp.services.utiils.impl;
 
+import de.toabels.wmtipp.model.db.Community;
 import de.toabels.wmtipp.model.db.Competition;
 import de.toabels.wmtipp.model.dto.AbstractBaseDto;
 import de.toabels.wmtipp.model.dto.GroupDto;
@@ -26,13 +27,16 @@ import de.toabels.wmtipp.model.db.Match;
 import de.toabels.wmtipp.model.db.Message;
 import de.toabels.wmtipp.model.db.News;
 import de.toabels.wmtipp.model.db.Player;
+import de.toabels.wmtipp.model.db.PlayerContext;
 import de.toabels.wmtipp.model.db.Round;
 import de.toabels.wmtipp.model.db.Team;
 import de.toabels.wmtipp.model.db.Tip;
+import de.toabels.wmtipp.model.dto.CommunityDto;
 import de.toabels.wmtipp.model.dto.CompetitionDto;
 import de.toabels.wmtipp.model.dto.MatchDto;
 import de.toabels.wmtipp.model.dto.MessageDto;
 import de.toabels.wmtipp.model.dto.NewsDto;
+import de.toabels.wmtipp.model.dto.PlayerContextDto;
 import de.toabels.wmtipp.model.dto.RoundDto;
 import de.toabels.wmtipp.model.dto.TeamDto;
 import de.toabels.wmtipp.model.dto.TipDto;
@@ -63,6 +67,12 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
         }
         if (entity instanceof Competition) {
             return (D) map((Competition) entity);
+        }
+        if (entity instanceof Community) {
+            return (D) map((Community) entity);
+        }
+        if (entity instanceof PlayerContext) {
+            return (D) map((PlayerContext) entity);
         }
         if (entity instanceof Player) {
             return (D) map((Player) entity);
@@ -106,6 +116,12 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
         if (dto instanceof CompetitionDto) {
             return (E) map((CompetitionDto) dto);
         }
+        if (dto instanceof CommunityDto) {
+            return (E) map((CommunityDto) dto);
+        }
+        if (dto instanceof PlayerContextDto) {
+            return (E) map((PlayerContextDto) dto);
+        }
         if (dto instanceof PlayerDto) {
             return (E) map((PlayerDto) dto);
         }
@@ -134,7 +150,6 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
     }
 
     /* Individual implementation of DTO/entity mappings
-
      */
     /**
      * Map Competition entity -> Competition DTO
@@ -149,6 +164,7 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
         }
         dto.setId(competition.getId());
         dto.setName(competition.getName());
+        dto.setAutoGenerateMatches(competition.get);
         dto.setSortOrder(competition.getSortOrder());
         return dto;
     }
@@ -187,7 +203,104 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
         return competition;
     }
 
-    
+    /**
+     * Map Community entity -> Community DTO
+     *
+     * @param community - entity
+     * @return Community DTO
+     */
+    private CommunityDto map(Community community) {
+        CommunityDto dto = new CommunityDto();
+        if (community == null) {
+            return dto;
+        }
+        dto.setId(community.getId());
+        dto.setName(community.getName());
+        return dto;
+    }
+
+    /**
+     * Map Community DTO -> Community entity
+     *
+     * @param dto - community dto
+     * @return Community entity
+     */
+    private Community map(CommunityDto dto) {
+        if (dto == null) {
+            return null;
+        }
+        Community community = new Community();
+        community.setId(dto.getId());
+        community.setName(dto.getName());
+        return community;
+    }
+
+    /**
+     * Map reference Community DTO -> Community entity
+     *
+     * @param dto - community dto
+     * @return Community entity
+     */
+    private Community mapReference(CommunityDto dto) {
+        if (dto == null || dto.getId() == null) {
+            return null;
+        }
+        Community community = new Community();
+        community.setId(dto.getId());
+        community.setName(dto.getName());
+        return community;
+    }
+
+    /**
+     * Map PlayerContext entity -> PlayerContext DTO
+     *
+     * @param playerContext - entity
+     * @return PlayerContext DTO
+     */
+    private PlayerContextDto map(PlayerContext playerContext) {
+        PlayerContextDto dto = new PlayerContextDto();
+        if (playerContext == null) {
+            return dto;
+        }
+        dto.setId(playerContext.getId());
+        dto.setPlayerId(playerContext.getPlayerId());
+        dto.setCommunityId(playerContext.getCommunityId());
+        dto.setCompetitionId(playerContext.getCompetitionId());
+        dto.setCorrectTips(playerContext.getCorrectTips());
+        dto.setCorrectTrends(playerContext.getCorrectTrends());
+        dto.setFeePaid(playerContext.getFeePaid());
+        dto.setScore(playerContext.getScore());
+        dto.setTipsVisible(playerContext.getTipsVisible());
+        dto.setUserRole(playerContext.getUserRole());
+        dto.setPredictedChampion(map(playerContext.getPredictedChampion()));
+        return dto;
+    }
+
+    /**
+     * Map reference PlayerContext DTO -> PlayerContext entity
+     *
+     * @param dto - playerContext dto
+     * @return PlayerContext entity
+     */
+    private PlayerContext map(PlayerContextDto dto) {
+        if (dto == null || dto.getId() == null) {
+            return null;
+        }
+        PlayerContext playerContext = new PlayerContext();
+        playerContext.setId(dto.getId());
+        playerContext.setPlayerId(dto.getPlayerId());
+        playerContext.setCommunityId(dto.getCommunityId());
+        playerContext.setCompetitionId(dto.getCompetitionId());
+        playerContext.setCorrectTips(dto.getCorrectTips());
+        playerContext.setCorrectTrends(dto.getCorrectTrends());
+        playerContext.setFeePaid(dto.getFeePaid());
+        playerContext.setScore(dto.getScore());
+        playerContext.setTipsVisible(dto.getTipsVisible());
+        playerContext.setUserRole(dto.getUserRole());
+        playerContext.setPredictedChampion(map(dto.getPredictedChampion()));
+        return playerContext;
+    }
+
     /**
      * Map Group entity -> Group DTO
      *
@@ -477,7 +590,6 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
             return null;
         }
         PlayerDto dto = mapCore(player);
-        dto.setPredictedChampion(mapReference(player.getPredictedChampion()));
         return dto;
     }
 
@@ -496,15 +608,8 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
         dto.setEmail(player.getEmail());
         dto.setLogin(player.getLogin());
         dto.setLastActivity(player.getLastActivity());
-        dto.setUserRole(player.getUserRole());
-        dto.setTipsVisible(player.getTipsVisible());
         dto.setPassword(player.getPassword());
         dto.setPhone(player.getPhone());
-        dto.setPredictedChampion(mapReference(player.getPredictedChampion()));
-        dto.setCorrectTips(player.getCorrectTips());
-        dto.setCorrectTrends(player.getCorrectTrends());
-        dto.setFeePaid(player.getFeePaid());
-        dto.setScore(player.getScore());
         return dto;
     }
 
@@ -525,15 +630,8 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
         player.setEmail(dto.getEmail());
         player.setLogin(dto.getLogin());
         player.setLastActivity(dto.getLastActivity());
-        player.setUserRole(dto.getUserRole());
-        player.setTipsVisible(dto.getTipsVisible());
         player.setPassword(dto.getPassword());
         player.setPhone(dto.getPhone());
-        player.setPredictedChampion(mapReference(dto.getPredictedChampion()));
-        player.setCorrectTips(dto.getCorrectTips());
-        player.setCorrectTrends(dto.getCorrectTrends());
-        player.setFeePaid(dto.getFeePaid());
-        player.setScore(dto.getScore());
         return player;
     }
 
