@@ -29,19 +29,11 @@ public class CompetitionDto extends AbstractBaseDto {
     private String name;
     private String shortname;
     private String title;
-    private String tournamentName;
-    private String tournamentShortname;
     private String imagePath;
     private String flagsPath;
 
     private Long pointsWin;
     private Long pointsDraw;
-    private Long scoreCorrectWinner;
-    private Long scoreCorrectTip;
-    private Long scoreCorrectTrend;
-
-    private boolean autoGenerateMatches;
-    private boolean autoReleaseRounds;
 
     private Integer sortOrder;
 
@@ -67,22 +59,6 @@ public class CompetitionDto extends AbstractBaseDto {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getTournamentName() {
-        return tournamentName;
-    }
-
-    public void setTournamentName(String tournamentName) {
-        this.tournamentName = tournamentName;
-    }
-
-    public String getTournamentShortname() {
-        return tournamentShortname;
-    }
-
-    public void setTournamentShortname(String tournamentShortname) {
-        this.tournamentShortname = tournamentShortname;
     }
 
     public String getImagePath() {
@@ -115,46 +91,6 @@ public class CompetitionDto extends AbstractBaseDto {
 
     public void setPointsDraw(Long pointsDraw) {
         this.pointsDraw = pointsDraw;
-    }
-
-    public Long getScoreCorrectWinner() {
-        return scoreCorrectWinner;
-    }
-
-    public void setScoreCorrectWinner(Long scoreCorrectWinner) {
-        this.scoreCorrectWinner = scoreCorrectWinner;
-    }
-
-    public Long getScoreCorrectTip() {
-        return scoreCorrectTip;
-    }
-
-    public void setScoreCorrectTip(Long scoreCorrectTip) {
-        this.scoreCorrectTip = scoreCorrectTip;
-    }
-
-    public Long getScoreCorrectTrend() {
-        return scoreCorrectTrend;
-    }
-
-    public void setScoreCorrectTrend(Long scoreCorrectTrend) {
-        this.scoreCorrectTrend = scoreCorrectTrend;
-    }
-
-    public boolean isAutoGenerateMatches() {
-        return autoGenerateMatches;
-    }
-
-    public void setAutoGenerateMatches(boolean autoGenerateMatches) {
-        this.autoGenerateMatches = autoGenerateMatches;
-    }
-
-    public boolean isAutoReleaseRounds() {
-        return autoReleaseRounds;
-    }
-
-    public void setAutoReleaseRounds(boolean autoReleaseRounds) {
-        this.autoReleaseRounds = autoReleaseRounds;
     }
 
     public Integer getSortOrder() {

@@ -68,6 +68,14 @@ public class Community implements IEntityBase<Community>, Serializable {
     @Column(name = "score_correct_trend")
     private Long scoreCorrectTrend;
 
+    @Basic(optional = false)
+    @Column(name = "autogenerate_matches")
+    private Boolean autoGenerateMatches;
+    @Basic(optional = false)
+    @Column(name = "autorelease_rounds")
+    private Boolean autoReleaseRounds;
+     
+            
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "community_competition", joinColumns = {
@@ -77,10 +85,12 @@ public class Community implements IEntityBase<Community>, Serializable {
                         nullable = false, updatable = false)})
     List<Competition> competitionList = new ArrayList<Competition>(0);
 
+    @Override
     public Long getId() {
         return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }
@@ -131,6 +141,22 @@ public class Community implements IEntityBase<Community>, Serializable {
 
     public void setScoreCorrectTrend(Long scoreCorrectTrend) {
         this.scoreCorrectTrend = scoreCorrectTrend;
+    }
+
+    public Boolean getAutoGenerateMatches() {
+        return autoGenerateMatches;
+    }
+
+    public void setAutoGenerateMatches(Boolean autoGenerateMatches) {
+        this.autoGenerateMatches = autoGenerateMatches;
+    }
+
+    public Boolean getAutoReleaseRounds() {
+        return autoReleaseRounds;
+    }
+
+    public void setAutoReleaseRounds(Boolean autoReleaseRounds) {
+        this.autoReleaseRounds = autoReleaseRounds;
     }
 
     public List<Competition> getCompetitionList() {

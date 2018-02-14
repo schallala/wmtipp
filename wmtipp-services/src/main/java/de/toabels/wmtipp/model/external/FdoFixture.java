@@ -17,6 +17,10 @@
 package de.toabels.wmtipp.model.external;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
 
 /**
  *
@@ -26,6 +30,8 @@ public class FdoFixture {
 
     @JsonProperty("date")
     private String date;
+
+    private String formattedDate;
 
     @JsonProperty("status")
     private String status;
@@ -57,6 +63,12 @@ public class FdoFixture {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getJodaDate() {
+        DateTime jodaDate = ISODateTimeFormat.dateTimeParser().parseDateTime(date);
+        DateTimeFormatter dtfOut = DateTimeFormat.forPattern("dd.MM.yyyy HH:mm");
+        return dtfOut.print(jodaDate);
     }
 
     public String getStatus() {

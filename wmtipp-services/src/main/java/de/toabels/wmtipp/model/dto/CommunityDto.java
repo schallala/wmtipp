@@ -37,6 +37,10 @@ public class CommunityDto extends AbstractBaseDto {
     private Long scoreCorrectTip;
 
     private Long scoreCorrectTrend;
+    
+    private boolean autoGenerateMatches;
+
+    private boolean autoReleaseRounds;
 
     public String getName() {
         return name;
@@ -84,6 +88,22 @@ public class CommunityDto extends AbstractBaseDto {
 
     public void setScoreCorrectTrend(Long scoreCorrectTrend) {
         this.scoreCorrectTrend = scoreCorrectTrend;
+    }
+
+    public boolean isAutoGenerateMatches() {
+        return autoGenerateMatches;
+    }
+
+    public void setAutoGenerateMatches(boolean autoGenerateMatches) {
+        this.autoGenerateMatches = autoGenerateMatches;
+    }
+
+    public boolean isAutoReleaseRounds() {
+        return autoReleaseRounds;
+    }
+
+    public void setAutoReleaseRounds(boolean autoReleaseRounds) {
+        this.autoReleaseRounds = autoReleaseRounds;
     }
 
     @Override

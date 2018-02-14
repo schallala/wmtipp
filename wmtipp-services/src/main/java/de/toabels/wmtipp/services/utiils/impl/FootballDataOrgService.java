@@ -19,6 +19,8 @@ package de.toabels.wmtipp.services.utiils.impl;
 import de.toabels.wmtipp.model.external.FdoCompetition;
 import de.toabels.wmtipp.model.external.FdoFixture;
 import de.toabels.wmtipp.model.external.FdoFixtureList;
+import de.toabels.wmtipp.model.external.FdoLeagueTable;
+import de.toabels.wmtipp.model.external.FdoLeagueTableHeader;
 import de.toabels.wmtipp.model.external.FdoTeam;
 import de.toabels.wmtipp.model.external.FdoTeamList;
 import de.toabels.wmtipp.services.utiils.IResultService;
@@ -106,6 +108,23 @@ public class FootballDataOrgService implements IResultService {
         response.close();
         client.close();
         return fixtures.getFixtures();
+    }
+
+    @Override
+    public List<FdoLeagueTable> findLeagueTable(String id) {
+        Client client = getClient();
+        Response response = client.target(getBaseURI()).
+                path(COMPETITIONS_SERVICE).path(id).path("/leagueTable").
+                request().
+                header("X-Auth-Token", authToken).
+                header("X-Response-Control", "minified").
+                accept(MediaType.APPLICATION_JSON).
+                get();
+        FdoLeagueTableHeader tableHeader = response.readEntity(FdoLeagueTableHeader.class);
+//        Object tableHeader = response.readEntity(Object.class);
+        response.close();
+        client.close();
+        return null;
     }
 
 }

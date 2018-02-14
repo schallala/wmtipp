@@ -17,10 +17,7 @@
 package de.toabels.wmtipp.web.controllers;
 
 import de.toabels.wmtipp.model.dto.MatchDto;
-import de.toabels.wmtipp.model.external.FdoCompetition;
-import de.toabels.wmtipp.model.external.FdoTeam;
 import de.toabels.wmtipp.services.api.IMatchService;
-import de.toabels.wmtipp.services.utiils.IResultService;
 
 import java.util.List;
 
@@ -38,15 +35,6 @@ public class MatchListController {
     private static final Logger logger = LoggerFactory.getLogger(MatchListController.class);
 
     private List<String> panels = new ArrayList<String>();
-
-    private List<FdoCompetition> competitions;
-
-    private List<FdoTeam> teams;
-
-    private String selectedYear;
-
-    @Autowired
-    private IResultService resultService;
 
     @Autowired
     private IMatchService matchService;
@@ -66,33 +54,4 @@ public class MatchListController {
         this.panels = panels;
     }
 
-    public List<FdoCompetition> getCompetitions() {
-        return competitions;
-    }
-
-    public void setCompetitions(List<FdoCompetition> competitions) {
-        this.competitions = competitions;
-    }
-
-    public List<FdoTeam> getTeams() {
-        return teams;
-    }
-
-    public void setTeams(List<FdoTeam> teams) {
-        this.teams = teams;
-    }
-
-    public String getSelectedYear() {
-        return selectedYear;
-    }
-
-    public void setSelectedYear(String selectedYear) {
-        this.selectedYear = selectedYear;
-    }
-
-    public void testFootballData() {
-        competitions = resultService.findCompetitionsByYear(selectedYear);
-        teams = resultService.findTeamsByCompetition(competitions.get(0).getId().toString());
-        resultService.findFixturesByCompetition(competitions.get(0).getId().toString());
-    }
 }

@@ -28,50 +28,23 @@
             <p:inputText id="title" value="#{competitionEditCtrl.currentCompetition.title}" 
                          required="true" disabled="#{not competitionEditCtrl.editMode}"/>
 
-            <p:outputLabel value="#{msg['global_competition_scoreCorrectWinner']}" 
-                           for="scoreCorrectWinner" />
-            <p:inputText id="scoreCorrectWinner" 
-                         value="#{competitionEditCtrl.currentCompetition.scoreCorrectWinner}" 
+            <p:outputLabel value="#{msg['global_competition_pointsWin']}" for="pointsWin" />
+            <p:inputText id="pointsWin" value="#{competitionEditCtrl.currentCompetition.pointsWin}" 
                          required="true" disabled="#{not competitionEditCtrl.editMode}"/>
-            <p:outputLabel value="#{msg['global_competition_scoreCorrectTip']}" 
-                           for="scoreCorrectTip" />
-            <p:inputText id="scoreCorrectTip" 
-                         value="#{competitionEditCtrl.currentCompetition.scoreCorrectTip}" 
+            <p:outputLabel value="#{msg['global_competition_pointsDraw']}" for="pointsDraw" />
+            <p:inputText id="pointsDraw" value="#{competitionEditCtrl.currentCompetition.pointsDraw}" 
                          required="true" disabled="#{not competitionEditCtrl.editMode}"/>
-            <p:outputLabel value="#{msg['global_competition_scoreCorrectTrend']}" 
-                           for="scoreCorrectTrend" />
-            <p:inputText id="scoreCorrectTrend" 
-                         value="#{competitionEditCtrl.currentCompetition.scoreCorrectTrend}" 
+            <p:outputLabel value="#{msg['global_competition_imagePath']}" for="imagePath" />
+            <p:inputText id="imagePath" value="#{competitionEditCtrl.currentCompetition.imagePath}" 
                          required="true" disabled="#{not competitionEditCtrl.editMode}"/>
-            <p:outputLabel value="#{msg['global_competition_autoGenerateMatches']}" 
-                           for="autoGenerateMatches" />
-            <p:selectBooleanButton id="autoGenerateMatches" 
-                                   value="#{competitionEditCtrl.currentCompetition.autoGenerateMatches}" 
-                                   onIcon="ui-icon-check" offIcon="ui-icon-close" style="width:60px"
-                                   onLabel="Ja" offLabel="Nein" disabled="#{not competitionEditCtrl.editMode}"/>
-            <p:outputLabel value="#{msg['global_competition_autoReleaseRounds']}" 
-                           for="autoReleaseRounds" />
-            <p:selectBooleanButton id="autoReleaseRounds" 
-                                   value="#{competitionEditCtrl.currentCompetition.autoReleaseRounds}" 
-                                   onIcon="ui-icon-check" offIcon="ui-icon-close" style="width:60px"
-                                   onLabel="#{msg['global_yes']}" offLabel="#{msg['global_no']}" 
-                                   disabled="#{not competitionEditCtrl.editMode}"/>
+            <p:outputLabel value="#{msg['global_competition_flagsPath']}" for="flagsPath" />
+            <p:inputText id="flagsPath" value="#{competitionEditCtrl.currentCompetition.flagsPath}" 
+                         required="true" disabled="#{not competitionEditCtrl.editMode}"/>
+
             <p:outputLabel value="#{msg['global_competition_sortOrder']}" for="sortOrder" />
             <p:inputText id="sortOrder" value="#{competitionEditCtrl.currentCompetition.sortOrder}" 
                          required="true" disabled="#{not competitionEditCtrl.editMode}"/>
 
-<!--            private String name;
-            private String tournamentName;
-            private String tournamentShortname;
-            private String imagePath;
-            private String flagsPath;
-
-            private Long scoreCorrectWinner;
-            private Long scoreCorrectTip;
-            private Long scoreCorrectTrend;
-
-
--->
 
 
           </h:panelGrid>
@@ -91,7 +64,7 @@
           <p:dataTable value=" "/>
         </p:panel>
 
-        <p:panel id="listPanel" header="#{msg['editGroups_selectionlist']}" toggleable="true" 
+        <p:panel id="listPanel" header="#{msg['editCompetition_selectionlist']}" toggleable="true" 
                  style="min-width: 350px;height: 300px;" styleClass="editpage_panel_list">
           <h:panelGrid style="height: 200px;">
               <h:selectOneListbox id="advanced" value="#{competitionEditCtrl.currentCompetition.id}" 

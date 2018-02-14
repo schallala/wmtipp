@@ -18,6 +18,7 @@ package de.toabels.wmtipp.services.utiils;
 
 import de.toabels.wmtipp.model.external.FdoCompetition;
 import de.toabels.wmtipp.model.external.FdoFixture;
+import de.toabels.wmtipp.model.external.FdoLeagueTable;
 import de.toabels.wmtipp.model.external.FdoTeam;
 import java.util.List;
 
@@ -32,4 +33,6 @@ public interface IResultService {
     List<FdoTeam> findTeamsByCompetition(String id);
     
     List<FdoFixture> findFixturesByCompetition(String id);
+    
+    List<FdoLeagueTable> findLeagueTable(String id);
 }

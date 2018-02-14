@@ -67,22 +67,6 @@ public class Competition implements IEntityBase<Competition>, Serializable {
     @Basic(optional = false)
     @Column(name = "points_draw")
     private Long pointsDraw;
-    @Basic(optional = false)
-    @Column(name = "score_correct_winner")
-    private Long scoreCorrectWinner;
-    @Basic(optional = false)
-    @Column(name = "score_correct_tip")
-    private Long scoreCorrectTip;
-    @Basic(optional = false)
-    @Column(name = "score_correct_trend")
-    private Long scoreCorrectTrend;
-
-    @Basic(optional = false)
-    @Column(name = "auto_generate_matches")
-    private boolean autoGenerateMatches;
-    @Basic(optional = false)
-    @Column(name = "auto_release_round")
-    private boolean autoReleaseRounds;
     
     @Column(name = "sort_order")
     private Integer sortOrder;
@@ -168,47 +152,6 @@ public class Competition implements IEntityBase<Competition>, Serializable {
         this.pointsDraw = pointsDraw;
     }
 
-    public Long getScoreCorrectWinner() {
-        return scoreCorrectWinner;
-    }
-
-    public void setScoreCorrectWinner(Long scoreCorrectWinner) {
-        this.scoreCorrectWinner = scoreCorrectWinner;
-    }
-
-    public Long getScoreCorrectTip() {
-        return scoreCorrectTip;
-    }
-
-    public void setScoreCorrectTip(Long scoreCorrectTip) {
-        this.scoreCorrectTip = scoreCorrectTip;
-    }
-
-    public Long getScoreCorrectTrend() {
-        return scoreCorrectTrend;
-    }
-
-    public void setScoreCorrectTrend(Long scoreCorrectTrend) {
-        this.scoreCorrectTrend = scoreCorrectTrend;
-    }
-
-    public boolean isAutoGenerateMatches() {
-        return autoGenerateMatches;
-    }
-
-    public void setAutoGenerateMatches(boolean autoGenerateMatches) {
-        this.autoGenerateMatches = autoGenerateMatches;
-    }
-
-    public boolean isAutoReleaseRounds() {
-        return autoReleaseRounds;
-    }
-
-    public void setAutoReleaseRounds(boolean autoReleaseRounds) {
-        this.autoReleaseRounds = autoReleaseRounds;
-    }
-
-    
     public Integer getSortOrder() {
         return sortOrder;
     }

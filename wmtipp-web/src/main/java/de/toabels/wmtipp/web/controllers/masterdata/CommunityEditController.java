@@ -16,8 +16,8 @@
  */
 package de.toabels.wmtipp.web.controllers.masterdata;
 
-import de.toabels.wmtipp.model.dto.CompetitionDto;
-import de.toabels.wmtipp.services.api.ICompetitionService;
+import de.toabels.wmtipp.model.dto.CommunityDto;
+import de.toabels.wmtipp.services.api.ICommunityService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,14 +32,14 @@ import org.springframework.stereotype.Controller;
  *
  * @author Torsten Abels <torsten.abels@gmail.com>
  */
-@Controller("competitionEditCtrl")
+@Controller("communityEditCtrl")
 @Scope("session")
-public class CompetitionEditController extends AbstractEditController<CompetitionDto> {
+public class CommunityEditController extends AbstractEditController<CommunityDto> {
 
     @Autowired
-    private ICompetitionService competitionService;
+    private ICommunityService communityService;
 
-    private static final Logger logger = LoggerFactory.getLogger(CompetitionEditController.class);
+    private static final Logger logger = LoggerFactory.getLogger(CommunityEditController.class);
 
     /* Following methods should be implemented in a similar way by all child classes of AbstractEditController */
  /* Concrete implementation may vary depending on the subject of the edit page                              */
@@ -48,7 +48,7 @@ public class CompetitionEditController extends AbstractEditController<Competitio
      */
     @PostConstruct
     public void init() {
-        super.init(competitionService);
+        super.init(communityService);
     }
 
     /**
@@ -57,7 +57,7 @@ public class CompetitionEditController extends AbstractEditController<Competitio
      *
      * @return current player dto
      */
-    public CompetitionDto getCurrentCompetition() {
+    public CommunityDto getCurrentCommunity() {
         return super.getCurrentSubject();
     }
 
@@ -67,8 +67,8 @@ public class CompetitionEditController extends AbstractEditController<Competitio
      *
      * @return ordered list of players
      */
-    public List<CompetitionDto> getSelectionList() {
-        return getSubjectList("sortOrder");
+    public List<CommunityDto> getSelectionList() {
+        return getSubjectList("name");
     }
 
     /* Subject specific selection lists */

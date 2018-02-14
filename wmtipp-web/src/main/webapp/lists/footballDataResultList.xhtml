@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/templates/template.xhtml">
+    <ui:define name="content">
+        <h1><h:outputText value="Ergebnisdienst" styleClass="pagetitle" /></h1>
+        <br />
+        <h:form >
+
+            <p:panel id="competitionPanel">
+                <h:panelGrid >
+                    <p:selectOneMenu id="yearSelection" value="#{footballDataListCtrl.selectedYear}" 
+                                     style="width: 150px;" 
+                                     
+                                     >
+                        <f:selectItem itemValue="" itemLabel=" - "/>
+                        <f:selectItem itemLabel="2018" itemValue="2018"/>
+                        <f:selectItem itemLabel="2017" itemValue="2017"/>
+                        <f:selectItem itemLabel="2016" itemValue="2016"/>
+                        <f:selectItem itemLabel="2015" itemValue="2015"/>
+                        <p:ajax listener="#{footballDataListCtrl.queryCompetitions()}" update="@this,competitionSelection"/>
+                    </p:selectOneMenu>
+                </h:panelGrid>
+                <p:blockUI block="page" trigger="yearSelection" />
+
+                <h:panelGrid style="height: 200px;" id="competitionSelection">
+                    <h:selectOneListbox id="advanced" value="#{footballDataListCtrl.selectedCompetitionId}" 
+                                        style="min-width: 270px;height: 170px;" >
+                        <f:selectItems value="#{footballDataListCtrl.competitions}" var="competition" 
+                                       itemLabel="#{competition.caption}" itemValue="#{competition.id}" />
+                        <!--<p:ajax update="editPanel,editPanel_buttons,listPanel_buttons"/>-->
+                    </h:selectOneListbox>
+                </h:panelGrid>
+
+                <p:commandButton id="testWS" actionListener="#{footballDataListCtrl.queryFixtures()}" 
+                                 value="Ergebnisse abrufen" update="fixtureTable"/>
+                <p:blockUI block="page" trigger="testWS" />
+                <!--                                 onclick="PF('block').show()" 
+                                 oncomplete="PF('block').hide()"-->
+
+                <p:dataTable id="fixtureTable" var="fixture" value="#{footballDataListCtrl.fixtures}" 
+                             rows="20" paginator="true"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+                             rowsPerPageTemplate="5,10,15,20"                     >
+                    <p:column headerText="Datum"   style="border-color: transparent;">
+                        <h:outputText value="#{fixture.jodaDate}" >
+                            <f:convertDateTime pattern="dd.MM.yyyy, HH:mm"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Team 1"  style="border-color: transparent;">
+                        <h:outputText value="#{fixture.homeTeamName}" />
+                    </p:column>
+                    <p:column headerText="Team 2" style="border-color: transparent;">
+                        <h:outputText value="#{fixture.awayTeamName}" />
+                    </p:column>
+                    <p:column headerText="Ergebnis" style="background-color: #{fixture.status == 'IN_PLAY' ? '#ff0000' : ''};border-color: transparent;">
+                        <h:outputText value ="#{fixture.result.goalsHomeTeam} - #{fixture.result.goalsAwayTeam} "
+                                      style="font-weight: bold"/> 
+                        <h:outputText value ="  (#{fixture.result.halfTime.goalsHomeTeam} - #{fixture.result.halfTime.goalsAwayTeam})"
+                                      rendered="#{not empty(fixture.result.halfTime)}"/> 
+                        <h:outputText value ="  (#{fixture.result.extraTime.goalsHomeTeam} - #{fixture.result.extraTime.goalsAwayTeam} n. V.)"
+                                      rendered="#{not empty(fixture.result.extraTime)}"/> 
+                        <h:outputText value ="  (#{fixture.result.penaltyShootout.goalsHomeTeam} - #{fixture.result.penaltyShootout.goalsAwayTeam} n. E.)"
+                                      rendered="#{not empty(fixture.result.penaltyShootout)}"/> 
+                    </p:column>
+                </p:dataTable>
+
+                <!--<p:blockUI block="page" widgetVar="block"/>-->
+            </p:panel>
+
+        </h:form>
+    </ui:define>
+</ui:composition>
