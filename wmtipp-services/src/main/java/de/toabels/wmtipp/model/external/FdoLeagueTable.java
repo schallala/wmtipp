@@ -24,11 +24,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class FdoLeagueTable {
 
-    @JsonProperty("position")
-    private Integer position;
+    @JsonProperty("rank")
+    private Integer rank;
 
-    @JsonProperty("teamName")
-    private String teamName;
+    @JsonProperty("team")
+    private String team;
+
+    @JsonProperty("teamId")
+    private Integer teamId;
 
     @JsonProperty("crestURI")
     private String crestURI;
@@ -48,38 +51,32 @@ public class FdoLeagueTable {
     @JsonProperty("goalDifference")
     private Integer goalDifference;
 
-    @JsonProperty("wins")
-    private Integer wins;
 
-    @JsonProperty("draws")
-    private Integer draws;
-
-    @JsonProperty("losses")
-    private Integer losses;
-
-//    @JsonProperty("home")
-//    private Object home;
-//    
-//    @JsonProperty("away")
-//    private Object away;
-
-    @JsonProperty("position")
-    public Integer getPosition() {
-        return position;
+    @JsonProperty("rank")
+    public Integer getRank() {
+        return rank;
     }
 
-    public void setPosition(Integer position) {
-        this.position = position;
+    public void setRank(Integer rank) {
+        this.rank = rank;
     }
 
-    public String getTeamName() {
-        return teamName;
+    public String getTeam() {
+        return team;
     }
 
-    public void setTeamName(String teamName) {
-        this.teamName = teamName;
+    public void setTeam(String team) {
+        this.team = team;
     }
 
+    public Integer getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(Integer teamId) {
+        this.teamId = teamId;
+    }
+    
     public String getCrestURI() {
         return crestURI;
     }
@@ -127,46 +124,4 @@ public class FdoLeagueTable {
     public void setGoalDifference(Integer goalDifference) {
         this.goalDifference = goalDifference;
     }
-
-    public Integer getWins() {
-        return wins;
-    }
-
-    public void setWins(Integer wins) {
-        this.wins = wins;
-    }
-
-    public Integer getDraws() {
-        return draws;
-    }
-
-    public void setDraws(Integer draws) {
-        this.draws = draws;
-    }
-
-    public Integer getLosses() {
-        return losses;
-    }
-
-    public void setLosses(Integer losses) {
-        this.losses = losses;
-    }
-
-//    public Object getHome() {
-//        return home;
-//    }
-//
-//    public void setHome(Object home) {
-//        this.home = home;
-//    }
-//
-//    public Object getAway() {
-//        return away;
-//    }
-//
-//    public void setAway(Object away) {
-//        this.away = away;
-//    }
-
-
 }

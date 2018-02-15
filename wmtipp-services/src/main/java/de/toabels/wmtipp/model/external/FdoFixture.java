@@ -28,10 +28,14 @@ import org.joda.time.format.ISODateTimeFormat;
  */
 public class FdoFixture {
 
+    @JsonProperty("id")
+    private Integer id;
+
+    @JsonProperty("competitionId")
+    private Integer competitionId;
+
     @JsonProperty("date")
     private String date;
-
-    private String formattedDate;
 
     @JsonProperty("status")
     private String status;
@@ -56,6 +60,22 @@ public class FdoFixture {
 
     @JsonProperty("odds")
     private Object odds;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getCompetitionId() {
+        return competitionId;
+    }
+
+    public void setCompetitionId(Integer competitionId) {
+        this.competitionId = competitionId;
+    }
 
     public String getDate() {
         return date;

@@ -24,11 +24,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class FdoTeam {
 
+    @JsonProperty("id")
+    private Integer id;
+
     @JsonProperty("name")
     private String name;
-
-    @JsonProperty("code")
-    private String code;
 
     @JsonProperty("shortName")
     private String shortName;
@@ -39,12 +39,12 @@ public class FdoTeam {
     @JsonProperty("crestUrl")
     private String crestUrl;
 
-    public String getCode() {
-        return code;
+    public Integer getId() {
+        return id;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -55,12 +55,12 @@ public class FdoTeam {
         this.name = name;
     }
 
-    public String getShortname() {
+    public String getShortName() {
         return shortName;
     }
 
-    public void setShortname(String shortname) {
-        this.shortName = shortname;
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
     }
 
     public String getSquadMarketValue() {

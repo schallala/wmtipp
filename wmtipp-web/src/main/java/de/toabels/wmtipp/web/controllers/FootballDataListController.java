@@ -18,6 +18,7 @@ package de.toabels.wmtipp.web.controllers;
 
 import de.toabels.wmtipp.model.external.FdoCompetition;
 import de.toabels.wmtipp.model.external.FdoFixture;
+import de.toabels.wmtipp.model.external.FdoLeagueTable;
 import de.toabels.wmtipp.services.utiils.IResultService;
 
 import java.util.List;
@@ -38,6 +39,8 @@ public class FootballDataListController {
 
     private List<FdoFixture> fixtures;
 
+    private List<FdoLeagueTable> teamTable;
+
     private String selectedYear;
 
     private String selectedCompetitionId;
@@ -53,6 +56,15 @@ public class FootballDataListController {
         return fixtures;
     }
 
+    public List<FdoLeagueTable> getTeamTable() {
+        return teamTable;
+    }
+
+    public void setTeamTable(List<FdoLeagueTable> teamTable) {
+        this.teamTable = teamTable;
+    }
+
+    
     public String getSelectedYear() {
         return selectedYear;
     }
@@ -78,8 +90,11 @@ public class FootballDataListController {
     public void queryFixtures() {
 //        teams = resultService.findTeamsByCompetition(competitions.get(0).getId().toString());
         if (selectedCompetitionId != null) {
+            logger.info("Query fixtures for competition " + selectedCompetitionId);
             fixtures = resultService.findFixturesByCompetition(selectedCompetitionId);
-            resultService.findLeagueTable(selectedCompetitionId);
+            logger.info("Query fixtures for competition " + selectedCompetitionId);
+            teamTable = resultService.findLeagueTable(selectedCompetitionId);
+            logger.info("Finished successfully!");
         }
     }
 }

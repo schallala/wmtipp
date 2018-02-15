@@ -31,6 +31,6 @@ public class PlayerRankingController extends AbstractController {
   private static final Logger logger = LoggerFactory.getLogger(PlayerRankingController.class);
 
   public List<PlayerDto> getRanking() {
-    return getPlayerListOrdered("score desc nulls last", "correctTips desc", "name", "firstName");
+    return getPlayerListOrdered("name", "firstName");
   }
 }

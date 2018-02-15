@@ -53,7 +53,7 @@ public class FootballDataOrgService implements IResultService {
 
     private static final String COMPETITIONS_SERVICE = "v1/competitions";
 
-    private @Value("${app.apiAuthToken}")
+    private @Value("${app.fdoApiAuthToken}")
     String authToken;
 
     private @Value("${app.proxy.uri}")
@@ -93,7 +93,7 @@ public class FootballDataOrgService implements IResultService {
                 path(COMPETITIONS_SERVICE).
                 queryParam("season", selectedYear).
                 request().
-                header("Authorization", authToken).
+                header("X-Auth-Token", authToken).
                 header("X-Response-Control", "minified").
                 accept(MediaType.APPLICATION_JSON).
                 get();
@@ -123,7 +123,9 @@ public class FootballDataOrgService implements IResultService {
     public List<FdoFixture> findFixturesByCompetition(String id) {
         Client client = getClient();
         Response response = client.target(getBaseURI()).
-                path(COMPETITIONS_SERVICE).path(id).path("/fixtures").
+                path(COMPETITIONS_SERVICE).
+                path(id).
+                path("/fixtures").
                 request().
                 header("X-Auth-Token", authToken).
                 header("X-Response-Control", "minified").
@@ -146,9 +148,8 @@ public class FootballDataOrgService implements IResultService {
                 accept(MediaType.APPLICATION_JSON).
                 get();
         FdoLeagueTableHeader tableHeader = response.readEntity(FdoLeagueTableHeader.class);
-        //        Object tableHeader = response.readEntity(Object.class);
         response.close();
         client.close();
-        return null;
+        return tableHeader.getStanding();
     }
 }
