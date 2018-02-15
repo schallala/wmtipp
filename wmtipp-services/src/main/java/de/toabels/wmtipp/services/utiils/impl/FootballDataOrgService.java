@@ -14,6 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.toabels.wmtipp.services.utiils.impl;
 
 import de.toabels.wmtipp.model.external.FdoCompetition;
@@ -24,31 +25,45 @@ import de.toabels.wmtipp.model.external.FdoLeagueTableHeader;
 import de.toabels.wmtipp.model.external.FdoTeam;
 import de.toabels.wmtipp.model.external.FdoTeamList;
 import de.toabels.wmtipp.services.utiils.IResultService;
+
 import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
+
+import org.glassfish.jersey.apache.connector.ApacheConnectorProvider;
 import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.jackson.internal.jackson.jaxrs.json.JacksonJsonProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 /**
- *
  * @author abels
  */
 @Service
 public class FootballDataOrgService implements IResultService {
 
     private static final String SERVICE_BASE_URL = "http://api.football-data.org/";
+
     private static final String COMPETITIONS_SERVICE = "v1/competitions";
 
     private @Value("${app.apiAuthToken}")
     String authToken;
+
+    private @Value("${app.proxy.uri}")
+    String proxyUri;
+
+    private @Value("${app.proxy.username}")
+    String proxyUsername;
+
+    private @Value("${app.proxy.password}")
+    String proxyPassword;
 
     private static URI getBaseURI() {
         return UriBuilder.fromUri(SERVICE_BASE_URL).build();
@@ -56,6 +71,16 @@ public class FootballDataOrgService implements IResultService {
 
     private Client getClient() {
         ClientConfig config = new ClientConfig();
+        if (proxyUri != null && !proxyUri.isEmpty()) {
+            config.connectorProvider(new ApacheConnectorProvider());
+            config.property(ClientProperties.PROXY_URI, proxyUri);
+            if (proxyUsername != null && !proxyUsername.isEmpty()) {
+                config.property(ClientProperties.PROXY_USERNAME, proxyUsername);
+            }
+            if (proxyPassword != null && !proxyPassword.isEmpty()) {
+                config.property(ClientProperties.PROXY_PASSWORD, proxyPassword);
+            }
+        }
         Client client = ClientBuilder.newClient(config);
         client.register(JacksonJsonProvider.class);
         return client;
@@ -121,10 +146,9 @@ public class FootballDataOrgService implements IResultService {
                 accept(MediaType.APPLICATION_JSON).
                 get();
         FdoLeagueTableHeader tableHeader = response.readEntity(FdoLeagueTableHeader.class);
-//        Object tableHeader = response.readEntity(Object.class);
+        //        Object tableHeader = response.readEntity(Object.class);
         response.close();
         client.close();
         return null;
     }
-
 }
