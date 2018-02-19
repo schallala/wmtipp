@@ -17,7 +17,9 @@
 package de.toabels.wmtipp.web.controllers.masterdata;
 
 import de.toabels.wmtipp.model.dto.CompetitionDto;
+import de.toabels.wmtipp.model.external.FdoCompetition;
 import de.toabels.wmtipp.services.api.ICompetitionService;
+import de.toabels.wmtipp.services.utiils.IResultService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,9 +39,14 @@ import org.springframework.stereotype.Controller;
 public class CompetitionEditController extends AbstractEditController<CompetitionDto> {
 
     @Autowired
+    private IResultService resultService;
+    
+    @Autowired
     private ICompetitionService competitionService;
 
     private static final Logger logger = LoggerFactory.getLogger(CompetitionEditController.class);
+    
+    private List<FdoCompetition> externalCompetitions;
 
     /* Following methods should be implemented in a similar way by all child classes of AbstractEditController */
  /* Concrete implementation may vary depending on the subject of the edit page                              */
@@ -51,6 +58,14 @@ public class CompetitionEditController extends AbstractEditController<Competitio
         super.init(competitionService);
     }
 
+    @Override
+    public void setDefaultValues(){
+        currentSubject.setPointsDraw(1L);
+        currentSubject.setPointsWin(3L);
+        currentSubject.setFlagsPath("/resources/graphics/");
+        currentSubject.setImagePath("/resources/graphics/");
+    }
+    
     /**
      * This getter serves as wrapper for the current subject object of the
      * abstract controller class
@@ -72,4 +87,16 @@ public class CompetitionEditController extends AbstractEditController<Competitio
     }
 
     /* Subject specific selection lists */
+
+    public List<FdoCompetition> getExternalCompetitions() {
+        if(externalCompetitions == null){
+            externalCompetitions = resultService.findCompetitionsByYear(null);
+        }
+        return externalCompetitions;
+    }
+
+    public void setExternalCompetitions(List<FdoCompetition> externalCompetitions) {
+        this.externalCompetitions = externalCompetitions;
+    }
+    
 }

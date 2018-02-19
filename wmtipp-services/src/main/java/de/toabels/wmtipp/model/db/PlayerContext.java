@@ -48,17 +48,15 @@ public class PlayerContext implements IEntityBase<PlayerContext>, Serializable {
     @Column(name = "id")
     private Long id;
 
+    @ManyToOne
     @Basic(optional = false)
-    @Column(name = "player_id")
-    private Long playerId;
+    @JoinColumn(name = "player_id")
+    private Player player;
     
+    @ManyToOne
     @Basic(optional = false)
-    @Column(name = "community_id")
-    private Long communityId;
-    
-    @Basic(optional = false)
-    @Column(name = "competition_id")
-    private Long competitionId;
+    @JoinColumn(name = "community_id")
+    private Community community;
     
     @ManyToOne
     @JoinColumn(name = "predicted_champion")
@@ -85,36 +83,30 @@ public class PlayerContext implements IEntityBase<PlayerContext>, Serializable {
     @Enumerated(EnumType.STRING)
     private UserRoleType userRole;
 
+    @Override
     public Long getId() {
         return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }
 
-    public Long getPlayerId() {
-        return playerId;
+    public Player getPlayer() {
+        return player;
     }
 
-    public void setPlayerId(Long playerId) {
-        this.playerId = playerId;
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
-    public Long getCommunityId() {
-        return communityId;
+    public Community getCommunity() {
+        return community;
     }
 
-    public void setCommunityId(Long communityId) {
-        this.communityId = communityId;
-    }
-
-    public Long getCompetitionId() {
-        return competitionId;
-    }
-
-    public void setCompetitionId(Long competitionId) {
-        this.competitionId = competitionId;
+    public void setCommunity(Community community) {
+        this.community = community;
     }
 
     public Team getPredictedChampion() {

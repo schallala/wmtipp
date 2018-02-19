@@ -41,6 +41,13 @@
             <p:inputText id="flagsPath" value="#{competitionEditCtrl.currentCompetition.flagsPath}" 
                          required="true" disabled="#{not competitionEditCtrl.editMode}"/>
 
+            <p:outputLabel value="#{msg['global_competition_externalId']}" for="externalId" />
+            <p:selectOneMenu id="externalId" value="#{competitionEditCtrl.currentCompetition.externalId}"  
+                             disabled="#{not competitionEditCtrl.editMode}"  style="width: 150px;">
+                <f:selectItem itemValue="" itemLabel=" - "/>
+                <f:selectItems value="#{competitionEditCtrl.externalCompetitions}" 
+                               var="externalComp" itemValue="#{externalComp.id}" itemLabel="#{externalComp.caption}"/>
+            </p:selectOneMenu>
             <p:outputLabel value="#{msg['global_competition_sortOrder']}" for="sortOrder" />
             <p:inputText id="sortOrder" value="#{competitionEditCtrl.currentCompetition.sortOrder}" 
                          required="true" disabled="#{not competitionEditCtrl.editMode}"/>

@@ -57,6 +57,9 @@ public abstract class AbstractEditController<D extends AbstractBaseDto> extends 
     }
   }
 
+  public void setDefaultValues(){
+  }
+  
   /* subject list for selection */
   protected List<D> getSubjectList(String... order) {
     subjectList = subjectService.listOrdered(order);
@@ -115,6 +118,7 @@ public abstract class AbstractEditController<D extends AbstractBaseDto> extends 
   public void clear() {
     currentSubject = null;
     setNewSubjectInstance();
+    setDefaultValues();
     editMode = true;
   }
 

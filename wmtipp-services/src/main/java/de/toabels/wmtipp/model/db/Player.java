@@ -28,6 +28,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -64,6 +65,8 @@ public class Player implements IEntityBase<Player>, Serializable {
     @Column(name = "last_activity")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastActivity;
+    @OneToMany(mappedBy = "player")
+    private List<PlayerContext> playerContext;
 
     public Player() {
     }
@@ -136,6 +139,14 @@ public class Player implements IEntityBase<Player>, Serializable {
 
     public void setLastActivity(Date lastActivity) {
         this.lastActivity = lastActivity;
+    }
+
+    public List<PlayerContext> getPlayerContext() {
+        return playerContext;
+    }
+
+    public void setPlayerContext(List<PlayerContext> playerContext) {
+        this.playerContext = playerContext;
     }
 
     @Override

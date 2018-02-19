@@ -16,9 +16,11 @@
  */
 package de.toabels.wmtipp.web.controllers;
 
+import de.toabels.wmtipp.model.dto.CompetitionDto;
 import de.toabels.wmtipp.model.dto.PlayerDto;
 import de.toabels.wmtipp.services.api.IPlayerService;
 import de.toabels.wmtipp.services.utiils.ISecurityService;
+import de.toabels.wmtipp.web.controllers.masterdata.AbstractController;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.context.FacesContext;
@@ -31,59 +33,70 @@ import org.springframework.stereotype.Controller;
 
 @Controller("userSessionCtrl")
 @Scope("session")
-public class UserSessionController {
+public class UserSessionController extends AbstractController {
 
-  @Autowired
-  private IPlayerService playerService;
+    @Autowired
+    private IPlayerService playerService;
 
-  @Autowired
-  private ISecurityService securityService;
+    @Autowired
+    private ISecurityService securityService;
 
-  private static final Logger logger = LoggerFactory.getLogger(UserSessionController.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserSessionController.class);
 
-  private String login;
+    private String login;
 
-  private String password;
+    private String password;
 
-  private PlayerDto currentUser;
+    private PlayerDto currentUser;
 
-  public String getLogin() {
-    return login;
-  }
+    private CompetitionDto currentCompetition;
 
-  public void setLogin(String login) {
-    this.login = login;
-  }
-
-  public String getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
-  }
-
-  public PlayerDto getCurrentUser() {
-    return currentUser;
-  }
-
-  public String validateAndlogin() {
-    currentUser = playerService.loginUser(login, securityService.getSaltedPassword(password));
-    return "";
-  }
-
-  public String invalidateLogin() {
-    HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-    session.invalidate();
-    currentUser = null;
-    return "";
-  }
-  
-  public List<PlayerDto> getLoggedInUsers(){
-    if(currentUser == null){
-      return new ArrayList<>();
+    public String getLogin() {
+        return login;
     }
-    return playerService.getLoggedInUsers(currentUser);
-  }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public PlayerDto getCurrentUser() {
+        return currentUser;
+    }
+
+    public boolean isLoggedIn() {
+        return currentUser != null;
+    }
+
+    public String validateAndlogin() {
+        currentUser = playerService.loginUser(login, securityService.getSaltedPassword(password));
+        if (currentUser == null) {
+            growlFailure("Login fehlgeschlagen", "Fehler beim Versuch den User " + login + " zu authentifizieren!");
+        } else {
+            growlSuccess("Login erfolgreich", null);
+        }
+        return "";
+    }
+
+    public String invalidateLogin() {
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+        session.invalidate();
+        currentUser = null;
+        return "";
+    }
+
+    public List<PlayerDto> getLoggedInUsers() {
+        if (currentUser == null) {
+            return new ArrayList<>();
+        }
+        return playerService.getLoggedInUsers(currentUser);
+    }
 
 }

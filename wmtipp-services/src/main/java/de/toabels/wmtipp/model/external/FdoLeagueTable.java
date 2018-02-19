@@ -24,6 +24,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class FdoLeagueTable {
 
+    @JsonProperty("group")
+    private String group;
+
     @JsonProperty("rank")
     private Integer rank;
 
@@ -51,6 +54,13 @@ public class FdoLeagueTable {
     @JsonProperty("goalDifference")
     private Integer goalDifference;
 
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
+    }
 
     @JsonProperty("rank")
     public Integer getRank() {

@@ -26,6 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class CompetitionDto extends AbstractBaseDto {
 
+    private String externalId;
     private String name;
     private String shortname;
     private String title;
@@ -36,6 +37,14 @@ public class CompetitionDto extends AbstractBaseDto {
     private Long pointsDraw;
 
     private Integer sortOrder;
+
+    public String getExternalId() {
+        return externalId;
+    }
+
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
+    }
 
     public String getName() {
         return name;

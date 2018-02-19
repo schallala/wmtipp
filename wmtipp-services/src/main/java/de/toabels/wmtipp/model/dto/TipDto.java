@@ -27,112 +27,112 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class TipDto extends AbstractBaseDto {
 
-  private PlayerDto player;
+    private PlayerContextDto playerContext;
 
-  private MatchDto match;
+    private MatchDto match;
 
-  private Integer goalsTeamOne;
+    private Integer goalsTeamOne;
 
-  private Integer goalsTeamTwo;
+    private Integer goalsTeamTwo;
 
-  private Integer trend;
+    private Integer trend;
 
-  private Integer playerScore;
+    private Integer playerScore;
 
-  private Date createdAt;
+    private Date createdAt;
 
-  private Date updatedAt;
+    private Date updatedAt;
 
-  public TipDto() {
-  }
-
-  public PlayerDto getPlayer() {
-    return player;
-  }
-
-  public void setPlayer(PlayerDto player) {
-    this.player = player;
-  }
-
-  public MatchDto getMatch() {
-    return match;
-  }
-
-  public void setMatch(MatchDto match) {
-    this.match = match;
-  }
-
-  public Integer getGoalsTeamOne() {
-    return goalsTeamOne;
-  }
-
-  public void setGoalsTeamOne(Integer goalsTeamOne) {
-    this.goalsTeamOne = goalsTeamOne;
-  }
-
-  public Integer getGoalsTeamTwo() {
-    return goalsTeamTwo;
-  }
-
-  public void setGoalsTeamTwo(Integer goalsTeamTwo) {
-    this.goalsTeamTwo = goalsTeamTwo;
-  }
-
-  public Integer getTrend() {
-    return trend;
-  }
-
-  public void setTrend(Integer trend) {
-    this.trend = trend;
-  }
-
-  public Integer getPlayerScore() {
-    return playerScore;
-  }
-
-  public void setPlayerScore(Integer playerScore) {
-    this.playerScore = playerScore;
-  }
-
-  public Date getCreatedAt() {
-    return createdAt;
-  }
-
-  public void setCreatedAt(Date createdAt) {
-    this.createdAt = createdAt;
-  }
-
-  public Date getUpdatedAt() {
-    return updatedAt;
-  }
-
-  public void setUpdatedAt(Date updatedAt) {
-    this.updatedAt = updatedAt;
-  }
-
-  @Override
-  public int hashCode() {
-    int hash = 0;
-    hash += (id != null ? id.hashCode() : 0);
-    return hash;
-  }
-
-  @Override
-  public boolean equals(Object object) {
-    // TODO: Warning - this method won't work in the case the id fields are not set
-    if (!(object instanceof TipDto)) {
-      return false;
+    public TipDto() {
     }
-    TipDto other = (TipDto) object;
-    if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-      return false;
-    }
-    return true;
-  }
 
-  @Override
-  public String toString() {
-    return "de.toabels.wmtipp.model.api.TipDto[ id=" + id + " ]";
-  }
-  
+    public PlayerContextDto getPlayerContext() {
+        return playerContext;
+    }
+
+    public void setPlayerContext(PlayerContextDto playerContext) {
+        this.playerContext = playerContext;
+    }
+
+    public MatchDto getMatch() {
+        return match;
+    }
+
+    public void setMatch(MatchDto match) {
+        this.match = match;
+    }
+
+    public Integer getGoalsTeamOne() {
+        return goalsTeamOne;
+    }
+
+    public void setGoalsTeamOne(Integer goalsTeamOne) {
+        this.goalsTeamOne = goalsTeamOne;
+    }
+
+    public Integer getGoalsTeamTwo() {
+        return goalsTeamTwo;
+    }
+
+    public void setGoalsTeamTwo(Integer goalsTeamTwo) {
+        this.goalsTeamTwo = goalsTeamTwo;
+    }
+
+    public Integer getTrend() {
+        return trend;
+    }
+
+    public void setTrend(Integer trend) {
+        this.trend = trend;
+    }
+
+    public Integer getPlayerScore() {
+        return playerScore;
+    }
+
+    public void setPlayerScore(Integer playerScore) {
+        this.playerScore = playerScore;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof TipDto)) {
+            return false;
+        }
+        TipDto other = (TipDto) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "de.toabels.wmtipp.model.api.TipDto[ id=" + id + " ]";
+    }
+
 }

@@ -45,6 +45,8 @@ public class Competition implements IEntityBase<Competition>, Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
+    @Column(name = "externalId")
+    private String externalId;
     @Basic(optional = false)
     @Column(name = "name")
     private String name;
@@ -94,6 +96,14 @@ public class Competition implements IEntityBase<Competition>, Serializable {
     @Override
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getExternalId() {
+        return externalId;
+    }
+
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
     }
 
     public String getName() {

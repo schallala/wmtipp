@@ -18,6 +18,7 @@ package de.toabels.wmtipp.services.api.impl;
 
 import de.toabels.wmtipp.model.db.Tip;
 import de.toabels.wmtipp.model.dto.MatchDto;
+import de.toabels.wmtipp.model.dto.PlayerContextDto;
 import de.toabels.wmtipp.model.dto.PlayerDto;
 import de.toabels.wmtipp.model.dto.TipDto;
 import de.toabels.wmtipp.services.api.IMatchService;
@@ -57,7 +58,7 @@ public class TipServiceImpl extends GenericBaseServiceImpl<TipDto, Tip> implemen
   public TipDto getNewObjectInstance() {
     TipDto object = new TipDto();
     object.setMatch(new MatchDto());
-    object.setPlayer(new PlayerDto());
+    object.setPlayerContext(new PlayerContextDto());
     return object;
   }
 
@@ -93,7 +94,7 @@ public class TipServiceImpl extends GenericBaseServiceImpl<TipDto, Tip> implemen
     for(MatchDto match : matchList){
       if(matchTipMap.get(match.getId()) == null){
         TipDto newTip = getNewObjectInstance();
-        newTip.getPlayer().setId(playerId);
+        newTip.getPlayerContext().setId(playerId);
         newTip.getMatch().setId(match.getId());
         tipList.add(newTip);
       }

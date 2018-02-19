@@ -163,7 +163,14 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
             return dto;
         }
         dto.setId(competition.getId());
+        dto.setExternalId(competition.getExternalId());
         dto.setName(competition.getName());
+        dto.setShortname(competition.getShortname());
+        dto.setTitle(competition.getTitle());
+        dto.setImagePath(competition.getImagePath());
+        dto.setFlagsPath(competition.getFlagsPath());
+        dto.setPointsWin(competition.getPointsWin());
+        dto.setPointsDraw(competition.getPointsDraw());
         dto.setSortOrder(competition.getSortOrder());
         return dto;
     }
@@ -180,24 +187,14 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
         }
         Competition competition = new Competition();
         competition.setId(dto.getId());
+        competition.setExternalId(dto.getExternalId());
         competition.setName(dto.getName());
-        competition.setSortOrder(dto.getSortOrder());
-        return competition;
-    }
-
-    /**
-     * Map reference Competition DTO -> Competition entity
-     *
-     * @param dto - competition dto
-     * @return Competition entity
-     */
-    private Competition mapReference(CompetitionDto dto) {
-        if (dto == null || dto.getId() == null) {
-            return null;
-        }
-        Competition competition = new Competition();
-        competition.setId(dto.getId());
-        competition.setName(dto.getName());
+        competition.setShortname(dto.getShortname());
+        competition.setTitle(dto.getTitle());
+        competition.setImagePath(dto.getImagePath());
+        competition.setFlagsPath(dto.getFlagsPath());
+        competition.setPointsWin(dto.getPointsWin());
+        competition.setPointsDraw(dto.getPointsDraw());
         competition.setSortOrder(dto.getSortOrder());
         return competition;
     }
@@ -215,6 +212,13 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
         }
         dto.setId(community.getId());
         dto.setName(community.getName());
+        dto.setShortname(community.getShortname());
+        dto.setTitle(community.getTitle());
+        dto.setScoreCorrectWinner(community.getScoreCorrectWinner());
+        dto.setScoreCorrectTip(community.getScoreCorrectTip());
+        dto.setScoreCorrectTrend(community.getScoreCorrectTrend());
+        dto.setAutoGenerateMatches(community.getAutoGenerateMatches());
+        dto.setAutoReleaseRounds(community.getAutoReleaseRounds());
         return dto;
     }
 
@@ -231,22 +235,13 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
         Community community = new Community();
         community.setId(dto.getId());
         community.setName(dto.getName());
-        return community;
-    }
-
-    /**
-     * Map reference Community DTO -> Community entity
-     *
-     * @param dto - community dto
-     * @return Community entity
-     */
-    private Community mapReference(CommunityDto dto) {
-        if (dto == null || dto.getId() == null) {
-            return null;
-        }
-        Community community = new Community();
-        community.setId(dto.getId());
-        community.setName(dto.getName());
+        community.setShortname(dto.getShortname());
+        community.setTitle(dto.getTitle());
+        community.setScoreCorrectWinner(dto.getScoreCorrectWinner());
+        community.setScoreCorrectTip(dto.getScoreCorrectTip());
+        community.setScoreCorrectTrend(dto.getScoreCorrectTrend());
+        community.setAutoGenerateMatches(dto.getAutoGenerateMatches());
+        community.setAutoReleaseRounds(dto.getAutoReleaseRounds());
         return community;
     }
 
@@ -262,9 +257,8 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
             return dto;
         }
         dto.setId(playerContext.getId());
-        dto.setPlayerId(playerContext.getPlayerId());
-        dto.setCommunityId(playerContext.getCommunityId());
-        dto.setCompetitionId(playerContext.getCompetitionId());
+        dto.setPlayer(map(playerContext.getPlayer()));
+        dto.setCommunity(map(playerContext.getCommunity()));
         dto.setCorrectTips(playerContext.getCorrectTips());
         dto.setCorrectTrends(playerContext.getCorrectTrends());
         dto.setFeePaid(playerContext.getFeePaid());
@@ -287,9 +281,8 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
         }
         PlayerContext playerContext = new PlayerContext();
         playerContext.setId(dto.getId());
-        playerContext.setPlayerId(dto.getPlayerId());
-        playerContext.setCommunityId(dto.getCommunityId());
-        playerContext.setCompetitionId(dto.getCompetitionId());
+        playerContext.setPlayer(map(dto.getPlayer()));
+        playerContext.setCommunity(map(dto.getCommunity()));
         playerContext.setCorrectTips(dto.getCorrectTips());
         playerContext.setCorrectTrends(dto.getCorrectTrends());
         playerContext.setFeePaid(dto.getFeePaid());
@@ -509,6 +502,7 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
     private MatchDto mapCore(Match match) {
         MatchDto dto = new MatchDto();
         dto.setId(match.getId());
+        dto.setExternalId(match.getExternalId());
         dto.setName(match.getName());
         dto.setDescription(match.getDescription());
         dto.setGoalsTeamOne(match.getGoalsTeamOne());
@@ -542,6 +536,7 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
         }
         Match match = new Match();
         match.setId(dto.getId());
+        match.setExternalId(dto.getExternalId());
         match.setName(dto.getName());
         match.setDescription(dto.getDescription());
         match.setGoalsTeamOne(dto.getGoalsTeamOne());
@@ -743,7 +738,7 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
         Tip tip = new Tip();
         tip.setId(dto.getId());
         tip.setMatch(mapReference(dto.getMatch()));
-        tip.setPlayer(mapReference(dto.getPlayer()));
+        tip.setPlayer(map(dto.getPlayerContext()));
         tip.setGoalsTeamOne(dto.getGoalsTeamOne());
         tip.setGoalsTeamTwo(dto.getGoalsTeamTwo());
         tip.setTrend(dto.getTrend());
@@ -765,7 +760,7 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
         TipDto dto = new TipDto();
         dto.setId(tip.getId());
         dto.setMatch(mapReference(tip.getMatch()));
-        dto.setPlayer(mapReference(tip.getPlayer()));
+        dto.setPlayerContext(map(tip.getPlayerContext()));
         dto.setGoalsTeamOne(tip.getGoalsTeamOne());
         dto.setGoalsTeamTwo(tip.getGoalsTeamTwo());
         dto.setTrend(tip.getTrend());

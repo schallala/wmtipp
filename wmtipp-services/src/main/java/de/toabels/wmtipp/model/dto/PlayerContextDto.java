@@ -27,11 +27,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class PlayerContextDto extends AbstractBaseDto {
 
-    private Long playerId;
+    private PlayerDto player;
 
-    private Long communityId;
+    private CommunityDto community;
 
-    private Long competitionId;
+    private CompetitionDto competition;
 
     private TeamDto predictedChampion;
 
@@ -47,28 +47,28 @@ public class PlayerContextDto extends AbstractBaseDto {
 
     private UserRoleType userRole;
 
-    public Long getPlayerId() {
-        return playerId;
+    public PlayerDto getPlayer() {
+        return player;
     }
 
-    public void setPlayerId(Long playerId) {
-        this.playerId = playerId;
+    public void setPlayer(PlayerDto player) {
+        this.player = player;
     }
 
-    public Long getCommunityId() {
-        return communityId;
+    public CommunityDto getCommunity() {
+        return community;
     }
 
-    public void setCommunityId(Long communityId) {
-        this.communityId = communityId;
+    public void setCommunity(CommunityDto community) {
+        this.community = community;
     }
 
-    public Long getCompetitionId() {
-        return competitionId;
+    public CompetitionDto getCompetition() {
+        return competition;
     }
 
-    public void setCompetitionId(Long competitionId) {
-        this.competitionId = competitionId;
+    public void setCompetition(CompetitionDto competition) {
+        this.competition = competition;
     }
 
     public TeamDto getPredictedChampion() {
