@@ -17,10 +17,7 @@
 package de.toabels.wmtipp.model.external;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.List;
-import java.util.Map;
-import javax.json.JsonObject;
 
 /**
  *
@@ -35,7 +32,6 @@ public class FdoLeagueTableHeader {
     private Integer matchday;
 
     @JsonProperty("standings")
-    @JsonDeserialize(using = FdoGroupMapDeserializer.class)
     private Object standings;
 
     @JsonProperty("standing")

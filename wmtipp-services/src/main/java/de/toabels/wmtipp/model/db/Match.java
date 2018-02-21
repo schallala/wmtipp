@@ -46,7 +46,7 @@ public class Match implements IEntityBase<Match>, Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Column(name = "externalId")
+    @Column(name = "external_id")
     private String externalId;
     @Column(name = "name")
     private String name;

@@ -31,8 +31,6 @@ public class PlayerContextDto extends AbstractBaseDto {
 
     private CommunityDto community;
 
-    private CompetitionDto competition;
-
     private TeamDto predictedChampion;
 
     private Boolean feePaid;
@@ -61,14 +59,6 @@ public class PlayerContextDto extends AbstractBaseDto {
 
     public void setCommunity(CommunityDto community) {
         this.community = community;
-    }
-
-    public CompetitionDto getCompetition() {
-        return competition;
-    }
-
-    public void setCompetition(CompetitionDto competition) {
-        this.competition = competition;
     }
 
     public TeamDto getPredictedChampion() {

@@ -41,6 +41,7 @@ import de.toabels.wmtipp.model.dto.RoundDto;
 import de.toabels.wmtipp.model.dto.TeamDto;
 import de.toabels.wmtipp.model.dto.TipDto;
 import de.toabels.wmtipp.services.utiils.IMappingService;
+import java.util.ArrayList;
 import java.util.Date;
 import org.springframework.stereotype.Service;
 
@@ -223,6 +224,21 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
     }
 
     /**
+     * Map Community entity -> Community DTO
+     *
+     * @param community - entity
+     * @return Community DTO
+     */
+    private CommunityDto mapReference(Community community) {
+        CommunityDto dto = new CommunityDto();
+        if (community == null) {
+            return dto;
+        }
+        dto.setId(community.getId());
+        return dto;
+    }
+
+    /**
      * Map Community DTO -> Community entity
      *
      * @param dto - community dto
@@ -257,8 +273,8 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
             return dto;
         }
         dto.setId(playerContext.getId());
-        dto.setPlayer(map(playerContext.getPlayer()));
-        dto.setCommunity(map(playerContext.getCommunity()));
+        dto.setPlayer(mapReference(playerContext.getPlayer()));
+        dto.setCommunity(mapReference(playerContext.getCommunity()));
         dto.setCorrectTips(playerContext.getCorrectTips());
         dto.setCorrectTrends(playerContext.getCorrectTrends());
         dto.setFeePaid(playerContext.getFeePaid());
@@ -269,6 +285,15 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
         return dto;
     }
 
+    private PlayerContextDto mapReference(PlayerContext playerContext) {
+        PlayerContextDto dto = new PlayerContextDto();
+        if (playerContext == null) {
+            return dto;
+        }
+        dto.setId(playerContext.getId());
+        return dto;
+    }
+
     /**
      * Map reference PlayerContext DTO -> PlayerContext entity
      *
@@ -276,7 +301,7 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
      * @return PlayerContext entity
      */
     private PlayerContext map(PlayerContextDto dto) {
-        if (dto == null || dto.getId() == null) {
+        if (dto == null) {
             return null;
         }
         PlayerContext playerContext = new PlayerContext();
@@ -584,6 +609,10 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
             return null;
         }
         PlayerDto dto = mapCore(player);
+        dto.setPlayerContext(new ArrayList<>());
+        for (PlayerContext context : player.getPlayerContext()) {
+            dto.getPlayerContext().add(map(context));
+        }
         return dto;
     }
 
@@ -604,7 +633,7 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
         dto.setLastActivity(player.getLastActivity());
         dto.setPassword(player.getPassword());
         dto.setPhone(player.getPhone());
-        return dto;
+         return dto;
     }
 
     /**
@@ -626,6 +655,12 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
         player.setLastActivity(dto.getLastActivity());
         player.setPassword(dto.getPassword());
         player.setPhone(dto.getPhone());
+        player.setPlayerContext(new ArrayList<>());
+//        for(PlayerContextDto context : dto.getPlayerContext()){
+//            PlayerContext newContext = map(context);
+//            newContext.setPlayer(player);
+//            player.getPlayerContext().add(newContext);
+//        }
         return player;
     }
 

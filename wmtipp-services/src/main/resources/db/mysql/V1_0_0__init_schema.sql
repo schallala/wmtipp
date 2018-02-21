@@ -174,23 +174,14 @@ CREATE TABLE `team` (
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `player` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `correct_tips` int(11) DEFAULT NULL,
-  `correct_trends` int(11) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `fee_paid` bit(1) DEFAULT NULL,
   `first_name` varchar(255) DEFAULT NULL,
   `last_activity` datetime DEFAULT NULL,
   `login` varchar(255) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
   `phone` varchar(255) DEFAULT NULL,
-  `score` int(11) DEFAULT NULL,
-  `tips_visible` bit(1) NOT NULL,
-  `user_role` varchar(255) NOT NULL,
-  `predicted_champion` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_player_champion` (`predicted_champion`),
-  CONSTRAINT `FK_player_champion` FOREIGN KEY (`predicted_champion`) REFERENCES `team` (`id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -207,7 +198,7 @@ CREATE TABLE `player_context` (
   `tips_visible` bit(1) NOT NULL,
   `user_role` varchar(255) NOT NULL,
   `community_id` bigint(20) DEFAULT NULL,
-  `player_id` bigint(20) DEFAULT NULL,
+  `player_id` bigint(20) NOT NULL,
   `predicted_champion` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_playercontext_community` (`community_id`),
@@ -241,6 +232,7 @@ CREATE TABLE `t_round` (
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `t_match` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `external_id` varchar(255) DEFAULT NULL,
   `auto_knockout_pos_team_one_fk` bigint(20) DEFAULT NULL,
   `auto_knockout_pos_team_two_fk` bigint(20) DEFAULT NULL,
   `auto_knockout_group_team_one_fk` bigint(20) DEFAULT NULL,
@@ -260,15 +252,18 @@ CREATE TABLE `t_match` (
   `round_fk` bigint(20) DEFAULT NULL,
   `team_one_fk` bigint(20) DEFAULT NULL,
   `team_two_fk` bigint(20) DEFAULT NULL,
+  `competition_fk` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_match_group` (`group_fk`),
   KEY `FK_match_round` (`round_fk`),
   KEY `FK_match_teamone` (`team_one_fk`),
   KEY `FK_match_teamtwo` (`team_two_fk`),
+  KEY `FK_match_competition` (`competition_fk`),
   CONSTRAINT `FK_match_round` FOREIGN KEY (`round_fk`) REFERENCES `t_round` (`id`),
   CONSTRAINT `FK_match_teamone` FOREIGN KEY (`team_one_fk`) REFERENCES `team` (`id`),
   CONSTRAINT `FK_match_teamtwo` FOREIGN KEY (`team_two_fk`) REFERENCES `team` (`id`),
-  CONSTRAINT `FK_match_group` FOREIGN KEY (`group_fk`) REFERENCES `t_group` (`id`)
+  CONSTRAINT `FK_match_group` FOREIGN KEY (`group_fk`) REFERENCES `t_group` (`id`),
+  CONSTRAINT `FK_match_competition` FOREIGN KEY (`competition_fk`) REFERENCES `competition` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

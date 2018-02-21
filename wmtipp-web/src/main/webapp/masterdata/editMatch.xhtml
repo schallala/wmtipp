@@ -106,7 +106,7 @@
                                 style="min-width: 300px;height: 420px;" disabled="#{matchEditCtrl.editMode}" 
                                 valueChangeListener="#{matchEditCtrl.subjectChangeListener}">
               <f:selectItems value="#{matchEditCtrl.selectionList}" var="match" itemValue="#{match.id}" 
-                             itemLabel="#{match.teamOne.name} - #{match.teamTwo.name} (#{match.round.name} #{match.group.id != null ? ', ' : ''}#{match.group.name})"/>
+                             itemLabel="#{match.teamOne.id != null ? match.teamOne.name : match.name} - #{match.teamTwo.name} (#{match.round.name} #{match.group.id != null ? ', ' : ''}#{match.group.name})"/>
               <p:ajax update="editPanel,editPanel_buttons,listPanel_buttons"/>
             </h:selectOneListbox>
           </h:panelGrid>

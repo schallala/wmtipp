@@ -54,7 +54,6 @@ public class PlayerContext implements IEntityBase<PlayerContext>, Serializable {
     private Player player;
     
     @ManyToOne
-    @Basic(optional = false)
     @JoinColumn(name = "community_id")
     private Community community;
     

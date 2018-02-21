@@ -37,8 +37,19 @@
             <p:password id="password" value="#{playerEditCtrl.currentPlayer.password}" 
                         feedback="true"  required="true"
                         disabled="#{not playerEditCtrl.editMode}"/>
+
+            <p:outputLabel value="#{msg['global_player_community']}" for="assignedCommunity"/>
+            <p:selectOneMenu id="assignedCommunity" value="#{playerEditCtrl.currentPlayerContext.community.id}"
+                             disabled="#{not playerEditCtrl.editMode}" style="width: 150px;">
+                <f:selectItem itemValue="" itemLabel=" - "/>
+                <f:selectItems value="#{playerEditCtrl.comunities}" 
+                               var="community" itemValue="#{community.id}" itemLabel="#{community.name}"/>
+                <p:column>  
+                    #{team.name}
+                </p:column>  
+            </p:selectOneMenu>
             <p:outputLabel value="#{msg['global_player_userrole']}" for="userRole"/>
-            <p:selectOneMenu id="userRole" value="#{playerEditCtrl.currentPlayer.userRole}"  
+            <p:selectOneMenu id="userRole" value="#{playerEditCtrl.currentPlayerContext.userRole}"  
                              required="true" disabled="#{not playerEditCtrl.editMode}"  style="width: 150px;">
               <f:selectItems value="#{playerEditCtrl.userRoles}" 
                              var="role" itemValue="#{role}" itemLabel="#{role.label}"/>
@@ -47,7 +58,7 @@
               </p:column>  
             </p:selectOneMenu>
             <p:outputLabel value="#{msg['global_player_champion']}" for="predictedChampion"/>
-            <p:selectOneMenu id="predictedChampion" value="#{playerEditCtrl.currentPlayer.predictedChampion.id}"
+            <p:selectOneMenu id="predictedChampion" value="#{playerEditCtrl.currentPlayerContext.predictedChampion.id}"
                              disabled="#{not playerEditCtrl.editMode}" style="width: 150px;">
               <f:selectItem itemValue="" itemLabel=" - "/>
               <f:selectItems value="#{playerEditCtrl.teamList}" 
@@ -57,11 +68,11 @@
               </p:column>  
             </p:selectOneMenu>
             <p:outputLabel value="#{msg['global_player_tipsvisible']}" for="tipsVisible"/>
-            <p:selectBooleanButton id="tipsVisible" value="#{playerEditCtrl.currentPlayer.tipsVisible}" 
+            <p:selectBooleanButton id="tipsVisible" value="#{playerEditCtrl.currentPlayerContext.tipsVisible}" 
                                    onIcon="ui-icon-check" offIcon="ui-icon-close" style="width:60px"
                                    onLabel="Ja" offLabel="Nein" disabled="#{not playerEditCtrl.editMode}"/>
             <p:outputLabel id="feePaid" value="#{msg['global_player_feepaid']}" for="feePaid"/>
-            <p:selectBooleanButton value="#{playerEditCtrl.currentPlayer.feePaid}"  
+            <p:selectBooleanButton value="#{playerEditCtrl.currentPlayerContext.feePaid}"  
                                    onIcon="ui-icon-check" offIcon="ui-icon-close" style="width:60px"
                                    onLabel="Ja" offLabel="Nein" disabled="#{not playerEditCtrl.editMode}"/>
           </h:panelGrid>

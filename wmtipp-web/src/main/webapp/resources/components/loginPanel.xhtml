@@ -19,7 +19,8 @@
         </h:panelGrid>
         <center>
           <p:panelGrid columns="2" rendered="#{userSessionCtrl.currentUser != null}">
-            Hallo #{userSessionCtrl.currentUser.firstName}!
+              <p:outputLabel value="Hallo #{userSessionCtrl.currentUser.firstName}!" 
+                             style="#{userSessionCtrl.systemAdmin ? 'background-color: red' : ''}"/>
           </p:panelGrid>
           <p:commandButton value="Login" actionListener="#{userSessionCtrl.validateAndlogin}" style="margin-top: 5px;"
                            rendered="#{userSessionCtrl.currentUser == null}" update="@form,content"/>

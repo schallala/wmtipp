@@ -16,8 +16,11 @@
  */
 package de.toabels.wmtipp.web.controllers;
 
-import de.toabels.wmtipp.model.dto.CompetitionDto;
+import de.toabels.wmtipp.model.dto.CommunityDto;
+import de.toabels.wmtipp.model.dto.PlayerContextDto;
 import de.toabels.wmtipp.model.dto.PlayerDto;
+import de.toabels.wmtipp.model.types.UserRoleType;
+import de.toabels.wmtipp.services.api.ICommunityService;
 import de.toabels.wmtipp.services.api.IPlayerService;
 import de.toabels.wmtipp.services.utiils.ISecurityService;
 import de.toabels.wmtipp.web.controllers.masterdata.AbstractController;
@@ -41,6 +44,9 @@ public class UserSessionController extends AbstractController {
     @Autowired
     private ISecurityService securityService;
 
+    @Autowired
+    private ICommunityService communityService;
+
     private static final Logger logger = LoggerFactory.getLogger(UserSessionController.class);
 
     private String login;
@@ -49,7 +55,9 @@ public class UserSessionController extends AbstractController {
 
     private PlayerDto currentUser;
 
-    private CompetitionDto currentCompetition;
+    private CommunityDto currentCommunity;
+
+    private List<PlayerContextDto> contextList;
 
     public String getLogin() {
         return login;
@@ -71,6 +79,10 @@ public class UserSessionController extends AbstractController {
         return currentUser;
     }
 
+    public CommunityDto getCurrentCommunity() {
+        return currentCommunity;
+    }
+
     public boolean isLoggedIn() {
         return currentUser != null;
     }
@@ -80,9 +92,21 @@ public class UserSessionController extends AbstractController {
         if (currentUser == null) {
             growlFailure("Login fehlgeschlagen", "Fehler beim Versuch den User " + login + " zu authentifizieren!");
         } else {
+            contextList = currentUser.getPlayerContext();
             growlSuccess("Login erfolgreich", null);
         }
         return "";
+    }
+
+    public boolean isSystemAdmin() {
+        if (currentUser != null) {
+            for (PlayerContextDto context : contextList) {
+                if(UserRoleType.SYSTEM_ADMIN.equals(context.getUserRole())){
+                    return true;
+                }
+            }
+        }    
+        return false;
     }
 
     public String invalidateLogin() {
@@ -90,6 +114,13 @@ public class UserSessionController extends AbstractController {
         session.invalidate();
         currentUser = null;
         return "";
+    }
+
+    public List<CommunityDto> getAvailableCommunities() {
+        if (currentUser != null) {
+
+        }
+        return null;
     }
 
     public List<PlayerDto> getLoggedInUsers() {

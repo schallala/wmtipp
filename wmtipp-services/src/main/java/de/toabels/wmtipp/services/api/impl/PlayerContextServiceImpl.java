@@ -17,7 +17,10 @@
 package de.toabels.wmtipp.services.api.impl;
 
 import de.toabels.wmtipp.model.db.PlayerContext;
+import de.toabels.wmtipp.model.dto.CommunityDto;
 import de.toabels.wmtipp.model.dto.PlayerContextDto;
+import de.toabels.wmtipp.model.dto.PlayerDto;
+import de.toabels.wmtipp.model.dto.TeamDto;
 import de.toabels.wmtipp.services.api.IPlayerContextService;
 import de.toabels.wmtipp.services.dao.IPlayerContextDao;
 import javax.inject.Inject;
@@ -43,6 +46,9 @@ public class PlayerContextServiceImpl extends GenericBaseServiceImpl<PlayerConte
     @Override
     public PlayerContextDto getNewObjectInstance() {
         PlayerContextDto object = new PlayerContextDto();
+        object.setPlayer(new PlayerDto());
+        object.setCommunity(new CommunityDto());
+        object.setPredictedChampion(new TeamDto());
         return object;
     }
 }

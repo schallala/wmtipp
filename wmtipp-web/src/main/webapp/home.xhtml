@@ -8,8 +8,10 @@
                 template="/WEB-INF/templates/template.xhtml">
     <ui:define name="content">
         <h:outputText value="Willkommen zu Abels WM-Tippspiel" styleClass="pagetitle"/>
-        <p:panelGrid style="width: 800px;" > 
-            <h:form>
+        <h:form>
+            <p:growl id="growl" showDetail="true" sticky="true" />  
+            <p:panelGrid > 
+                <p:panel style="max-width: 800px;height: 510px;" styleClass="editpage_panel_edit">
                 <h2>Mannschaften</h2>
                     <p:carousel value="#{teamListCtrl.teamList}" headerText="WM-Teilnehmer" var="team" 
                                 itemStyle="text-align:center" responsive="true">
@@ -52,8 +54,8 @@
                 
                       </p:dataTable>
                 -->
-
-            </h:form>
+                </p:panel>
         </p:panelGrid>
+        </h:form>
     </ui:define>
 </ui:composition>

@@ -18,12 +18,15 @@ package de.toabels.wmtipp.services.api.impl;
 
 import de.toabels.wmtipp.model.dto.PlayerDto;
 import de.toabels.wmtipp.model.db.Player;
-import de.toabels.wmtipp.model.dto.TeamDto;
+import de.toabels.wmtipp.services.api.ICommunityService;
+import de.toabels.wmtipp.services.api.IPlayerContextService;
 import de.toabels.wmtipp.services.api.IPlayerService;
 import de.toabels.wmtipp.services.dao.IPlayerDao;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,36 +38,40 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class PlayerServiceImpl extends GenericBaseServiceImpl<PlayerDto, Player> implements IPlayerService {
 
-  IPlayerDao playerDao;
-  
-  @Inject
-  public PlayerServiceImpl(IPlayerDao dao) {
-    super(dao);
-    playerDao = dao;
-  }
+    IPlayerDao playerDao;
 
-  @Override
-  public PlayerDto getNewObjectInstance() {
-    PlayerDto object = new PlayerDto();
-    // add needed child objects
-    object.setPredictedChampion(new TeamDto());
-    return object;
-  }
+    @Autowired
+    IPlayerContextService playerContextService;
 
-  @Override
-  public PlayerDto loginUser(String login, String password) {
-    Player result = playerDao.findByLoginAndPassword(login, password);
-    if (result != null) {
-      return mapper.map(result);
+    @Inject
+    public PlayerServiceImpl(IPlayerDao dao) {
+        super(dao);
+        playerDao = dao;
     }
-    return null;
-  }
-  
-  @Override
-  public List<PlayerDto> getLoggedInUsers(PlayerDto player){
-    // set last activity of calling user
-    player.setLastActivity(new Date());
-    super.save(player);
-    return super.listOrdered("lastActivity desc");
-  }
+
+    @Override
+    public PlayerDto getNewObjectInstance() {
+        PlayerDto object = new PlayerDto();
+        // add needed child objects
+        object.setPlayerContext(new ArrayList<>());
+        object.getPlayerContext().add(playerContextService.getNewObjectInstance());
+        return object;
+    }
+
+    @Override
+    public PlayerDto loginUser(String login, String password) {
+        Player result = playerDao.findByLoginAndPassword(login, password);
+        if (result != null) {
+            return mapper.map(result);
+        }
+        return null;
+    }
+
+    @Override
+    public List<PlayerDto> getLoggedInUsers(PlayerDto player) {
+        // set last activity of calling user
+        player.setLastActivity(new Date());
+        super.save(player);
+        return super.listOrdered("lastActivity desc");
+    }
 }

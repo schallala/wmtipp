@@ -16,192 +16,141 @@
  */
 package de.toabels.wmtipp.model.dto;
 
-import de.toabels.wmtipp.model.types.UserRoleType;
 import java.util.Date;
+import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- *  DTO class representing a view object of player entity
- * 
- *  @author abels
+ * DTO class representing a view object of player entity
+ *
+ * @author abels
  */
 @XmlRootElement
 public class PlayerDto extends AbstractBaseDto {
 
-  private String name;
+    private String name;
 
-  private String firstName;
+    private String firstName;
 
-  private String phone;
+    private String phone;
 
-  private String email;
+    private String email;
 
-  private TeamDto predictedChampion;
+    private String password;
 
-  private Boolean feePaid;
+    private String login;
 
-  private Integer score;
+    private Date lastActivity;
 
-  private Integer correctTips;
+    private List<PlayerContextDto> playerContext;
 
-  private Integer correctTrends;
-
-  private String password;
-
-  private Boolean tipsVisible;
-
-  private UserRoleType userRole;
-
-  private String login;
-
-  private Date lastActivity;
-
-  public PlayerDto() {
-    this.feePaid = false;
-    this.score = 0;
-    this.correctTips = 0;
-    this.correctTrends = 0;
-    this.tipsVisible = true;
-    this.userRole = UserRoleType.USER;
-  }
-
-  public PlayerDto(Long id) {
-    this();
-    this.id = id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public String getFirstName() {
-    return firstName;
-  }
-
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
-  }
-
-  public String getPhone() {
-    return phone;
-  }
-
-  public void setPhone(String phone) {
-    this.phone = phone;
-  }
-
-  public String getEmail() {
-    return email;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
-  }
-
-  public TeamDto getPredictedChampion() {
-    return predictedChampion;
-  }
-
-  public void setPredictedChampion(TeamDto predictedChampion) {
-    this.predictedChampion = predictedChampion;
-  }
-
-  public Boolean getFeePaid() {
-    return feePaid;
-  }
-
-  public void setFeePaid(Boolean feePaid) {
-    this.feePaid = feePaid;
-  }
-
-  public Integer getScore() {
-    return score;
-  }
-
-  public void setScore(Integer score) {
-    this.score = score;
-  }
-
-  public Integer getCorrectTips() {
-    return correctTips;
-  }
-
-  public void setCorrectTips(Integer correctTips) {
-    this.correctTips = correctTips;
-  }
-
-  public Integer getCorrectTrends() {
-    return correctTrends;
-  }
-
-  public void setCorrectTrends(Integer correctTrends) {
-    this.correctTrends = correctTrends;
-  }
-
-  public String getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
-  }
-
-  public Boolean getTipsVisible() {
-    return tipsVisible;
-  }
-
-  public void setTipsVisible(Boolean tipsVisible) {
-    this.tipsVisible = tipsVisible;
-  }
-
-  public UserRoleType getUserRole() {
-    return userRole;
-  }
-
-  public void setUserRole(UserRoleType userRole) {
-    this.userRole = userRole;
-  }
-
-  public String getLogin() {
-    return login;
-  }
-
-  public void setLogin(String login) {
-    this.login = login;
-  }
-
-  public Date getLastActivity() {
-    return lastActivity;
-  }
-
-  public void setLastActivity(Date lastActivity) {
-    this.lastActivity = lastActivity;
-  }
-
-  @Override
-  public int hashCode() {
-    int hash = 0;
-    hash += (this.id != null ? this.id.hashCode() : 0);
-    return hash;
-  }
-
-  @Override
-  public boolean equals(Object object) {
-    // TODO: Warning - this method won't work in the case the id fields are not set
-    if (!(object instanceof PlayerDto)) {
-      return false;
+    public PlayerDto() {
     }
-    PlayerDto other = (PlayerDto) object;
-    return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
-  }
 
-  @Override
-  public String toString() {
-    return "de.toabels.wmtipp.model.db.PlayerDto[  id=" + id + " ]";
-  }
+    public PlayerDto(Long id) {
+        this();
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public Date getLastActivity() {
+        return lastActivity;
+    }
+
+    public void setLastActivity(Date lastActivity) {
+        this.lastActivity = lastActivity;
+    }
+
+    /**
+     * Convenience method to obtain context with given community
+     * If communityId is null the first context is returned
+     * @param communityId
+     * @return player context in relation to community
+     */
+    public PlayerContextDto getPlayerContext(Long communityId) {
+        for(PlayerContextDto context : getPlayerContext()){
+            if(communityId == null ||  communityId.equals(context.getCommunity().getId())){
+                return context;
+            }
+        }
+        return null;
+    }
+
+    public List<PlayerContextDto> getPlayerContext() {
+        return playerContext;
+    }
+
+    public void setPlayerContext(List<PlayerContextDto> playerContext) {
+        this.playerContext = playerContext;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (this.id != null ? this.id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof PlayerDto)) {
+            return false;
+        }
+        PlayerDto other = (PlayerDto) object;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
+    }
+
+    @Override
+    public String toString() {
+        return "de.toabels.wmtipp.model.db.PlayerDto[  id=" + id + " ]";
+    }
 
 }
