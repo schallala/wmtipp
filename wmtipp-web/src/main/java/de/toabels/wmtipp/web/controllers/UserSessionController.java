@@ -93,6 +93,9 @@ public class UserSessionController extends AbstractController {
             growlFailure("Login fehlgeschlagen", "Fehler beim Versuch den User " + login + " zu authentifizieren!");
         } else {
             contextList = currentUser.getPlayerContext();
+            if(contextList!=null && !contextList.isEmpty()){
+                currentCommunity = communityService.findById(contextList.get(0).getCommunity().getId().intValue());
+            }
             growlSuccess("Login erfolgreich", null);
         }
         return "";

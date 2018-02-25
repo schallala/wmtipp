@@ -7,7 +7,8 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/WEB-INF/templates/template.xhtml">
     <ui:define name="content">
-        <h:outputText value="Willkommen zu Abels WM-Tippspiel" styleClass="pagetitle"/>
+        <h:outputText value="Willkommen zu #{userSessionCtrl.currentCommunity.name}" 
+                      rendered="#{not empty(userSessionCtrl.currentCommunity)}" styleClass="pagetitle"/>
         <h:form>
             <p:growl id="growl" showDetail="true" sticky="true" />  
             <p:panelGrid > 

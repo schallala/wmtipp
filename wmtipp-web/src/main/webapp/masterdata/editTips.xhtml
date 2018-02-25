@@ -21,11 +21,11 @@
             <h:outputText value="Name"/>
             <h:outputText value="#{tipEditCtrl.selectedPlayer.firstName} #{tipEditCtrl.selectedPlayer.name}"/>
             <h:outputText value="Exakte Tipps"/>
-            <h:outputText value="#{tipEditCtrl.selectedPlayer.correctTips}" style="float: right"/>
+            <h:outputText value="#{tipEditCtrl.selectedPlayer.playerContext.correctTips}" style="float: right"/>
             <h:outputText value="Richtige Tendenz"/>
-            <h:outputText value="#{tipEditCtrl.selectedPlayer.correctTrends}"  style="float: right"/>
+            <h:outputText value="#{tipEditCtrl.selectedPlayer.playerContext}"  style="float: right"/>
             <h:outputText value="Punkte gesamt"/>
-            <h:outputText value="#{tipEditCtrl.selectedPlayer.score}" style="float: right"/>
+            <h:outputText value="#{tipEditCtrl.selectedPlayer.playerContext.score}" style="float: right"/>
           </p:panelGrid>
         </center>
         </h:form>
