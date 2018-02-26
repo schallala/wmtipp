@@ -26,63 +26,73 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class GroupDto extends AbstractBaseDto {
 
-  private String name;
+    private CompetitionDto competition;
 
-  private Integer sortOrder;
+    private String name;
 
-  public GroupDto() {
-  }
+    private Integer sortOrder;
 
-  public GroupDto(Long id) {
-    this();
-    this.id = id;
-  }
-
-  public GroupDto(Long id, String name) {
-    this();
-    this.id = id;
-    this.name = name;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public Integer getSortOrder() {
-    return sortOrder;
-  }
-
-  public void setSortOrder(Integer sortOrder) {
-    this.sortOrder = sortOrder;
-  }
-
-  @Override
-  public int hashCode() {
-    int hash = 0;
-    hash += (id != null ? id.hashCode() : 0);
-    return hash;
-  }
-
-  @Override
-  public boolean equals(Object object) {
-    // TODO: Warning - this method won't work in the case the id fields are not set
-    if (!(object instanceof GroupDto)) {
-      return false;
+    public GroupDto() {
     }
-    GroupDto other = (GroupDto) object;
-    if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-      return false;
-    }
-    return true;
-  }
 
-  @Override
-  public String toString() {
-    return "de.toabels.wmtipp.model.api.GroupDto[ id=" + id + " ]";
-  }
-  
+    public GroupDto(Long id) {
+        this();
+        this.id = id;
+    }
+
+    public GroupDto(Long id, String name) {
+        this();
+        this.id = id;
+        this.name = name;
+    }
+
+    public CompetitionDto getCompetition() {
+        return competition;
+    }
+
+    public void setCompetition(CompetitionDto competition) {
+        this.competition = competition;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getSortOrder() {
+        return sortOrder;
+    }
+
+    public void setSortOrder(Integer sortOrder) {
+        this.sortOrder = sortOrder;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof GroupDto)) {
+            return false;
+        }
+        GroupDto other = (GroupDto) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "de.toabels.wmtipp.model.api.GroupDto[ id=" + id + " ]";
+    }
+
 }

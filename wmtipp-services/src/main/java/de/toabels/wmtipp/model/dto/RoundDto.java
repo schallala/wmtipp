@@ -26,62 +26,72 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class RoundDto extends AbstractBaseDto {
 
-  private String name;
+    private CompetitionDto competition;
 
-  private Boolean approved;
+    private String name;
 
-  private Short sortOrder;
+    private Boolean approved;
 
-  public RoundDto() {
-  }
+    private Short sortOrder;
 
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public Boolean getApproved() {
-    return approved;
-  }
-
-  public void setApproved(Boolean approved) {
-    this.approved = approved;
-  }
-
-  public Short getSortOrder() {
-    return sortOrder;
-  }
-
-  public void setSortOrder(Short sortOrder) {
-    this.sortOrder = sortOrder;
-  }
-
-  @Override
-  public int hashCode() {
-    int hash = 0;
-    hash += (id != null ? id.hashCode() : 0);
-    return hash;
-  }
-
-  @Override
-  public boolean equals(Object object) {
-    // TODO: Warning - this method won't work in the case the id fields are not set
-    if (!(object instanceof RoundDto)) {
-      return false;
+    public RoundDto() {
     }
-    RoundDto other = (RoundDto) object;
-    if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-      return false;
-    }
-    return true;
-  }
 
-  @Override
-  public String toString() {
-    return "de.toabels.wmtipp.model.db.RoundDto[ id=" + id + " ]";
-  }
-  
+    public CompetitionDto getCompetition() {
+        return competition;
+    }
+
+    public void setCompetition(CompetitionDto competition) {
+        this.competition = competition;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Boolean getApproved() {
+        return approved;
+    }
+
+    public void setApproved(Boolean approved) {
+        this.approved = approved;
+    }
+
+    public Short getSortOrder() {
+        return sortOrder;
+    }
+
+    public void setSortOrder(Short sortOrder) {
+        this.sortOrder = sortOrder;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof RoundDto)) {
+            return false;
+        }
+        RoundDto other = (RoundDto) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "de.toabels.wmtipp.model.db.RoundDto[ id=" + id + " ]";
+    }
+
 }

@@ -134,9 +134,12 @@ CREATE TABLE `message` (
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `t_group` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `competition_fk` bigint(20),
   `name` varchar(255) NOT NULL,
   `sort_order` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `FK_team_competition` (`competition_fk`),
+  CONSTRAINT `FK_team_competition` FOREIGN KEY (`competition_fk`) REFERENCES `competition` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -217,10 +220,13 @@ CREATE TABLE `player_context` (
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `t_round` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `competition_fk` bigint(20) DEFAULT NULL,
   `approved` bit(1) NOT NULL,
   `name` varchar(255) NOT NULL,
   `sort_order` smallint(6) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `FK_round_competition` (`competition_fk`),
+  CONSTRAINT `FK_round_competition` FOREIGN KEY (`competition_fk`) REFERENCES `competition` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

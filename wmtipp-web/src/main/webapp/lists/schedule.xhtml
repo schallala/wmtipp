@@ -20,10 +20,10 @@
                 </p:column>
                 <p:column headerText="Mannschaft 1"  sortBy="#{match.teamOne.name}" style="border-color: transparent;text-align: right">
                     <h:outputText value="#{match.teamOne.name}" />
-                    <p:graphicImage url="resources/graphics/wm2018/flags/#{match.teamOne.urlFlagImage}" style="padding-left: 20px"/>
+                    <p:graphicImage url="/resources/graphics/wm2018/flags/#{match.teamOne.urlFlagImage}" style="padding-left: 20px"/>
                 </p:column>
                 <p:column headerText="Mannschaft 2"  sortBy="#{match.teamTwo.name}" style="border-color: transparent;text-align: left">
-                    <p:graphicImage url="resources/graphics/wm2018/flags/#{match.teamTwo.urlFlagImage}" style="padding-right: 20px"/>
+                    <p:graphicImage url="/resources/graphics/wm2018/flags/#{match.teamTwo.urlFlagImage}" style="padding-right: 20px"/>
                     <h:outputText value="#{match.teamTwo.name}" />
                 </p:column>
                 <p:column headerText="Anstoß"  sortBy="#{match.startDate}" style="border-color: transparent;">

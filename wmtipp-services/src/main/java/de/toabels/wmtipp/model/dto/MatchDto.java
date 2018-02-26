@@ -28,6 +28,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class MatchDto extends AbstractBaseDto {
 
     private String externalId;
+    
+    private CompetitionDto competition;
 
     private String name;
 
@@ -82,6 +84,15 @@ public class MatchDto extends AbstractBaseDto {
         this.externalId = externalId;
     }
 
+    public CompetitionDto getCompetition() {
+        return competition;
+    }
+
+    public void setCompetition(CompetitionDto competition) {
+        this.competition = competition;
+    }
+
+    
     public RoundDto getRound() {
         return round;
     }

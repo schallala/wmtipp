@@ -176,6 +176,15 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
         return dto;
     }
 
+    private CompetitionDto mapReference(Competition competition) {
+        CompetitionDto dto = new CompetitionDto();
+        if (competition == null) {
+            return dto;
+        }
+        dto.setId(competition.getId());
+        return dto;
+    }
+    
     /**
      * Map Competition DTO -> Competition entity
      *
@@ -197,6 +206,15 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
         competition.setPointsWin(dto.getPointsWin());
         competition.setPointsDraw(dto.getPointsDraw());
         competition.setSortOrder(dto.getSortOrder());
+        return competition;
+    }
+    
+    private Competition mapReference(CompetitionDto dto) {
+        if (dto == null) {
+            return null;
+        }
+        Competition competition = new Competition();
+        competition.setId(dto.getId());
         return competition;
     }
 
@@ -330,6 +348,7 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
             return dto;
         }
         dto.setId(group.getId());
+        dto.setCompetition(mapReference(group.getCompetition()));
         dto.setName(group.getName());
         dto.setSortOrder(group.getSortOrder());
         return dto;
@@ -347,6 +366,7 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
         }
         Group group = new Group();
         group.setId(dto.getId());
+        group.setCompetition(mapReference(dto.getCompetition()));
         group.setName(dto.getName());
         group.setSortOrder(dto.getSortOrder());
         return group;
@@ -381,6 +401,7 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
             return dto;
         }
         dto.setId(round.getId());
+        dto.setCompetition(mapReference(round.getCompetition()));
         dto.setName(round.getName());
         dto.setSortOrder(round.getSortOrder());
         dto.setApproved(round.getApproved());
@@ -399,6 +420,7 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
         }
         Round round = new Round();
         round.setId(dto.getId());
+        round.setCompetition(mapReference(dto.getCompetition()));
         round.setName(dto.getName());
         round.setSortOrder(dto.getSortOrder());
         round.setApproved(dto.getApproved());
@@ -528,6 +550,7 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
         MatchDto dto = new MatchDto();
         dto.setId(match.getId());
         dto.setExternalId(match.getExternalId());
+        dto.setCompetition(map(match.getCompetition()));
         dto.setName(match.getName());
         dto.setDescription(match.getDescription());
         dto.setGoalsTeamOne(match.getGoalsTeamOne());
@@ -562,6 +585,7 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
         Match match = new Match();
         match.setId(dto.getId());
         match.setExternalId(dto.getExternalId());
+        match.setCompetition(map(dto.getCompetition()));
         match.setName(dto.getName());
         match.setDescription(dto.getDescription());
         match.setGoalsTeamOne(dto.getGoalsTeamOne());
