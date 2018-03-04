@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author abels
  */
 @XmlRootElement
-public class PlayerContextDto extends AbstractBaseDto {
+public class PlayerContextDto extends AbstractBaseDto implements ICommunityAware{
 
     private PlayerDto player;
 
@@ -53,10 +53,12 @@ public class PlayerContextDto extends AbstractBaseDto {
         this.player = player;
     }
 
+    @Override
     public CommunityDto getCommunity() {
         return community;
     }
 
+    @Override
     public void setCommunity(CommunityDto community) {
         this.community = community;
     }

@@ -51,6 +51,13 @@ public class CommunityEditController extends AbstractEditController<CommunityDto
         super.init(communityService);
     }
 
+    @Override
+    public void setDefaultValues() {
+        currentSubject.setScoreCorrectWinner(10L);
+        currentSubject.setScoreCorrectTrend(1L);
+        currentSubject.setScoreCorrectTip(3L);
+    }
+
     /**
      * This getter serves as wrapper for the current subject object of the
      * abstract controller class

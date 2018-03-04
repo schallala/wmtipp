@@ -43,6 +43,20 @@
             <p:inputText id="scoreCorrectTrend" 
                          value="#{communityEditCtrl.currentCommunity.scoreCorrectTrend}" 
                          required="true" disabled="#{not communityEditCtrl.editMode}"/>
+            
+            <p:outputLabel value="#{msg['global_community_competition']}" 
+                           for="selectCommunityCompetition" />
+            <p:selectManyMenu id="selectCommunityCompetition" value="#{communityEditCtrl.currentSubject.competitionList}" 
+                              converter="#{competitionConverter}" var="competition" disabled="#{not communityEditCtrl.editMode}" 
+                              filter="true" filterMatchMode="contains" showCheckbox="true">
+                <f:selectItems value="#{communityEditCtrl.competitionList}" var="comp" itemLabel="#{comp.name}" itemValue="#{comp}" />
+
+                <p:column>
+                    <h:outputText value="#{competition.name}" />
+                </p:column>
+            </p:selectManyMenu>
+
+            
             <p:outputLabel value="#{msg['global_community_autoGenerateMatches']}" 
                            for="autoGenerateMatches" />
             <p:selectBooleanButton id="autoGenerateMatches" 

@@ -16,6 +16,8 @@
  */
 package de.toabels.wmtipp.model.dto;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -37,6 +39,8 @@ public class CommunityDto extends AbstractBaseDto {
     private Long scoreCorrectTip;
 
     private Long scoreCorrectTrend;
+    
+    private List<CompetitionDto> competitionList = new ArrayList<>();
     
     private Boolean autoGenerateMatches;
 
@@ -88,6 +92,14 @@ public class CommunityDto extends AbstractBaseDto {
 
     public void setScoreCorrectTrend(Long scoreCorrectTrend) {
         this.scoreCorrectTrend = scoreCorrectTrend;
+    }
+
+    public List<CompetitionDto> getCompetitionList() {
+        return competitionList;
+    }
+
+    public void setCompetitionList(List<CompetitionDto> competitionList) {
+        this.competitionList = competitionList;
     }
 
     public Boolean getAutoGenerateMatches() {

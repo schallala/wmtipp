@@ -16,6 +16,7 @@
  */
 package de.toabels.wmtipp.model.dto;
 
+import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -37,6 +38,7 @@ public class CompetitionDto extends AbstractBaseDto {
     private Long pointsDraw;
 
     private Integer sortOrder;
+    private List<CommunityDto> communityList;
 
     public String getExternalId() {
         return externalId;
@@ -108,6 +110,14 @@ public class CompetitionDto extends AbstractBaseDto {
 
     public void setSortOrder(Integer sortOrder) {
         this.sortOrder = sortOrder;
+    }
+
+    public List<CommunityDto> getCommunityList() {
+        return communityList;
+    }
+
+    public void setCommunityList(List<CommunityDto> communityList) {
+        this.communityList = communityList;
     }
 
     

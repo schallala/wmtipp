@@ -41,6 +41,7 @@ import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.jackson.internal.jackson.jaxrs.json.JacksonJsonProvider;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -87,6 +88,7 @@ public class FootballDataOrgService implements IResultService {
     }
 
     @Override
+    @Cacheable(value = "lists", key = "'fdoCompetitionList' + #selectedYear")
     public List<FdoCompetition> findCompetitionsByYear(String selectedYear) {
         Client client = getClient();
         Response response = client.target(getBaseURI()).

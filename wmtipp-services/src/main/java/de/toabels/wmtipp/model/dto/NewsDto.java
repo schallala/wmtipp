@@ -25,64 +25,76 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author abels
  */
 @XmlRootElement
-public class NewsDto extends AbstractBaseDto {
+public class NewsDto extends AbstractBaseDto implements ICommunityAware{
 
-  private String subject;
+    private String subject;
 
-  private String text;
+    private String text;
 
-  private Date createdAt;
+    private CommunityDto community;
 
-  public NewsDto() {
-  }
+    private Date createdAt;
 
-  public String getSubject() {
-    return subject;
-  }
-
-  public void setSubject(String subject) {
-    this.subject = subject;
-  }
-
-  public String getText() {
-    return text;
-  }
-
-  public void setText(String text) {
-    this.text = text;
-  }
-
-  public Date getCreatedAt() {
-    return createdAt;
-  }
-
-  public void setCreatedAt(Date createdAt) {
-    this.createdAt = createdAt;
-  }
-
-  @Override
-  public int hashCode() {
-    int hash = 0;
-    hash += (id != null ? id.hashCode() : 0);
-    return hash;
-  }
-
-  @Override
-  public boolean equals(Object object) {
-    // TODO: Warning - this method won't work in the case the id fields are not set
-    if (!(object instanceof NewsDto)) {
-      return false;
+    public NewsDto() {
     }
-    NewsDto other = (NewsDto) object;
-    if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-      return false;
-    }
-    return true;
-  }
 
-  @Override
-  public String toString() {
-    return "de.toabels.wmtipp.model.db.NewsDto[ id=" + id + " ]";
-  }
-  
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    @Override
+    public CommunityDto getCommunity() {
+        return community;
+    }
+
+    @Override
+    public void setCommunity(CommunityDto community) {
+        this.community = community;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof NewsDto)) {
+            return false;
+        }
+        NewsDto other = (NewsDto) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "de.toabels.wmtipp.model.db.NewsDto[ id=" + id + " ]";
+    }
+
 }

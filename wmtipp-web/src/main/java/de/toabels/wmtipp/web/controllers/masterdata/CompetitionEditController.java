@@ -90,7 +90,7 @@ public class CompetitionEditController extends AbstractEditController<Competitio
 
     public List<FdoCompetition> getExternalCompetitions() {
         if(externalCompetitions == null){
-            externalCompetitions = resultService.findCompetitionsByYear(null);
+            externalCompetitions = resultService.findCompetitionsByYear("");
         }
         return externalCompetitions;
     }

@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author abels
  */
 @XmlRootElement
-public class GroupDto extends AbstractBaseDto {
+public class GroupDto extends AbstractBaseDto implements ICompetitionAware {
 
     private CompetitionDto competition;
 
@@ -46,10 +46,12 @@ public class GroupDto extends AbstractBaseDto {
         this.name = name;
     }
 
+    @Override
     public CompetitionDto getCompetition() {
         return competition;
     }
 
+    @Override
     public void setCompetition(CompetitionDto competition) {
         this.competition = competition;
     }

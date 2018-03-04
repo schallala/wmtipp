@@ -173,6 +173,12 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
         dto.setPointsWin(competition.getPointsWin());
         dto.setPointsDraw(competition.getPointsDraw());
         dto.setSortOrder(competition.getSortOrder());
+//        if(competition.getCommunityList() != null && !competition.getCommunityList().isEmpty()){
+//            dto.setCommunityList(new ArrayList<>());
+//            for(Community community : competition.getCommunityList()){
+//                dto.getCommunityList().add(mapReference(community));
+//            }
+//        }
         return dto;
     }
 
@@ -206,6 +212,13 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
         competition.setPointsWin(dto.getPointsWin());
         competition.setPointsDraw(dto.getPointsDraw());
         competition.setSortOrder(dto.getSortOrder());
+//        competition.setSortOrder(dto.getSortOrder());
+//        if (dto.getCommunityList() != null && !dto.getCommunityList().isEmpty()) {
+//            competition.setCommunityList(new ArrayList<>());
+//            for (CommunityDto community : dto.getCommunityList()) {
+//                competition.getCommunityList().add(mapReference(community));
+//            }
+//        }
         return competition;
     }
     
@@ -237,7 +250,13 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
         dto.setScoreCorrectTip(community.getScoreCorrectTip());
         dto.setScoreCorrectTrend(community.getScoreCorrectTrend());
         dto.setAutoGenerateMatches(community.getAutoGenerateMatches());
-        dto.setAutoReleaseRounds(community.getAutoReleaseRounds());
+        dto.setAutoReleaseRounds(community.getAutoReleaseRounds());        
+        if(community.getCompetitionList() != null && !community.getCompetitionList().isEmpty()){
+            dto.setCompetitionList(new ArrayList<>());
+            for(Competition competition : community.getCompetitionList()){
+                dto.getCompetitionList().add(mapReference(competition));
+            }
+        }
         return dto;
     }
 
@@ -276,10 +295,31 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
         community.setScoreCorrectTrend(dto.getScoreCorrectTrend());
         community.setAutoGenerateMatches(dto.getAutoGenerateMatches());
         community.setAutoReleaseRounds(dto.getAutoReleaseRounds());
+        if (dto.getCompetitionList() != null && !dto.getCompetitionList().isEmpty()) {
+            community.setCompetitionList(new ArrayList<>());
+            for (CompetitionDto competition : dto.getCompetitionList()) {
+                community.getCompetitionList().add(mapReference(competition));
+            }
+        }
         return community;
     }
 
     /**
+     * Map Community DTO -> Community entity
+     *
+     * @param dto - community dto
+     * @return Community entity
+     */
+    private Community mapReference(CommunityDto dto) {
+        if (dto == null) {
+            return null;
+        }
+        Community community = new Community();
+        community.setId(dto.getId());
+        return community;
+    }
+        
+        /**
      * Map PlayerContext entity -> PlayerContext DTO
      *
      * @param playerContext - entity
@@ -459,6 +499,7 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
         dto.setId(news.getId());
         dto.setSubject(news.getSubject());
         dto.setText(news.getText());
+        dto.setCommunity(map(news.getCommunity()));
         dto.setCreatedAt(news.getCreatedAt());
         return dto;
     }
@@ -477,6 +518,7 @@ public class MappingServiceImpl<D extends AbstractBaseDto, E extends IEntityBase
         news.setId(dto.getId());
         news.setSubject(dto.getSubject());
         news.setText(dto.getText());
+        news.setCommunity(map(dto.getCommunity()));
         news.setCreatedAt(dto.getCreatedAt());
         return news;
     }

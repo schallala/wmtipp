@@ -100,7 +100,9 @@ CREATE TABLE `news` (
   `created_at` datetime NOT NULL,
   `subject` varchar(255) DEFAULT NULL,
   `text` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `community_fk` bigint(20),
+  PRIMARY KEY (`id`),
+  CONSTRAINT `FK_community_fk` FOREIGN KEY (`COMMUNITY_FK`) REFERENCES `community` (`id`),
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

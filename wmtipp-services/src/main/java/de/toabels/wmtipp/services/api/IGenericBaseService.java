@@ -23,8 +23,9 @@ import java.util.List;
 /**
  * Generic DAO interfacre of common persistence tasks
  *
- * All methods are working on DTO objects and never directly return entity objects to calling methods. Mapping between
- * DTO and entity objects is done by a generic mapping servicee, where mapping rules are specified.
+ * All methods are working on DTO objects and never directly return entity
+ * objects to calling methods. Mapping between DTO and entity objects is done by
+ * a generic mapping servicee, where mapping rules are specified.
  *
  * @author abels
  * @param <D> - DTO object
@@ -32,66 +33,87 @@ import java.util.List;
  */
 public interface IGenericBaseService<D extends AbstractBaseDto, E extends IEntityBase<E>> {
 
-  /**
-   * Factory method to create new DTO objects
-   * 
-   * @return DTO instance
-   */
-  D getNewObjectInstance();
-  
-  /**
-   * Persist a DTO object to the database.
-   * This methods handles creating objects as well as updates.
-   * 
-   * @param dto - DTO object
-   * 
-   * @return updated dto object after persisting
-   */
-  D save(D dto);
+    /**
+     * Factory method to create new DTO objects
+     *
+     * @return DTO instance
+     */
+    D getNewObjectInstance();
 
-  /**
-   * Convenience method to save a list of DTOs (no bulk update!)
-   * 
-   * @param dtoList - list of DTO objects
-   * @return list of persisted DTO objects
-   */
-  List<D> saveList(List<D> dtoList);  
-  
-  /**
-   * Deleting a DTO object from database
-   * 
-   * @param dto - DTO object
-   */
-  void delete(D dto);
+    /**
+     * Persist a DTO object to the database. This methods handles creating
+     * objects as well as updates.
+     *
+     * @param dto - DTO object
+     *
+     * @return updated dto object after persisting
+     */
+    D save(D dto);
 
-  /**
-   * Convenience method to delete a list of DTOs from datatabase (no bulk operation!)
-   *
-   * @param dtoList - list of DTO objects
-   */
-  void deleteList(List<D> dtoList);
-  
-  /**
-   * Get a list of all DTO objects which entities are stored in database
-   * 
-   * @return unordered list of all objects
-   */
-  List<D> list();
+    /**
+     * Convenience method to save a list of DTOs (no bulk update!)
+     *
+     * @param dtoList - list of DTO objects
+     * @return list of persisted DTO objects
+     */
+    List<D> saveList(List<D> dtoList);
 
-  /**
-   * Get an ordered list of all DTO objects which entities are stored in database
+    /**
+     * Deleting a DTO object from database
+     *
+     * @param dto - DTO object
+     */
+    void delete(D dto);
+
+    /**
+     * Convenience method to delete a list of DTOs from datatabase (no bulk
+     * operation!)
+     *
+     * @param dtoList - list of DTO objects
+     */
+    void deleteList(List<D> dtoList);
+
+    /**
+     * Get a list of all DTO objects which entities are stored in database
+     *
+     * @return unordered list of all objects
+     */
+    List<D> list();
+
+    /** 
+     * Filter given list by competition id
      * 
-   * @param order - array of strings (JPA syntax) defining the sort order of list 
-   * @return ordered list of all objects
-   */
-  List<D> listOrdered(String... order);
+     * @param list
+     * @param competitionId
+     * @return 
+     */
+    List<D> filterCompetition(List<D> list, Long competitionId);
 
-  /**
-   * Get a DTO object with specified ID
-   * 
-   * @param id - identifier (database ID) of object to find
-   * @return object with specified ID
-   */
-  D findById(int id);
-  
+    /**
+     * Filter given list by community id
+     *
+     * @param list
+     * @param competitionId
+     * @return
+     */
+    List<D> filterCommunity(List<D> list, Long competitionId);
+
+    /**
+     * Get an ordered list of all DTO objects which entities are stored in
+     * database
+     *
+     * @param order - array of strings (JPA syntax) defining the sort order of
+     * list
+     * @return ordered list of all objects
+     */
+    List<D> listOrdered(String... order);
+
+    /**
+     * Get a DTO object with specified ID
+     *
+     * @param id - identifier (database ID) of object to find
+     * @return object with specified ID
+     */
+    D findById(int id);
+
 }

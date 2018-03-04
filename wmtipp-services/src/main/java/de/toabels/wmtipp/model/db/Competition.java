@@ -17,16 +17,12 @@
 package de.toabels.wmtipp.model.db;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -62,20 +58,19 @@ public class Competition implements IEntityBase<Competition>, Serializable {
     @Basic(optional = false)
     @Column(name = "flags_path")
     private String flagsPath;
- 
+
     @Basic(optional = false)
     @Column(name = "points_win")
     private Long pointsWin;
     @Basic(optional = false)
     @Column(name = "points_draw")
     private Long pointsDraw;
-    
+
     @Column(name = "sort_order")
     private Integer sortOrder;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "competitionList")
-    private List<Community> communityList = new ArrayList<Community>(0);
-    
+//    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "competitionList")
+//    private List<Community> communityList = new ArrayList<Community>(0);
     public Competition() {
     }
 
@@ -170,14 +165,13 @@ public class Competition implements IEntityBase<Competition>, Serializable {
         this.sortOrder = sortOrder;
     }
 
-    public List<Community> getCommunityList() {
-        return communityList;
-    }
-
-    public void setCommunityList(List<Community> communityList) {
-        this.communityList = communityList;
-    }
-
+//    public List<Community> getCommunityList() {
+//        return communityList;
+//    }
+//
+//    public void setCommunityList(List<Community> communityList) {
+//        this.communityList = communityList;
+//    }
     @Override
     public int hashCode() {
         int hash = 0;

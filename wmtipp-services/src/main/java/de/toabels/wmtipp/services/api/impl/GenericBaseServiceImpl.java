@@ -16,8 +16,10 @@
  */
 package de.toabels.wmtipp.services.api.impl;
 
+import de.toabels.wmtipp.model.dto.ICompetitionAware;
 import de.toabels.wmtipp.model.db.IEntityBase;
 import de.toabels.wmtipp.model.dto.AbstractBaseDto;
+import de.toabels.wmtipp.model.dto.CompetitionDto;
 import de.toabels.wmtipp.services.api.IGenericBaseService;
 import de.toabels.wmtipp.services.dao.IGenericDao;
 import de.toabels.wmtipp.services.utiils.IMappingService;
@@ -127,6 +129,34 @@ public abstract class GenericBaseServiceImpl<D extends AbstractBaseDto, E extend
     @Override
     public List<D> list() {
         return dao.findAll().stream().map(p -> mapper.map(p)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<D> filterCompetition(List<D> list, Long competitionId) {
+        List<D> result = new ArrayList<>();
+        if (competitionId != null) {
+            for (D dto : list) {
+                if (competitionId.equals(
+                        ((ICompetitionAware) dto).getCompetition().getId())) {
+                    result.add(dto);
+                }
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public List<D> filterCommunity(List<D> list, Long communityId) {
+        List<D> result = new ArrayList<>();
+        if (communityId != null) {
+            for (D dto : list) {
+                if (communityId.equals(
+                        ((ICompetitionAware) dto).getCompetition().getId())) {
+                    result.add(dto);
+                }
+            }
+        }
+        return result;
     }
 
     // only one ordered list per target class will be cached 

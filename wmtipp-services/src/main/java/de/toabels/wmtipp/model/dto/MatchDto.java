@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author abels
  */
 @XmlRootElement
-public class MatchDto extends AbstractBaseDto {
+public class MatchDto extends AbstractBaseDto implements ICompetitionAware {
 
     private String externalId;
     
@@ -84,10 +84,12 @@ public class MatchDto extends AbstractBaseDto {
         this.externalId = externalId;
     }
 
+    @Override
     public CompetitionDto getCompetition() {
         return competition;
     }
 
+    @Override
     public void setCompetition(CompetitionDto competition) {
         this.competition = competition;
     }

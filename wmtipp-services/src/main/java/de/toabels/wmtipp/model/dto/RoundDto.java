@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author abels
  */
 @XmlRootElement
-public class RoundDto extends AbstractBaseDto {
+public class RoundDto extends AbstractBaseDto implements ICompetitionAware {
 
     private CompetitionDto competition;
 
@@ -37,10 +37,12 @@ public class RoundDto extends AbstractBaseDto {
     public RoundDto() {
     }
 
+    @Override
     public CompetitionDto getCompetition() {
         return competition;
     }
 
+    @Override
     public void setCompetition(CompetitionDto competition) {
         this.competition = competition;
     }

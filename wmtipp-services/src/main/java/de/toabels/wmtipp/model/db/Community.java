@@ -77,7 +77,7 @@ public class Community implements IEntityBase<Community>, Serializable {
      
             
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(name = "community_competition", joinColumns = {
         @JoinColumn(name = "COMMUNITY_ID", nullable = false, updatable = false)},
             inverseJoinColumns = {
