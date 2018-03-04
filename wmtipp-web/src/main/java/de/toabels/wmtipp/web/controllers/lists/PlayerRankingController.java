@@ -17,7 +17,7 @@
 package de.toabels.wmtipp.web.controllers.lists;
 
 import de.toabels.wmtipp.model.dto.PlayerDto;
-import de.toabels.wmtipp.web.controllers.masterdata.AbstractController;
+import de.toabels.wmtipp.web.controllers.masterdata.AbstractObjectController;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +26,7 @@ import org.springframework.stereotype.Controller;
 
 @Controller("playerRankingCtrl")
 @Scope("session")
-public class PlayerRankingController extends AbstractController {
+public class PlayerRankingController extends AbstractObjectController {
 
   private static final Logger logger = LoggerFactory.getLogger(PlayerRankingController.class);
 

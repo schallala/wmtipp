@@ -30,13 +30,12 @@ import de.toabels.wmtipp.services.api.IMatchService;
 import de.toabels.wmtipp.services.api.IPlayerService;
 import de.toabels.wmtipp.services.api.IRoundService;
 import de.toabels.wmtipp.services.api.ITeamService;
+import de.toabels.wmtipp.web.controllers.UserSessionController;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.ResourceBundle;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -44,13 +43,16 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  * @author Torsten Abels <torsten.abels@gmail.com>
  */
-public abstract class AbstractController {
+public abstract class AbstractObjectController extends AbstractBaseController {
 
-    private static final Logger logger = LoggerFactory.getLogger(AbstractController.class);
+    private static final Logger logger = LoggerFactory.getLogger(AbstractObjectController.class);
 
     private ResourceBundle messageBundle;
 
     /* define lookup services for listboces in central spot */
+    @Autowired
+    private UserSessionController userSessionController;
+
     @Autowired
     private IMatchService matchService;
 
@@ -80,7 +82,7 @@ public abstract class AbstractController {
      * @return team list
      */
     public List<MatchDto> getMatchList() {
-        return matchService.listOrdered("startDate");
+        return matchService.filterCompetition(matchService.listOrdered("startDate"), getCompetitionId());
     }
 
     /**
@@ -89,7 +91,7 @@ public abstract class AbstractController {
      * @return team list
      */
     public List<GroupDto> getGroupList() {
-        return groupService.listOrdered("sortOrder");
+        return groupService.filterCompetition(groupService.listOrdered("sortOrder"), getCompetitionId());
     }
 
     /**
@@ -98,8 +100,7 @@ public abstract class AbstractController {
      * @return team list
      */
     public List<RoundDto> getRoundList() {
-        //TODO: remove hardcoded filter
-        return roundService.filterCompetition(roundService.listOrdered("sortOrder nulls last"), 1L);
+        return roundService.filterCompetition(roundService.listOrdered("sortOrder nulls last"), getCompetitionId());
     }
 
     /**
@@ -148,22 +149,14 @@ public abstract class AbstractController {
         return communityService.listOrdered("name");
     }
 
-    /* Feedback popups */
-    protected void growlSuccess(String summary, String detail) {
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail));
+    private Long getCompetitionId() {
+        return userSessionController.getCurrentCompetition() != null 
+            ? userSessionController.getCurrentCompetition().getId() : null;
     }
 
-    protected void growlFailure(String summary, String detail) {
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, detail));
-    }
-
-    protected String getMessage(String key) {
-        if (messageBundle == null) {
-            messageBundle = ResourceBundle.getBundle("messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
-        }
-        return messageBundle.getString(key);
+    private Long getCommunityId() {
+        return userSessionController.getCurrentCommunity() != null 
+            ? userSessionController.getCurrentCommunity().getId() : null;
     }
 
 }

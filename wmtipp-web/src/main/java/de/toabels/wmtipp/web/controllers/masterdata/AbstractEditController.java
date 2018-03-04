@@ -34,7 +34,7 @@ import javax.faces.event.ValueChangeEvent;
  * @author Torsten Abels <torsten.abels@gmail.com>
  * @param <D> - DTO class of page subject
  */
-public abstract class AbstractEditController<D extends AbstractBaseDto> extends AbstractController {
+public abstract class AbstractEditController<D extends AbstractBaseDto> extends AbstractObjectController {
 
     private IGenericBaseService subjectService;
 

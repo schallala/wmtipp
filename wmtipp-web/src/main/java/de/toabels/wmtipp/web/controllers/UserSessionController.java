@@ -17,13 +17,14 @@
 package de.toabels.wmtipp.web.controllers;
 
 import de.toabels.wmtipp.model.dto.CommunityDto;
+import de.toabels.wmtipp.model.dto.CompetitionDto;
 import de.toabels.wmtipp.model.dto.PlayerContextDto;
 import de.toabels.wmtipp.model.dto.PlayerDto;
 import de.toabels.wmtipp.model.types.UserRoleType;
 import de.toabels.wmtipp.services.api.ICommunityService;
 import de.toabels.wmtipp.services.api.IPlayerService;
 import de.toabels.wmtipp.services.utiils.ISecurityService;
-import de.toabels.wmtipp.web.controllers.masterdata.AbstractController;
+import de.toabels.wmtipp.web.controllers.masterdata.AbstractBaseController;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.context.FacesContext;
@@ -36,7 +37,7 @@ import org.springframework.stereotype.Controller;
 
 @Controller("userSessionCtrl")
 @Scope("session")
-public class UserSessionController extends AbstractController {
+public class UserSessionController extends AbstractBaseController {
 
     @Autowired
     private IPlayerService playerService;
@@ -56,6 +57,8 @@ public class UserSessionController extends AbstractController {
     private PlayerDto currentUser;
 
     private CommunityDto currentCommunity;
+
+    private CompetitionDto currentCompetition;
 
     private List<PlayerContextDto> contextList;
 
@@ -83,6 +86,10 @@ public class UserSessionController extends AbstractController {
         return currentCommunity;
     }
 
+    public CompetitionDto getCurrentCompetition() {
+        return currentCompetition;
+    }
+
     public boolean isLoggedIn() {
         return currentUser != null;
     }
@@ -93,7 +100,7 @@ public class UserSessionController extends AbstractController {
             growlFailure("Login fehlgeschlagen", "Fehler beim Versuch den User " + login + " zu authentifizieren!");
         } else {
             contextList = currentUser.getPlayerContext();
-            if(contextList!=null && !contextList.isEmpty()){
+            if (contextList != null && !contextList.isEmpty()) {
                 currentCommunity = communityService.findById(contextList.get(0).getCommunity().getId().intValue());
             }
             growlSuccess("Login erfolgreich", null);
@@ -104,11 +111,11 @@ public class UserSessionController extends AbstractController {
     public boolean isSystemAdmin() {
         if (currentUser != null) {
             for (PlayerContextDto context : contextList) {
-                if(UserRoleType.SYSTEM_ADMIN.equals(context.getUserRole())){
+                if (UserRoleType.SYSTEM_ADMIN.equals(context.getUserRole())) {
                     return true;
                 }
             }
-        }    
+        }
         return false;
     }
 

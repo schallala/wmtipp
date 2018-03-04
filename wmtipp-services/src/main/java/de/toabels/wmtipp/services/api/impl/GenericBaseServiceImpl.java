@@ -133,13 +133,15 @@ public abstract class GenericBaseServiceImpl<D extends AbstractBaseDto, E extend
 
     @Override
     public List<D> filterCompetition(List<D> list, Long competitionId) {
+        if (competitionId == null) {
+            return list;
+        }
+
         List<D> result = new ArrayList<>();
-        if (competitionId != null) {
-            for (D dto : list) {
-                if (competitionId.equals(
-                        ((ICompetitionAware) dto).getCompetition().getId())) {
-                    result.add(dto);
-                }
+        for (D dto : list) {
+            if (competitionId.equals(
+                    ((ICompetitionAware) dto).getCompetition().getId())) {
+                result.add(dto);
             }
         }
         return result;
@@ -147,13 +149,14 @@ public abstract class GenericBaseServiceImpl<D extends AbstractBaseDto, E extend
 
     @Override
     public List<D> filterCommunity(List<D> list, Long communityId) {
+        if (communityId == null) {
+            return list;
+        }
         List<D> result = new ArrayList<>();
-        if (communityId != null) {
-            for (D dto : list) {
-                if (communityId.equals(
-                        ((ICompetitionAware) dto).getCompetition().getId())) {
-                    result.add(dto);
-                }
+        for (D dto : list) {
+            if (communityId.equals(
+                    ((ICompetitionAware) dto).getCompetition().getId())) {
+                result.add(dto);
             }
         }
         return result;

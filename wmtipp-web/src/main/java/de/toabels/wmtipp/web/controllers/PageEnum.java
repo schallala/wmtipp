@@ -10,13 +10,17 @@ package de.toabels.wmtipp.web.controllers;
  * @author Torsten Abels <torsten.abels@gmail.com>
  */
 public enum PageEnum {
+    LIST_FOOTBALLDATA("/lists/footballDataResultList.jsf"),
+    LIST_PLAYERRANKING("/lists/playerRanking.jsf"),
+    LIST_SCHEDULE("/lists/schedule.jsf"),
+    EDIT_COMMUNITY("/masterdata/editCommunity.jsf"),
     EDIT_COMPETITION("/masterdata/editCompetition.jsf"),
-    EDIT_PLAYER("/masterdata/editPlayer.jsf"),
-    EDIT_TEAM("/masterdata/editTeam.jsf"),
     EDIT_GROUP("/masterdata/editGroup.jsf"),
-    EDIT_ROUND("/masterdata/editRound.jsf"),
     EDIT_MATCH("/masterdata/editMatch.jsf"),
-    TEST_PAGE("/testServices.jsf");
+    EDIT_PLAYER("/masterdata/editPlayer.jsf"),
+    EDIT_ROUND("/masterdata/editRound.jsf"),
+    EDIT_TEAM("/masterdata/editTeam.jsf"),
+    EDIT_TIPS("/masterdata/editTips.jsf");
 
     private String outcome;
 
