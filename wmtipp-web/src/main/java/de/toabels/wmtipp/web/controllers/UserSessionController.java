@@ -39,6 +39,8 @@ import org.springframework.stereotype.Controller;
 @Scope("session")
 public class UserSessionController extends AbstractBaseController {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserSessionController.class);
+
     @Autowired
     private IPlayerService playerService;
 
@@ -47,8 +49,6 @@ public class UserSessionController extends AbstractBaseController {
 
     @Autowired
     private ICommunityService communityService;
-
-    private static final Logger logger = LoggerFactory.getLogger(UserSessionController.class);
 
     private String login;
 
@@ -94,11 +94,21 @@ public class UserSessionController extends AbstractBaseController {
         return currentUser != null;
     }
 
+    private HttpSession getSession(boolean create) {
+        return (HttpSession) FacesContext.
+            getCurrentInstance().
+            getExternalContext().
+            getSession(create);
+    }
+
     public String validateAndlogin() {
         currentUser = playerService.loginUser(login, securityService.getSaltedPassword(password));
         if (currentUser == null) {
             growlFailure("Login fehlgeschlagen", "Fehler beim Versuch den User " + login + " zu authentifizieren!");
         } else {
+            // get Http Session and store username
+            HttpSession session = getSession(false);
+            session.setAttribute("username", currentUser.getLogin());
             contextList = currentUser.getPlayerContext();
             if (contextList != null && !contextList.isEmpty()) {
                 currentCommunity = communityService.findById(contextList.get(0).getCommunity().getId().intValue());
@@ -120,7 +130,7 @@ public class UserSessionController extends AbstractBaseController {
     }
 
     public String invalidateLogin() {
-        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+        HttpSession session = getSession(true);
         session.invalidate();
         currentUser = null;
         return "";

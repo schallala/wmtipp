@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.toabels.wmtipp.services.utiils.impl;
+package de.toabels.wmtipp.services.utils.impl;
 
 import de.toabels.wmtipp.model.external.FdoCompetition;
 import de.toabels.wmtipp.model.external.FdoFixture;

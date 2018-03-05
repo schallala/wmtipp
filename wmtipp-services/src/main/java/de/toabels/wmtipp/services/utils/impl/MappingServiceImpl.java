@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.toabels.wmtipp.services.utiils.impl;
+package de.toabels.wmtipp.services.utils.impl;
 
 import de.toabels.wmtipp.model.db.Community;
 import de.toabels.wmtipp.model.db.Competition;
