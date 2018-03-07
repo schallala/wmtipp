@@ -24,7 +24,6 @@ package de.toabels.wmtipp.model.types;
 public enum UserRoleType {
   SYSTEM_ADMIN("Sytemadministrator"),
   ADMIN("Administrator"),
-  TIPPER("Tipper"),
   USER("User");
   
   private String label;

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.toabels.wmtipp.web.controllers;
+package de.toabels.wmtipp.web.infrastructure;
 
 import de.toabels.wmtipp.model.dto.CommunityDto;
 import de.toabels.wmtipp.model.dto.CompetitionDto;

@@ -4,7 +4,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-          xmlns:wmc="http://java.sun.com/jsf/composite/components"      
+      xmlns:wmc="http://java.sun.com/jsf/composite/components"      
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Abels WM Tippspiel 2016</title>
@@ -24,28 +24,28 @@
             </h:panelGroup>
         </h:panelGroup>
 
-    <p:panelGrid columns="3" columnClasses="ui-grid-col-2,ui-grid-col-14,ui-grid-col-2" layout="grid" styleClass="ui-panelgrid-blank" >
+        <p:panelGrid columns="3" columnClasses="ui-grid-col-2,ui-grid-col-14,ui-grid-col-2" layout="grid" styleClass="ui-panelgrid-blank" >
             <!--<p:panel id="menu_left" header="Links" style="margin-top:20px;width: 150px;">-->
             <p:panelGrid id="menuleft" columns="1" layout="grid" style="float: left">
                 <p:panel id="horizontal" header=" " toggleable="true" toggleOrientation="horizontal" style="background-color: transparent">
                     <p:menu  id="menu_left"   >
-                    <p:submenu label="Krimskrams">
-                        <p:menuitem value="Home"  outcome="/home.jsf" />
-                        <p:menuitem value="Fahrplan" outcome="/lists/schedule.jsf" />
-                        <p:menuitem value="Ergebnisdienst" outcome="/lists/footballDataResultList.jsf" />
-                        <p:menuitem value="Tippzettel" outcome="/masterdata/editTips.jsf" />
-                        <p:menuitem value="Rangliste" outcome="/lists/playerRanking.jsf" />
-                    </p:submenu>
-                    <p:submenu label="Stammdaten">
-                        <p:menuitem value="Wettbewerb bearbeiten" outcome="/masterdata/editCompetition.jsf" />
-                        <p:menuitem value="Tipprunde bearbeiten" outcome="/masterdata/editCommunity.jsf" />
-                        <p:menuitem value="Spieler bearbeiten" outcome="/masterdata/editPlayer.jsf" />
-                        <p:menuitem value="Teams bearbeiten" outcome="/masterdata/editTeam.jsf" />
-                        <p:menuitem value="Gruppen bearbeiten" outcome="/masterdata/editGroup.jsf" />
-                        <p:menuitem value="Runden bearbeiten" outcome="/masterdata/editRound.jsf" />
-                        <p:menuitem value="Spiele bearbeiten" outcome="/masterdata/editMatch.jsf" />
-                    </p:submenu>
-                </p:menu>
+                        <p:submenu label="Krimskrams">
+                            <p:menuitem value="Home"  outcome="/home.jsf" />
+                            <p:menuitem value="Fahrplan" outcome="/lists/schedule.jsf" />
+                            <p:menuitem value="Ergebnisdienst" outcome="/lists/footballDataResultList.jsf" />
+                            <p:menuitem value="Tippzettel" outcome="/masterdata/editTips.jsf" />
+                            <p:menuitem value="Rangliste" outcome="/lists/playerRanking.jsf" />
+                        </p:submenu>
+                        <p:submenu label="Stammdaten">
+                            <p:menuitem value="Wettbewerb bearbeiten" outcome="/masterdata/editCompetition.jsf" />
+                            <p:menuitem value="Tipprunde bearbeiten" outcome="/masterdata/editCommunity.jsf" />
+                            <p:menuitem value="Spieler bearbeiten" outcome="/masterdata/editPlayer.jsf" />
+                            <p:menuitem value="Teams bearbeiten" outcome="/masterdata/editTeam.jsf" />
+                            <p:menuitem value="Gruppen bearbeiten" outcome="/masterdata/editGroup.jsf" />
+                            <p:menuitem value="Runden bearbeiten" outcome="/masterdata/editRound.jsf" />
+                            <p:menuitem value="Spiele bearbeiten" outcome="/masterdata/editMatch.jsf" />
+                        </p:submenu>
+                    </p:menu>
                 </p:panel>
             </p:panelGrid>
             <p:panelGrid id="content" columns="1" layout="grid" styleClass="ui-panelgrid-blank" style="float: left;" >

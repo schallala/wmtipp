@@ -21,7 +21,7 @@ import de.toabels.wmtipp.model.dto.MatchDto;
 import de.toabels.wmtipp.model.dto.PlayerDto;
 import de.toabels.wmtipp.model.dto.TipDto;
 import de.toabels.wmtipp.services.api.ITipService;
-import de.toabels.wmtipp.web.controllers.UserSessionController;
+import de.toabels.wmtipp.web.infrastructure.UserSessionController;
 import java.util.ArrayList;
 import java.util.HashMap;
 

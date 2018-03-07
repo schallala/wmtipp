@@ -30,7 +30,7 @@ import de.toabels.wmtipp.services.api.IMatchService;
 import de.toabels.wmtipp.services.api.IPlayerService;
 import de.toabels.wmtipp.services.api.IRoundService;
 import de.toabels.wmtipp.services.api.ITeamService;
-import de.toabels.wmtipp.web.controllers.UserSessionController;
+import de.toabels.wmtipp.web.infrastructure.UserSessionController;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

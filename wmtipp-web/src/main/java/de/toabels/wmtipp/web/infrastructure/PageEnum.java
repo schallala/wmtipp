@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.toabels.wmtipp.web.controllers;
+package de.toabels.wmtipp.web.infrastructure;
 
 /**
  *
  * @author Torsten Abels <torsten.abels@gmail.com>
  */
 public enum PageEnum {
+    HOME("/home.jsf"),
     LIST_FOOTBALLDATA("/lists/footballDataResultList.jsf"),
     LIST_PLAYERRANKING("/lists/playerRanking.jsf"),
     LIST_SCHEDULE("/lists/schedule.jsf"),
@@ -36,4 +37,5 @@ public enum PageEnum {
         this.outcome = outcome;
     }
 
+    
 }

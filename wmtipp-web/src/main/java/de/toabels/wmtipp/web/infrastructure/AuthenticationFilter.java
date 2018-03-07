@@ -16,7 +16,12 @@
  */
 package de.toabels.wmtipp.web.infrastructure;
 
+import de.toabels.wmtipp.model.types.UserRoleType;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.faces.application.ResourceHandler;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -40,15 +45,19 @@ public class AuthenticationFilter implements Filter {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthenticationFilter.class);
 
+    private UserSessionController userSession;
+
     private static final String AJAX_REDIRECT_XML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
         + "<partial-response><redirect url=\"%s\"></redirect></partial-response>";
+
+    private Map<UserRoleType, List<String>> accessMap;
 
     public AuthenticationFilter() {
     }
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
+        initAccessMap();
     }
 
     @Override
@@ -59,22 +68,26 @@ public class AuthenticationFilter implements Filter {
             HttpServletRequest req = (HttpServletRequest) request;
             HttpServletResponse res = (HttpServletResponse) response;
             HttpSession session = req.getSession(false);
-            String loginURL = req.getContextPath() + "/home.jsf";
+            userSession = session != null ? (UserSessionController) session.getAttribute("userSessionCtrl") : null;
+            String loginURL = req.getContextPath() + PageEnum.HOME.getOutcome();
             //  allow user to proccede if url is login.xhtml or user logged in or user is accessing any page in //public folder
-            boolean loggedIn = (session != null) && (session.getAttribute("username") != null);
+            boolean loggedIn = (session != null) && (userSession.getCurrentUser() != null);
             boolean loginRequest = req.getRequestURI().equals(loginURL);
             boolean resourceRequest = req.getRequestURI().startsWith(req.getContextPath() + ResourceHandler.RESOURCE_IDENTIFIER + "/");
             boolean ajaxRequest = "partial/ajax".equals(req.getHeader("Faces-Request"));
 
             if (loggedIn || loginRequest || resourceRequest) {
                 // Prevent browser from caching restricted resources. See also https://stackoverflow.com/q/4194207/157882
-                if (!resourceRequest) { 
+                if (!resourceRequest) {
                     res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
                     res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
                     res.setDateHeader("Expires", 0); // Proxies.
                 }
-
-                chain.doFilter(req, res); // So, just continue request.
+                if(loginRequest || resourceRequest || checkAccess(req, userSession)){
+                    chain.doFilter(req, res); // So, just continue request.
+                }else {
+                    res.sendRedirect(loginURL); // So, just perform standard synchronous redirect.
+                }
             } else if (ajaxRequest) {
                 res.setContentType("text/xml");
                 res.setCharacterEncoding("UTF-8");
@@ -89,6 +102,38 @@ public class AuthenticationFilter implements Filter {
 
     @Override
     public void destroy() {
-
     }
+    
+    private boolean checkAccess(HttpServletRequest request, UserSessionController userSession){
+        if(userSession == null){
+            return false;
+        }
+        UserRoleType currentRole = userSession.getCurrentUser().getPlayerContext().get(0).getUserRole();
+        if(UserRoleType.SYSTEM_ADMIN.equals(currentRole)){
+            return true;
+        }
+        return accessMap.get(currentRole).contains(request.getServletPath());
+    }
+
+    private Map<UserRoleType, List<String>> initAccessMap() {
+        accessMap = new HashMap<>();
+        // read access rights for role ADMIN
+        List<String> adminPageList = new ArrayList<>();
+           
+        adminPageList.add(PageEnum.EDIT_COMMUNITY.getOutcome());
+        adminPageList.add(PageEnum.EDIT_PLAYER.getOutcome());
+        adminPageList.add(PageEnum.EDIT_ROUND.getOutcome());
+        adminPageList.add(PageEnum.EDIT_TIPS.getOutcome());
+        accessMap.put(UserRoleType.ADMIN, adminPageList); 
+
+        // read access rights for role USER
+        List<String> userPageList = new ArrayList<>();
+        userPageList.add(PageEnum.EDIT_PLAYER.getOutcome());
+        userPageList.add(PageEnum.EDIT_TIPS.getOutcome());
+        accessMap.put(UserRoleType.USER, userPageList);
+
+        // SYSTEM_ADMIN has access to everything
+        return accessMap;
+    }
+
 }
