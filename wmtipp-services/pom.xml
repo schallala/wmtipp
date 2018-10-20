@@ -37,6 +37,11 @@
       <artifactId>hsqldb</artifactId>
     </dependency>
 
+    <dependency>
+        <groupId>com.h2database</groupId>
+        <artifactId>h2</artifactId>
+    </dependency>
+
     <!-- database migration with flyway -->
     <dependency>
         <groupId>org.flywaydb</groupId>
