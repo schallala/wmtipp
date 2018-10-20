@@ -55,13 +55,114 @@ public class UserSessionController extends AbstractBaseController {
     private String password;
 
     private PlayerDto currentUser;
-
+    
     private CommunityDto currentCommunity;
 
     private CompetitionDto currentCompetition;
 
+    private PlayerContextDto currentContext;
+
     private List<PlayerContextDto> contextList;
 
+    /**
+     * Convenience method to retrieve short access to current session
+     * 
+     * @param create
+     * @return 
+     */
+    private HttpSession getSession(boolean create) {
+        return (HttpSession) FacesContext.
+            getCurrentInstance().
+            getExternalContext().
+            getSession(create);
+    }
+
+    /**
+     * Check credentials and set user properties if log in succeeded
+     * 
+     * @return 
+     */
+    public String validateAndlogin() {
+        currentUser = playerService.loginUser(login, securityService.getSaltedPassword(password));
+        if (currentUser == null) {
+            growlFailure("Login fehlgeschlagen", "Fehler beim Versuch den User " + login + " zu authentifizieren!");
+        } else {
+            // get Http Session and store username
+            HttpSession session = getSession(false);
+            session.setAttribute("username", currentUser.getLogin());
+            contextList = currentUser.getPlayerContext();
+            if (contextList != null && !contextList.isEmpty()) {
+                currentCommunity = communityService.findById(contextList.get(0).getCommunity().getId().intValue());
+            }
+            growlSuccess("Login erfolgreich", null);
+        }
+        return "";
+    }
+
+    /**
+     * Log out, invalidate session and return to start page
+     * 
+     * @return 
+     */
+    public String invalidateLogin() {
+        HttpSession session = getSession(true);
+        session.invalidate();
+        currentUser = null;
+        return PageEnum.HOME.getOutcome();
+    }
+
+    /**
+     * Check if user is logged in
+     * 
+     * @return 
+     */
+    public boolean isLoggedIn() {
+        return currentUser != null;
+    }
+
+    /**
+     * Check if user has system admin role
+     * 
+     * @return 
+     */
+    public boolean isSystemAdmin() {
+        if (currentUser != null) {
+            for (PlayerContextDto context : contextList) {
+                if (UserRoleType.SYSTEM_ADMIN.equals(context.getUserRole())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /** 
+     * Get user accessible communities
+     * 
+     * @return 
+     */
+    public List<CommunityDto> getAvailableCommunities() {
+        if (currentUser != null) {
+            return null;
+        }
+        return null;
+    }
+
+    /**
+     * Get all logged in users
+     * 
+     * @return 
+     */
+    public List<PlayerDto> getLoggedInUsers() {
+        if (currentUser == null) {
+            return new ArrayList<>();
+        }
+        return playerService.getLoggedInUsers(currentUser);
+    }
+    
+    /*
+     *   Getter and setters
+     */
     public String getLogin() {
         return login;
     }
@@ -88,66 +189,6 @@ public class UserSessionController extends AbstractBaseController {
 
     public CompetitionDto getCurrentCompetition() {
         return currentCompetition;
-    }
-
-    public boolean isLoggedIn() {
-        return currentUser != null;
-    }
-
-    private HttpSession getSession(boolean create) {
-        return (HttpSession) FacesContext.
-            getCurrentInstance().
-            getExternalContext().
-            getSession(create);
-    }
-
-    public String validateAndlogin() {
-        currentUser = playerService.loginUser(login, securityService.getSaltedPassword(password));
-        if (currentUser == null) {
-            growlFailure("Login fehlgeschlagen", "Fehler beim Versuch den User " + login + " zu authentifizieren!");
-        } else {
-            // get Http Session and store username
-            HttpSession session = getSession(false);
-            session.setAttribute("username", currentUser.getLogin());
-            contextList = currentUser.getPlayerContext();
-            if (contextList != null && !contextList.isEmpty()) {
-                currentCommunity = communityService.findById(contextList.get(0).getCommunity().getId().intValue());
-            }
-            growlSuccess("Login erfolgreich", null);
-        }
-        return "";
-    }
-
-    public boolean isSystemAdmin() {
-        if (currentUser != null) {
-            for (PlayerContextDto context : contextList) {
-                if (UserRoleType.SYSTEM_ADMIN.equals(context.getUserRole())) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public String invalidateLogin() {
-        HttpSession session = getSession(true);
-        session.invalidate();
-        currentUser = null;
-        return "";
-    }
-
-    public List<CommunityDto> getAvailableCommunities() {
-        if (currentUser != null) {
-
-        }
-        return null;
-    }
-
-    public List<PlayerDto> getLoggedInUsers() {
-        if (currentUser == null) {
-            return new ArrayList<>();
-        }
-        return playerService.getLoggedInUsers(currentUser);
     }
 
 }

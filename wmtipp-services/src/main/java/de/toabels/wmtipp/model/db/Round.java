@@ -53,7 +53,7 @@ public class Round implements IEntityBase<Round>, Serializable {
     @Column(name = "approved")
     private Boolean approved;
     @Column(name = "sort_order")
-    private Short sortOrder;
+    private Long sortOrder;
 
     public Round() {
     }
@@ -96,11 +96,11 @@ public class Round implements IEntityBase<Round>, Serializable {
         this.approved = approved;
     }
 
-    public Short getSortOrder() {
+    public Long getSortOrder() {
         return sortOrder;
     }
 
-    public void setSortOrder(Short sortOrder) {
+    public void setSortOrder(Long sortOrder) {
         this.sortOrder = sortOrder;
     }
 

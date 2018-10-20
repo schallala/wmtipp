@@ -32,7 +32,7 @@ public class RoundDto extends AbstractBaseDto implements ICompetitionAware {
 
     private Boolean approved;
 
-    private Short sortOrder;
+        private Long sortOrder;
 
     public RoundDto() {
     }
@@ -63,11 +63,11 @@ public class RoundDto extends AbstractBaseDto implements ICompetitionAware {
         this.approved = approved;
     }
 
-    public Short getSortOrder() {
+    public Long getSortOrder() {
         return sortOrder;
     }
 
-    public void setSortOrder(Short sortOrder) {
+    public void setSortOrder(Long sortOrder) {
         this.sortOrder = sortOrder;
     }
 

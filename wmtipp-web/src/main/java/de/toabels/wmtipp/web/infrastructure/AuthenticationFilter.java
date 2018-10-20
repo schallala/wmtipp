@@ -109,7 +109,7 @@ public class AuthenticationFilter implements Filter {
             return false;
         }
         UserRoleType currentRole = userSession.getCurrentUser().getPlayerContext().get(0).getUserRole();
-        if(UserRoleType.SYSTEM_ADMIN.equals(currentRole)){
+        if(userSession.isSystemAdmin()){
             return true;
         }
         return accessMap.get(currentRole).contains(request.getServletPath());

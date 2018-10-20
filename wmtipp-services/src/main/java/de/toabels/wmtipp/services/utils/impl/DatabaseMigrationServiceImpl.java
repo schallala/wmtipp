@@ -32,7 +32,7 @@ public class DatabaseMigrationServiceImpl implements IDatabaseMigrationService {
 
     private static final Logger logger = LoggerFactory.getLogger(DatabaseMigrationServiceImpl.class);
 
-    private static String MIGRATION_PATH_MYSQL = "src/main/resources/db";
+    private static final String MIGRATION_PATH_MYSQL = "src/main/resources/db";
 
     /* get database configuration from properties file */
     private @Value("${db.migrationPath}")
